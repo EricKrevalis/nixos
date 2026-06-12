@@ -25,13 +25,34 @@
     LC_TIME           = "de_DE.UTF-8";
   };
 
-  # Temporary: KDE until Hyprland is set up
+  # Temporary: KDE Plasma 6 until Sway is set up (Hyprland was dropped)
   services.xserver.enable = true;
   services.displayManager.sddm.enable = true;
   services.desktopManager.plasma6.enable = true;
   services.xserver.xkb = {
     layout = "us";
     variant = "";
+  };
+
+  # GPU: NVIDIA RTX 3060 Ti (Ampere). Needed for Wayland (KDE/Sway) + gaming.
+  # ▶ CURRENTLY TESTING: stable branch + open kernel modules (open = true).
+  # Note: both open=true/false use the proprietary userspace driver (neither is
+  # nouveau); `open` only swaps the kernel module. The old Linux Mint setup ran
+  # the CLOSED modules (open=false) well, so this open=true run is the experiment.
+  # If this build misbehaves (flicker, black screen, suspend issues): roll back to
+  # the previous generation from the boot menu, then try open=false and/or another
+  # branch (production/beta/latest).
+  hardware.graphics = {
+    enable = true;
+    enable32Bit = true; # 32-bit GL for Steam/Proton
+  };
+  services.xserver.videoDrivers = [ "nvidia" ];
+  hardware.nvidia = {
+    modesetting.enable = true; # required for Wayland; enables explicit sync path
+    open = true;               # TESTING open kernel modules (vs closed, which Mint ran well)
+    nvidiaSettings = true;
+    package = config.boot.kernelPackages.nvidiaPackages.stable; # TESTING stable branch
+    powerManagement.enable = false; # enable only if suspend/resume corrupts the display
   };
 
   services.printing.enable = true;
@@ -49,7 +70,12 @@
     isNormalUser = true;
     description = "eric";
     extraGroups = [ "networkmanager" "wheel" ];
+    shell = pkgs.zsh; # HM configures zsh; this makes it the actual login shell
   };
+
+  # Enabling zsh system-wide is required for users.users.eric.shell = pkgs.zsh
+  # to work cleanly (sets up /etc/shells and completion).
+  programs.zsh.enable = true;
 
   programs.firefox.enable = true;
 
