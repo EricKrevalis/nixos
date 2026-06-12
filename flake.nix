@@ -1,5 +1,5 @@
 {
-  description = "NixOS configuration — desktop + laptop";
+  description = "NixOS configuration for desktop and laptop";
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
@@ -9,12 +9,14 @@
     };
   };
 
-  outputs = { self, nixpkgs, home-manager }: {
-    nixosConfigurations = {
-      desktop = nixpkgs.lib.nixosSystem {
+  outputs = { self, nixpkgs, home-manager }:
+    let
+      # Every host wires in Home Manager the same way; only its own
+      # configuration.nix differs.
+      mkHost = configuration: nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
         modules = [
-          ./hosts/desktop/configuration.nix
+          configuration
           home-manager.nixosModules.home-manager
           {
             home-manager.useGlobalPkgs = true;
@@ -24,19 +26,11 @@
           }
         ];
       };
-      laptop = nixpkgs.lib.nixosSystem {
-        system = "x86_64-linux";
-        modules = [
-          ./hosts/laptop/configuration.nix
-          home-manager.nixosModules.home-manager
-          {
-            home-manager.useGlobalPkgs = true;
-            home-manager.useUserPackages = true;
-            home-manager.backupFileExtension = "backup";
-            home-manager.users.eric = import ./home/home.nix;
-          }
-        ];
+    in
+    {
+      nixosConfigurations = {
+        desktop = mkHost ./hosts/desktop/configuration.nix;
+        laptop = mkHost ./hosts/laptop/configuration.nix;
       };
     };
-  };
 }
