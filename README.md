@@ -6,12 +6,14 @@ nixos module. one settings block per host, the rest is shared modules layered in
 ## rebuilding
 
 ```bash
-sudo nixos-rebuild switch
+nrs   # sudo nixos-rebuild switch --flake ~/.config/nixos-config
+nrb   # same but boot, applies on next reboot
 ```
 
-uses the flake through the `/etc/nixos/flake.nix` symlink and picks the config matching my
-hostname. see `docs/bootstrap.md` for how that link is set up and how to recreate it on a
-fresh install.
+the repo lives at `~/.config/nixos-config` and i reference it explicitly, no `/etc/nixos`
+symlink. the aliases are defined in `home/basic.nix`. with no `#attr` on the flake,
+nixos-rebuild picks the config matching my hostname. see `docs/bootstrap.md` for the first
+build on a fresh install (where the aliases do not exist yet).
 
 ## how it fits together
 
