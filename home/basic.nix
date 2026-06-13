@@ -44,6 +44,16 @@
     '';
   };
 
+  programs.alacritty = {
+    enable = true;
+    package = null; # alacritty is installed system-wide, home-manager only writes the config
+    # Mono variant keeps icons single-width so columns stay aligned
+    settings.font = {
+      normal.family = "AtkynsonMono Nerd Font Mono";
+      size = 12;
+    };
+  };
+
   # sway base. per-host monitor layout lives in hosts/<host>/home.nix.
   # the session launch is system-level (modules/basic.nix), not here.
   wayland.windowManager.sway = {
