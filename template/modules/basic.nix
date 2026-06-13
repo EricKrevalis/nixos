@@ -103,6 +103,17 @@ in
     wiremix # audio TUI
   ];
 
+  services.openssh = {
+    enable = true;
+    openFirewall = false; # no incoming connections, host key generation only
+    settings = {
+      PasswordAuthentication = false;
+      PermitRootLogin = "no";
+    };
+  };
+
+  sops.age.sshKeyPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
+
   nix.settings = {
     experimental-features = [ "nix-command" "flakes" ];
     auto-optimise-store = true;

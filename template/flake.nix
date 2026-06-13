@@ -7,9 +7,13 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    sops-nix = {
+      url = "github:Mic92/sops-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
-  outputs = { nixpkgs, home-manager, ... }:
+  outputs = { nixpkgs, home-manager, sops-nix, ... }:
     let
       lib = nixpkgs.lib;
 
@@ -22,6 +26,8 @@
         locale = "en_US.UTF-8";
         gitName = "Your Name";
         gitEmail = "you@example.com";
+        # ssh identity per git host, "<host>" = "<key filename in ~/.ssh>"
+        sshIdentities = { }; # e.g. "github.com" = "id_ed25519_github";
         nvidia = false; # set true per host for the proprietary nvidia stack
         extended = true; # feature complete desktop for normal use, the recommended default
         specializedDev = false; # dev tools layer on top of extended
@@ -37,6 +43,7 @@
         modules = [
           ./modules/basic.nix
           ./hosts/${settings.hostname}/configuration.nix
+          sops-nix.nixosModules.sops
           home-manager.nixosModules.home-manager
           {
             home-manager.useGlobalPkgs = true;
