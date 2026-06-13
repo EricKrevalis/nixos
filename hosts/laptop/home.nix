@@ -1,4 +1,4 @@
 { ... }:
 
-# Per-host home for the laptop. Add the monitor layout once the hardware exists.
+# per-host home for the laptop, add the monitor layout once the hardware exists
 { }
