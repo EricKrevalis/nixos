@@ -21,19 +21,21 @@ a machine is that one block:
 
 ```nix
 desktop = mkHost (common // {
-  hostname    = "desktop";
-  nvidia      = true;   # proprietary nvidia stack
-  extended    = true;   # feature complete desktop
-  specialized = true;   # dev and gaming on top
+  hostname        = "desktop";
+  nvidia          = true;   # proprietary nvidia stack
+  extended        = true;   # feature complete desktop
+  specializedDev  = true;   # dev tools on top
+  specializedGame = true;   # gaming on top
 });
 ```
 
 those booleans are typed in `modules/options.nix`, so a wrong value is a build error, not a
 silent no-op. the software stacks in tiers, each one opt in per host:
 
-- basic       every host, base system plus sway. `modules/basic.nix`
-- extended    feature complete desktop for normal use. `modules/extended.nix`
-- specialized dev and gaming on top of extended. `modules/specialized.nix`
+- basic            every host, base system plus sway. `modules/basic.nix`
+- extended         feature complete desktop for normal use. `modules/extended.nix`
+- specializedDev   dev tools on top of extended. `modules/specialized-dev.nix`
+- specializedGame  gaming on top of extended. `modules/specialized-game.nix`
 
 nvidia is a separate hardware toggle (`modules/nvidia.nix`), inert unless `nvidia = true`.
 non nvidia machines run the default mesa stack and set nothing.
@@ -42,7 +44,7 @@ non nvidia machines run the default mesa stack and set nothing.
 
 ```
 flake.nix / flake.lock   inputs, the common settings block, one mkHost per machine
-modules/                 shared modules: basic, extended, specialized, nvidia, options
+modules/                 shared modules: basic, extended, specialized-dev, specialized-game, nvidia, options
 home/basic.nix           home manager base (git, zsh, sway), shared by every host
 hosts/<host>/            per machine: hardware-configuration.nix, configuration.nix, home.nix
 template/                self contained starter others can fork (see below)
@@ -63,7 +65,7 @@ that copies the `template/` starter into an empty dir, just the engine, none of 
 then:
 
 1. edit `flake.nix` `common` with your name, email, timezone, hostname
-2. flip the toggles you want (`nvidia`, `extended`, `specialized`)
+2. flip the toggles you want (`nvidia`, `extended`, `specializedDev`, `specializedGame`)
 3. generate your hardware config:
    ```bash
    sudo nixos-generate-config --show-hardware-config > hosts/nixos/hardware-configuration.nix
