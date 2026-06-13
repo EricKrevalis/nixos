@@ -1,8 +1,11 @@
 { config, lib, pkgs, ... }:
 
-# feature complete desktop for normal use, on top of basic
-# enabled by host.extended, empty until the stack lands
+# feature complete desktop on top of basic, enabled by host.extended
 lib.mkIf config.host.extended {
-  environment.systemPackages = with pkgs; [
-  ];
+  programs.thunar = {
+    enable = true;
+    plugins = with pkgs; [ thunar-volman thunar-archive-plugin ];
+  };
+  services.gvfs.enable = true;    # trash, MTP devices, network locations
+  services.tumbler.enable = true; # thumbnail generation
 }

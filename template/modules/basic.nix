@@ -69,6 +69,8 @@ in
 
   programs.firefox.enable = true;
 
+  services.udisks2.enable = true; # drive mounting backend, needed for USB automount and udisksctl
+
   hardware.bluetooth.enable = true; # powers on at boot so paired audio devices reconnect
 
   # audio, PipeWire instead of PulseAudio
