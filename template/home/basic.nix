@@ -33,6 +33,12 @@
     enable = true;
     autosuggestion.enable = true;
     syntaxHighlighting.enable = true;
+    # rebuild shortcuts. the flake is referenced explicitly, no /etc/nixos symlink.
+    # no #attr means nixos-rebuild builds nixosConfigurations.<hostname> for the current host.
+    shellAliases = {
+      nrs = "sudo nixos-rebuild switch --flake ~/.config/nixos-config";
+      nrb = "sudo nixos-rebuild boot --flake ~/.config/nixos-config";
+    };
     initContent = ''
       export PATH="$HOME/.local/bin:$PATH"
     '';
