@@ -1,0 +1,23 @@
+name: check
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      # flakes enabled by default with this installer
+      - uses: DeterminateSystems/nix-installer-action@main
+
+      # the template modules must match their source, see scripts/sync-template.sh
+      - name: template in sync
+        run: ./scripts/sync-template.sh --check
+
+      # evaluates every host, catches type errors and bad options without building
+      - name: evaluate flake
+        run: nix flake check --no-build
