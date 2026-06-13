@@ -5,7 +5,7 @@
     ./hardware-configuration.nix
   ];
 
-  services.printing.enable = true;
+  # services.printing.enable = true; # no printer on this machine, uncomment to add one
 
   # internal drives, always present on this machine
   fileSystems."/run/media/eric/work" = {

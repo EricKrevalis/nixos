@@ -3,8 +3,8 @@
 # base system plus the sway desktop, every host gets this. the extended and specialized
 # tiers are opt in from flake.nix common. gpu is a separate hardware module (nvidia.nix).
 let
-  # nvidia needs a couple wlroots env vars and an extra sway flag, integrated gpus do not
-  # hardware cursors left on, re-add export WLR_NO_HARDWARE_CURSORS=1 if a fullscreen game hides the cursor
+  # nvidia needs two wlroots env vars and a sway flag, integrated gpus do not
+  # hardware cursors on, re-add WLR_NO_HARDWARE_CURSORS=1 if a game hides the cursor
   nvidiaEnv = lib.optionalString config.host.nvidia ''
     export GBM_BACKEND=nvidia-drm
     export __GLX_VENDOR_LIBRARY_NAME=nvidia
@@ -31,6 +31,7 @@ in
 
   networking.hostName = settings.hostname;
   networking.networkmanager.enable = true; # ships nmtui for terminal Wi-Fi management
+  networking.modemmanager.enable = false; # no cellular modem, networkmanager enables it by default
 
   time.timeZone = settings.timezone;
 
@@ -54,6 +55,10 @@ in
   # autologin on tty1 then exec sway straight away, no display manager. the launch sits at
   # the system level via loginShellInit so it does not depend on which login shell is used.
   programs.sway.enable = true;
+  # clear sway's default extras, we supply our own, laptop re-adds its tools
+  programs.sway.extraPackages = [ ];
+  # sway's graphical-desktop base turns on speech-dispatcher, it drags in 700+ MiB of tts voices
+  services.speechd.enable = false;
   services.getty.autologinUser = settings.username;
   environment.loginShellInit = ''
     if [ -z "$WAYLAND_DISPLAY" ] && [ "$XDG_VTNR" = 1 ]; then
@@ -93,6 +98,13 @@ in
   programs.zsh.enable = true;
 
   nixpkgs.config.allowUnfree = true;
+
+  # keep man pages, skip the nixos manual rebuild and the html/info trees
+  documentation = {
+    nixos.enable = false;
+    doc.enable = false;
+    info.enable = false;
+  };
 
   environment.systemPackages = with pkgs; [
     neovim
