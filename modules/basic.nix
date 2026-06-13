@@ -106,6 +106,28 @@ in
     info.enable = false;
   };
 
+  # explicit font set, the default bundle drags in 100+ MiB of cjk we do not need
+  # one proportional sans for ui, one nerd-font mono for terminal and editor
+  fonts = {
+    enableDefaultPackages = false;
+    packages = with pkgs; [
+      noto-fonts                # ui sans + serif, broad latin and ~900 script faces, no cjk
+      noto-fonts-cjk-sans       # chinese/japanese/korean sans, base noto ships none
+      noto-fonts-cjk-serif      # cjk serif counterpart
+      noto-fonts-color-emoji    # emoji
+      nerd-fonts.atkynson-mono  # mono, atkinson hyperlegible, terminal + monospace role
+      # nerd-fonts.caskaydia-cove # alt mono, patched cascadia code
+      # nerd-fonts.sauce-code-pro # alt mono, source code pro
+    ];
+    # point the generic family aliases at our fonts, otherwise nixos falls back to dejavu
+    fontconfig.defaultFonts = {
+      sansSerif = [ "Noto Sans" ];
+      serif     = [ "Noto Serif" ];
+      monospace = [ "AtkynsonMono Nerd Font Mono" ];
+      emoji     = [ "Noto Color Emoji" ];
+    };
+  };
+
   environment.systemPackages = with pkgs; [
     neovim
     git
