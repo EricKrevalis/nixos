@@ -166,6 +166,7 @@ in
     satty # screenshot annotation
     playerctl # media key control (MPRIS)
     waybar # status bar
+    swaybg # wallpaper renderer for sway
   ];
 
   services.openssh = {
