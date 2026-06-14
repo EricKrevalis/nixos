@@ -164,6 +164,7 @@ in
     grim # wayland screenshot capture
     slurp # region selector, pairs with grim
     satty # screenshot annotation
+    playerctl # media key control (MPRIS)
   ];
 
   services.openssh = {

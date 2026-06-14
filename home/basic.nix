@@ -74,9 +74,18 @@ in
         { command = "wl-paste --primary --watch cliphist store"; }
       ];
       keybindings = lib.mkOptionDefault {
-        "${mod}+v"       = "exec bash -c 'cliphist list | fuzzel --dmenu | cliphist decode | tee >(wl-copy --primary) | wl-copy'";
-        "Print"          = "exec grim - | satty --filename -";
-        "Shift+Print"    = "exec grim -g \"$(slurp)\" - | satty --filename -";
+        "${mod}+v"             = "exec bash -c 'cliphist list | fuzzel --dmenu | cliphist decode | tee >(wl-copy --primary) | wl-copy'";
+        "Print"                = "exec grim - | satty --filename -";
+        "Shift+Print"          = "exec grim -g \"$(slurp)\" - | satty --filename -";
+        "XF86AudioPlay"        = "exec playerctl play-pause";
+        "XF86AudioPause"       = "exec playerctl play-pause";
+        "XF86AudioNext"        = "exec playerctl next";
+        "XF86AudioPrev"        = "exec playerctl previous";
+        "XF86AudioStop"        = "exec playerctl stop";
+        "XF86AudioRaiseVolume" = "exec wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+";
+        "XF86AudioLowerVolume" = "exec wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-";
+        "XF86AudioMute"        = "exec wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle";
+        "XF86AudioMicMute"     = "exec wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle";
       };
     };
   };
