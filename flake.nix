@@ -24,8 +24,7 @@
         locale = "en_US.UTF-8";
         gitName = "EricKrevalis";
         gitEmail = "eric.krevalis@gmail.com";
-        # public ssh identities, "<host>" = "<key filename in ~/.ssh>". private ones live
-        # in a sops secret instead, see hosts/desktop for the work identity.
+        # "<host>" = "<key filename in ~/.ssh>", per-host blocks can extend this
         sshIdentities = {
           "github.com" = "id_ed25519_github";
         };
@@ -67,6 +66,9 @@
           extended = true;
           specializedDev = true;
           specializedGame = true;
+          sshIdentities = common.sshIdentities // {
+            "git.haw-hamburg.de" = "id_ed25519_haw";
+          };
         });
 
         # laptop stays out until hosts/laptop/hardware-configuration.nix exists, the stub
