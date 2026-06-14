@@ -71,9 +71,13 @@ in
         # (polkit agents, etc.) can see XDG_SESSION_ID and wayland socket vars
         { command = "systemctl --user import-environment XDG_SESSION_ID XDG_SESSION_TYPE WAYLAND_DISPLAY DISPLAY"; }
         { command = "waybar"; }
+        # wallpaper file stays out of the repo (licensing), the glob takes any png/jpg/jpeg
+        { command = ''swaybg -m fill -i "$(ls /home/${settings.username}/Pictures/wallpaper.* 2>/dev/null | head -n1)"''; }
         { command = "wl-paste --watch cliphist store"; }
         { command = "wl-paste --primary --watch cliphist store"; }
       ];
+      bars = [ ]; # waybar runs from startup, drop the default swaybar
+
       window = {
         border = 1;
         titlebar = false;
