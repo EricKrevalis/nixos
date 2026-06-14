@@ -5,8 +5,6 @@ rough priority order, lower items lean on earlier ones being stable.
 ## in progress
 
 - finish the basic tier: feature complete, debloated, settings optimized and personalized.
-  the extended/dev/game tiers stay parked until basic is done. work the software stack below.
-- push repo to github (secrets and ssh are done, so this is unblocked)
 
 ## up next
 
@@ -16,15 +14,15 @@ rough priority order, lower items lean on earlier ones being stable.
 - full basic stack customization pass: once all features are installed, go back and tune settings, keybinds, and config files for every tool (sway, mako, satty, alacritty, fuzzel, etc.)
 
 
-## software stack (phase 3)
-
+## software stack, ~ means testing
+### noted links for research: https://github.com/swaywm/sway/wiki/Useful-add-ons-for-sway  https://github.com/Alexays/Waybar/wiki/Examples
 desktop features still missing, tool choice per feature TBD:
 - [x] clipboard with history
 - [x] notifications
-- [ ] screenshots, needs tuning after first use (grim, slurp, satty)
+- [~] screenshots, needs tuning after first use (grim, slurp, satty)
 - [x] gui authentication prompts (soteria polkit agent)
-- [ ] media key control
-- [ ] status bar (network, clock, audio at a glance)
+- [~] media key control
+- [~] status bar (network, clock, audio at a glance)
 - [ ] night light
 - [ ] video playback
 - [ ] image viewing
