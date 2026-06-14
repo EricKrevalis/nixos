@@ -160,6 +160,7 @@ in
     trashy # recoverable delete
     wl-clipboard # wayland clipboard tools
     cliphist # clipboard history
+    libnotify # notify-send for scripted notifications
   ];
 
   services.openssh = {

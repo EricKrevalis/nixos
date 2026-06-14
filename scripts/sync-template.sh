@@ -32,8 +32,10 @@ for f in "${synced[@]}"; do
   else
     mkdir -p "$(dirname "$dest")"
     cp "$f" "$dest"
+    echo "synced $dest"
   fi
 done
 
 [ "$check" -eq 1 ] && [ "$status" -eq 0 ] && echo "template in sync"
+[ "$check" -eq 0 ] && echo "done"
 exit $status
