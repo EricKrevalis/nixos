@@ -1,4 +1,7 @@
 { settings, lib, ... }:
+let
+  mod = "Mod4";
+in
 
 {
   home.username = settings.username;
@@ -60,10 +63,30 @@
     enable = true;
     package = null; # use the system sway from programs.sway.enable
     config = {
-      modifier = "Mod4"; # Super key
+      modifier = mod;
       terminal = "alacritty";
       menu = "fuzzel"; # Super+D launcher (native wayland, no xwayland)
+      startup = [
+        # propagate session vars into the systemd user session so user services
+        # (polkit agents, etc.) can see XDG_SESSION_ID and wayland socket vars
+        { command = "systemctl --user import-environment XDG_SESSION_ID XDG_SESSION_TYPE WAYLAND_DISPLAY DISPLAY"; }
+        { command = "wl-paste --watch cliphist store"; }
+        { command = "wl-paste --primary --watch cliphist store"; }
+      ];
+      keybindings = lib.mkOptionDefault {
+        "${mod}+v" = "exec bash -c 'cliphist list | fuzzel --dmenu | cliphist decode | tee >(wl-copy --primary) | wl-copy'";
+      };
     };
+  };
+
+  xdg.configFile."nvim/init.lua".text = ''
+    vim.opt.clipboard = "unnamedplus"
+  '';
+
+  # usb/drive automount, read by thunar-volman
+  xfconf.settings.thunar-volman = {
+    "automount-drives/enabled" = true;
+    "automount-media/enabled" = true;
   };
 
   home.stateVersion = "26.05";
