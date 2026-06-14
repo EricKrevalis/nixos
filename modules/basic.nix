@@ -167,6 +167,11 @@ in
     playerctl # media key control (MPRIS)
     waybar # status bar
     swaybg # wallpaper renderer for sway
+    swayimg # image viewer
+    xarchiver # archive manager, thunar right-click frontend
+    p7zip # 7z and zip backend xarchiver calls
+    unzip # zip extraction
+    zip # zip creation
   ];
 
   services.openssh = {

@@ -151,6 +151,54 @@ in
     };
   };
 
+  programs.zathura.enable = true; # mupdf backend bundled, no extra plugin
+
+  programs.mpv = {
+    enable = true;
+    config.hwdec = "auto-safe"; # host gpu decoder when safe (nvdec here), else software
+  };
+
+  # call alacritty directly, the packaged nvim.desktop wants a default terminal
+  xdg.desktopEntries.nvim = {
+    name = "Neovim";
+    genericName = "Text Editor";
+    exec = "alacritty -e nvim %F";
+    terminal = false;
+    mimeType = [ "text/plain" ];
+    categories = [ "Utility" "TextEditor" ];
+  };
+
+  # default handler per file type: swayimg images, zathura documents, mpv media,
+  # neovim text, firefox web
+  xdg.mimeApps = {
+    enable = true;
+    defaultApplications =
+      let
+        forEach = desktop: types: lib.genAttrs types (_: desktop);
+      in
+        forEach "swayimg.desktop" [
+          "image/png" "image/jpeg" "image/gif" "image/webp"
+          "image/bmp" "image/tiff" "image/avif" "image/heif"
+        ]
+        // forEach "org.pwmt.zathura.desktop" [
+          "application/pdf" "application/epub+zip"
+          "application/vnd.comicbook+zip" "application/x-cbz"
+        ]
+        // forEach "mpv.desktop" [
+          "video/mp4" "video/x-matroska" "video/webm"
+          "video/quicktime" "video/x-msvideo" "video/mpeg"
+          "audio/mpeg" "audio/flac" "audio/x-wav"
+          "audio/ogg" "audio/mp4" "audio/aac"
+        ]
+        // forEach "nvim.desktop" [
+          "text/plain" "text/markdown" "application/json"
+          "application/x-shellscript" "text/x-python" "text/x-csrc"
+        ]
+        // forEach "firefox.desktop" [
+          "text/html" "x-scheme-handler/http" "x-scheme-handler/https"
+        ];
+  };
+
   xdg.configFile."waybar/config.jsonc".source = ../configs/waybar/config.jsonc;
   xdg.configFile."waybar/style.css".source   = ../configs/waybar/style.css;
 

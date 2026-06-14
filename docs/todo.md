@@ -21,23 +21,44 @@ desktop features still missing, tool choice per feature TBD:
 - [x] notifications
 - [~] screenshots, needs tuning after first use (grim, slurp, satty)
 - [x] gui authentication prompts (soteria polkit agent)
-- [~] media key control
+- [x] media key control
 - [~] status bar (network, clock, audio at a glance)
-- [ ] night light
-- [ ] video playback
-- [ ] image viewing
-- [ ] pdf viewing
-- [ ] archive handling
+- [x] night light
+- [x] video playback
+- [~] status bar (network, clock, audio at a glance)
+- [~]  image viewing
+- [x] night light
+- [~] pdf viewing
+- [~] archive handling
 - [x] trash, recoverable delete instead of gone forever (trashy)
 - [x] usb drives auto-mount on plug in (thunar-volman + xfconf)
 - [ ] gpu fan and clock control that works on wayland
-- [ ] default app per file type (md, txt, pdf, images, audio, video)
+- [~] default app per file type (md, txt, pdf, images, audio, video)
 - [ ] firefox config in the repo, not hand-pasted into ~/.mozilla
+- [ ] configure visuals (mouse cursor, bars, etc.)
+- [ ] configure features (fzf, all those small QoL tools)
+- [ ] sway tiling functionality (how they split) + fix not being able to grab them without titlebars
+- [ ] keyboard delay / repeat rate!
+- [ ] ...
+
+extended (feature complete desktop, later tier):
+- [ ] office suite (libreoffice), opening docx/xlsx/odt/pptx
+- [ ] email client
+- [ ] calendar
+- [ ] pdf annotation and forms (zathura is read-only, okular or similar)
+- [ ] image editor (gimp or krita)
+- [ ] music player with a library, if mpv playback proves not enough
+- [ ] password manager
+- [ ] torrent client
+- [ ] note taking
+- [ ] file sync (syncthing or similar)
 
 dev:
 - [ ] editors and lsp tooling
+- [ ] jupyter notebooks in neovim (jupytext + molten), needs a graphics-capable terminal for inline output
 - [ ] docker or podman
 - [ ] language toolchains as needed
+- [ ] fix claude fullscreen render in terminal
 
 game:
 - [ ] steam + proton
