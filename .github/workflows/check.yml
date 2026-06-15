@@ -14,10 +14,8 @@ jobs:
       # flakes enabled by default with this installer
       - uses: DeterminateSystems/nix-installer-action@main
 
-      # the template modules must match their source, see scripts/sync-template.sh
-      - name: template in sync
-        run: ./scripts/sync-template.sh --check
-
-      # evaluates every host, catches type errors and bad options without building
+      # evaluates every host, catches type errors and bad options without building. this
+      # covers the whole core/ engine too, since the real hosts import it. the starter flake
+      # in core/ cannot be checked here, it fails on purpose until a hardware config exists.
       - name: evaluate flake
         run: nix flake check --no-build

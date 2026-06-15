@@ -1,5 +1,5 @@
 {
-  description = "NixOS flake starter, sway desktop with optional nvidia and tiers";
+  description = "NixOS flake starter, sway desktop with optional nvidia and layers";
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
@@ -17,8 +17,7 @@
     let
       lib = nixpkgs.lib;
 
-      # forking starts here. change these to your own, then drop a
-      # hardware-configuration.nix into hosts/nixos/
+      # fork here, set your own values, then drop a hardware-configuration.nix into hosts/nixos/
       common = {
         hostname = "nixos";
         username = "changeme";
@@ -28,20 +27,20 @@
         gitEmail = "you@example.com";
         # ssh identity per git host, "<host>" = "<key filename in ~/.ssh>"
         sshIdentities = { }; # e.g. "github.com" = "id_ed25519_github";
-        nvidia = false; # set true per host for the proprietary nvidia stack
-        extended = true; # feature complete desktop for normal use, the recommended default
-        specializedDev = false; # dev tools layer on top of extended
-        specializedGame = false; # gaming layer on top of extended
+        # base is always on. flip a layer to true to add it on top.
+        polish = false; # the polished, feature complete desktop for normal use
+        dev = false; # dev tools layer on top of polish
+        gaming = false; # gaming layer on top of polish
+        nvidia = false; # the proprietary nvidia gpu stack
       };
 
-      # one call per machine, settings is common merged with per-host overrides, threaded
-      # to every module via specialArgs. modules/options.nix is the typed schema these
-      # values feed into.
+      # one mkHost call per machine, settings is common merged with per-host overrides,
+      # threaded to modules via specialArgs and typed by modules/toggles.nix.
       mkHost = settings: lib.nixosSystem {
         system = settings.system or "x86_64-linux";
         specialArgs = { inherit settings; };
         modules = [
-          ./modules/basic.nix
+          ./modules/base.nix
           ./hosts/${settings.hostname}/configuration.nix
           sops-nix.nixosModules.sops
           home-manager.nixosModules.home-manager
@@ -51,7 +50,7 @@
             home-manager.backupFileExtension = "backup";
             home-manager.extraSpecialArgs = { inherit settings; };
             home-manager.users.${settings.username}.imports = [
-              ./home/basic.nix
+              ./home/base.nix
               ./hosts/${settings.hostname}/home.nix
             ];
           }

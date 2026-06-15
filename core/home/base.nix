@@ -4,11 +4,13 @@ let
 in
 
 {
+  imports = [ ./specialized/dev.nix ]; # inert unless settings.dev = true
+
   home.username = settings.username;
   home.homeDirectory = "/home/${settings.username}";
 
-  # one block per git host from settings.sshIdentities, IdentitiesOnly so the agent
-  # never offers the wrong key. the identities live in flake.nix common, this stays generic.
+  # one block per git host from settings.sshIdentities, IdentitiesOnly so the agent never offers the wrong key.
+  # the identities live in flake.nix common, this stays generic.
   programs.ssh = {
     enable = true;
     enableDefaultConfig = false;
@@ -24,7 +26,7 @@ in
 
   programs.git = {
     enable = true;
-    package = null; # git is installed system-wide; home-manager only writes the config
+    package = null; # git is installed system-wide, home-manager only writes the config
     settings = {
       user.email = settings.gitEmail;
       user.name = settings.gitName;
@@ -36,21 +38,36 @@ in
     enable = true;
     autosuggestion.enable = true;
     syntaxHighlighting.enable = true;
-    # rebuild shortcuts. the flake is referenced explicitly, no /etc/nixos symlink.
-    # no #attr means nixos-rebuild builds nixosConfigurations.<hostname> for the current host.
+    # rebuild shortcuts. flake referenced explicitly, no /etc/nixos symlink.
+    # no #attr, so nixos-rebuild builds nixosConfigurations.<hostname> for the current host.
     shellAliases = {
-      nrs = "sudo nixos-rebuild switch --flake ~/.config/nixos-config";
-      nrb = "sudo nixos-rebuild boot --flake ~/.config/nixos-config";
+      nrs = "sudo nixos-rebuild switch --flake ~/.config/nixos";
+      nrb = "sudo nixos-rebuild boot --flake ~/.config/nixos";
     };
     initContent = ''
       export PATH="$HOME/.local/bin:$PATH"
     '';
   };
 
+  # shell companions wired into zsh:
+  # starship prompt, zoxide dir-jump (z), fzf history (Ctrl+R) and file search (Ctrl+T).
+  programs.starship = {
+    enable = true;
+    enableZshIntegration = true;
+  };
+  programs.zoxide = {
+    enable = true;
+    enableZshIntegration = true;
+  };
+  programs.fzf = {
+    enable = true;
+    enableZshIntegration = true;
+  };
+
   programs.alacritty = {
     enable = true;
     package = null; # alacritty is installed system-wide, home-manager only writes the config
-    # Mono variant keeps icons single-width so columns stay aligned
+    # mono variant keeps icons single-width so columns stay aligned
     settings.font = {
       normal.family = "AtkynsonMono Nerd Font Mono";
       size = 12;
@@ -58,7 +75,7 @@ in
   };
 
   # sway base. per-host monitor layout lives in hosts/<host>/home.nix.
-  # the session launch is system-level (modules/basic.nix), not here.
+  # the session launch is system-level (core/modules/base.nix), not here.
   wayland.windowManager.sway = {
     enable = true;
     package = null; # use the system sway from programs.sway.enable
@@ -67,8 +84,8 @@ in
       terminal = "alacritty";
       menu = "fuzzel"; # Super+D launcher (native wayland, no xwayland)
       startup = [
-        # propagate session vars into the systemd user session so user services
-        # (polkit agents, etc.) can see XDG_SESSION_ID and wayland socket vars
+        # propagate session vars into the systemd user session
+        # so user services (polkit agents, etc.) can see XDG_SESSION_ID and wayland socket vars
         { command = "systemctl --user import-environment XDG_SESSION_ID XDG_SESSION_TYPE WAYLAND_DISPLAY DISPLAY"; }
         { command = "waybar"; }
         # wallpaper file stays out of the repo (licensing), the glob takes any png/jpg/jpeg

@@ -1,4 +1,0 @@
-#!/usr/bin/env bash
-# block commits where template/ has drifted from the source modules
-set -euo pipefail
-./scripts/sync-template.sh --check
