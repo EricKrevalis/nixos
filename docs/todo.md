@@ -32,9 +32,9 @@ desktop features still missing, tool choice per feature TBD:
 - [~] archive handling
 - [x] trash, recoverable delete instead of gone forever (trashy)
 - [x] usb drives auto-mount on plug in (thunar-volman + xfconf)
-- [ ] gpu fan and clock control that works on wayland
+- [ ] gpu fan and clock control that works on wayland (LACT is the tool, deferred to the gaming module, only worth it if performance turns out bad)
 - [~] default app per file type (md, txt, pdf, images, audio, video)
-- [ ] firefox config in the repo, not hand-pasted into ~/.mozilla
+- [ ] firefox settings in the repo (prefs, not just visuals), not hand-pasted into ~/.mozilla
 - [ ] configure visuals (mouse cursor, bars, etc.)
 - [ ] configure features (fzf, all those small QoL tools)
 - [ ] sway tiling functionality (how they split) + fix not being able to grab them without titlebars
@@ -78,7 +78,9 @@ game:
 
 ## audio
 
+- [ ] set pipewire sample rate / allowed rates and quantum, match the devices to avoid resampling
 - [ ] wireplumber config for the mic chain
+- [ ] microphone settings: gain, input levels, any processing
 - [ ] wireplumber config for the dac output
 - [ ] test routing between both devices
 
