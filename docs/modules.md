@@ -1,8 +1,8 @@
 # modules
 
-what each module holds and where new things go.
+what each module holds and where new things go. paths are under `core/`.
 
-## basic.nix
+## modules/base.nix
 
 every host gets this:
 
@@ -13,44 +13,45 @@ every host gets this:
 - hardware.graphics (mesa, accelerated GL)
 - pipewire audio stack
 - openssh (key generation only, firewall closed)
-- udisks2 (drive mounting backend)
+- file manager stack: thunar plus volman and archive plugins, gvfs, tumbler, udisks2
 - bluetooth
 - firefox
-- core cli packages: neovim, git, alacritty, fuzzel, bluetui, wiremix
+- xdg portals, soteria polkit agent
+- core cli packages: neovim, git, alacritty, fuzzel, bluetui, wiremix, btop, trashy,
+  clipboard, screenshot and media-key tooling, waybar
 - zsh system wide so it works as the login shell
 - sops-nix age key config
 - nix flakes, store optimization, weekly gc
 
-## extended.nix
+## modules/polish.nix
 
-enabled by `host.extended`:
+enabled by `host.polish`. the polished feature complete desktop on top of base. empty
+placeholder for now, base already covers a usable desktop.
 
-- thunar file manager plus volman and archive plugins
-- gvfs (trash, MTP, network locations)
-- tumbler (thumbnails)
+## modules/specialized/dev.nix
 
-## specialized-dev.nix
-
-enabled by `host.specializedDev`:
+enabled by `host.dev`:
 
 - dev tools (currently claude-code)
 
-## specialized-game.nix
+the home-side counterpart `home/specialized/dev.nix` adds delta and lazygit.
 
-enabled by `host.specializedGame`:
+## modules/specialized/gaming.nix
+
+enabled by `host.gaming`:
 
 - 32-bit GL (`hardware.graphics.enable32Bit`) for Steam/Proton
 
-## nvidia.nix
+## modules/specialized/nvidia.nix
 
 enabled by `host.nvidia`:
 
 - proprietary nvidia driver
 - modesetting
 - open kernel modules
-- wlroots env vars, set via `loginShellInit` in basic.nix, gated on this toggle
+- wlroots env vars, set via `loginShellInit` in base.nix, gated on this toggle
 
-## options.nix
+## modules/toggles.nix
 
 typed boolean schema for the `host.*` toggles. a wrong value fails at eval, not at runtime,
 and it is the one place to see what knobs exist.
@@ -59,10 +60,10 @@ and it is the one place to see what knobs exist.
 
 | what | where |
 |------|-------|
-| works on any machine | `basic.nix` or `home/basic.nix` |
-| desktop gui, daily use | `extended.nix` |
-| dev tools | `specialized-dev.nix` |
-| gaming | `specialized-game.nix` |
-| gpu specific | `nvidia.nix` or a new hardware module |
+| works on any machine | `base.nix` or `home/base.nix` |
+| polished desktop, daily use | `polish.nix` |
+| dev tools | `specialized/dev.nix` (or `home/specialized/dev.nix`) |
+| gaming | `specialized/gaming.nix` |
+| gpu specific | `specialized/nvidia.nix` or a new hardware module |
 | one machine only | `hosts/<host>/configuration.nix` or `hosts/<host>/home.nix` |
-| new toggle | add to `options.nix`, `flake.nix` common, and the relevant module |
+| new toggle | add to `toggles.nix`, `flake.nix` common, and the relevant module |

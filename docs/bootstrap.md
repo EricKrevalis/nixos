@@ -5,12 +5,12 @@ a fresh install, and getting back to a working system if a build breaks.
 
 ## how my system finds this repo
 
-the repo lives at `~/.config/nixos-config`. i reference it explicitly when i rebuild, no
-`/etc/nixos` symlink. the `nrs` / `nrb` aliases (from `home/basic.nix`) expand to:
+the repo lives at `~/.config/nixos`. i reference it explicitly when i rebuild, no
+`/etc/nixos` symlink. the `nrs` / `nrb` aliases (from `core/home/base.nix`) expand to:
 
 ```bash
-sudo nixos-rebuild switch --flake ~/.config/nixos-config
-sudo nixos-rebuild boot   --flake ~/.config/nixos-config
+sudo nixos-rebuild switch --flake ~/.config/nixos
+sudo nixos-rebuild boot   --flake ~/.config/nixos
 ```
 
 with no `#attr` on the flake, nixos-rebuild builds the config matching my hostname, so on
@@ -28,16 +28,16 @@ longer finds the flake. i always use `nrs` / `nrb` (or the full `--flake` comman
 ## redoing this on a fresh machine
 
 1. install nixos from the iso, get online.
-2. `nix-shell -p git`, then clone the repo to `~/.config/nixos-config`.
+2. `nix-shell -p git`, then clone the repo to `~/.config/nixos`.
 3. generate the hardware config for that machine:
    ```bash
-   sudo nixos-generate-config --show-hardware-config > ~/.config/nixos-config/hosts/<host>/hardware-configuration.nix
+   sudo nixos-generate-config --show-hardware-config > ~/.config/nixos/hosts/<host>/hardware-configuration.nix
    ```
 4. confirm the hostname matches a config name in `flake.nix` (set by `networking.hostName`
    in that host's `configuration.nix`).
 5. first build, spelled out (the `nrs` alias does not exist until this build activates it):
    ```bash
-   sudo nixos-rebuild switch --flake ~/.config/nixos-config#<host>
+   sudo nixos-rebuild switch --flake ~/.config/nixos#<host>
    ```
 6. reboot. after that `nrs` / `nrb` work from any new shell.
 

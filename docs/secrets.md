@@ -73,7 +73,7 @@ recover every secret if a machine is lost, the repo never holds it.
 ## ssh user keys
 
 public identities are declarative in `flake.nix` common as `sshIdentities`, a map of git host
-to key filename. `home/basic.nix` renders an ssh config block per entry, each with
+to key filename. `core/home/base.nix` renders an ssh config block per entry, each with
 `IdentitiesOnly yes` so the agent never offers the wrong key. adding a public service is one
 line:
 
