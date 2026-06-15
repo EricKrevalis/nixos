@@ -4,7 +4,7 @@ rough priority order, lower items lean on earlier ones being stable.
 
 ## in progress
 
-- finish the basic tier: feature complete, debloated, settings optimized and personalized.
+- finish the base layer: feature complete, debloated, settings optimized and personalized.
 
 ## up next
 
