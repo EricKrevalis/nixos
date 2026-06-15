@@ -36,7 +36,7 @@ desktop features still missing, tool choice per feature TBD:
 - [~] default app per file type (md, txt, pdf, images, audio, video)
 - [ ] firefox settings in the repo (prefs, not just visuals), not hand-pasted into ~/.mozilla
 - [ ] configure visuals (mouse cursor, bars, etc.)
-- [ ] configure features (fzf, all those small QoL tools)
+- [ ] wire the QoL shell stack (zoxide, fzf, starship): zoxide as cd, fzf keybinds, prompt tuning
 - [ ] sway tiling functionality (how they split) + fix not being able to grab them without titlebars
 - [ ] keyboard delay / repeat rate!
 - [ ] ...
