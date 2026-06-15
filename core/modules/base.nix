@@ -85,6 +85,12 @@ in
       "org.freedesktop.impl.portal.ScreenCast"  = [ "wlr" ];
       "org.freedesktop.impl.portal.Screenshot"  = [ "wlr" ];
     };
+    # chooser_type=simple runs slurp directly instead of hunting a dmenu it can't find.
+    # 0.8.x needs the "Monitor: " prefix and an absolute slurp path.
+    wlr.settings.screencast = {
+      chooser_type = "simple";
+      chooser_cmd = "${pkgs.slurp}/bin/slurp -f 'Monitor: %o' -or";
+    };
   };
 
   programs.firefox.enable = true;
