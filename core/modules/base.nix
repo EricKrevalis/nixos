@@ -1,7 +1,7 @@
 { settings, config, pkgs, lib, ... }:
 
-# base system plus the sway desktop, every host gets this. the extended and specialized
-# tiers are opt in from flake.nix common. gpu is a separate hardware module (nvidia.nix).
+# base system plus sway desktop, every host.
+# polish and specialized layers are opt in from flake.nix common, gated by toggles.nix.
 let
   # nvidia needs two wlroots env vars and a sway flag, integrated gpus do not
   # hardware cursors on, re-add WLR_NO_HARDWARE_CURSORS=1 if a game hides the cursor
@@ -13,18 +13,18 @@ let
 in
 {
   imports = [
-    ./options.nix
-    ./nvidia.nix # inert unless host.nvidia = true
-    ./extended.nix # inert unless host.extended = true
-    ./specialized-dev.nix # inert unless host.specializedDev = true
-    ./specialized-game.nix # inert unless host.specializedGame = true
+    ./toggles.nix
+    ./polish.nix # inert unless host.polish = true
+    ./specialized/dev.nix # inert unless host.dev = true
+    ./specialized/gaming.nix # inert unless host.gaming = true
+    ./specialized/nvidia.nix # inert unless host.nvidia = true
   ];
 
-  # per-host settings feed the typed host.* schema in options.nix
+  # per-host settings feed the typed host.* schema in toggles.nix
+  host.polish = settings.polish;
+  host.dev = settings.dev;
+  host.gaming = settings.gaming;
   host.nvidia = settings.nvidia;
-  host.extended = settings.extended;
-  host.specializedDev = settings.specializedDev;
-  host.specializedGame = settings.specializedGame;
 
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
@@ -36,15 +36,15 @@ in
   time.timeZone = settings.timezone;
 
   i18n.defaultLocale = settings.locale;
-  # english ui, international formats. no single english locale does all of this, so the
-  # categories are split: ISO dates from en_DK, euro + metric + A4 from en_IE.
+  # english ui, international formats. no single english locale does all of this,
+  # so the categories are split: ISO dates from en_DK, euro, metric and A4 from en_IE.
   i18n.extraLocaleSettings = {
     LC_TIME        = "en_DK.UTF-8"; # YYYY-MM-DD, 24-hour, Monday-first weeks
     LC_MEASUREMENT = "en_IE.UTF-8"; # metric (km, kg)
     LC_PAPER       = "en_IE.UTF-8"; # A4
     LC_MONETARY    = "en_IE.UTF-8"; # euro, formatted as €1,234.56
   };
-  # only generate the locales actually used, keeps the closure small.
+  # generate only the locales we use, keeps the closure small
   i18n.supportedLocales = [
     "C.UTF-8/UTF-8"
     "${settings.locale}/UTF-8"
@@ -52,8 +52,8 @@ in
     "en_IE.UTF-8/UTF-8"
   ];
 
-  # autologin on tty1 then exec sway straight away, no display manager. the launch sits at
-  # the system level via loginShellInit so it does not depend on which login shell is used.
+  # autologin tty1 then exec sway, no display manager.
+  # launch is system level via loginShellInit, independent of the login shell.
   programs.sway.enable = true;
   # clear sway's default extras, we supply our own, laptop re-adds its tools
   programs.sway.extraPackages = [ ];
@@ -79,7 +79,7 @@ in
     enable = true;
     wlr.enable = true;
     extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
-    # wlr handles screen capture; gtk covers everything else (file picker, inhibit, settings)
+    # wlr handles screen capture, gtk covers everything else (file picker, inhibit, settings)
     config.sway = {
       default = [ "gtk" ];
       "org.freedesktop.impl.portal.ScreenCast"  = [ "wlr" ];
@@ -114,7 +114,7 @@ in
     isNormalUser = true;
     description = settings.username;
     extraGroups = [ "networkmanager" "wheel" ];
-    shell = pkgs.zsh; # home-manager configures zsh; this makes it the login shell
+    shell = pkgs.zsh; # home-manager configures zsh, this makes it the login shell
   };
   # zsh must be enabled system-wide for the login shell above (adds /etc/shells, completion).
   programs.zsh.enable = true;
@@ -133,11 +133,11 @@ in
   fonts = {
     enableDefaultPackages = false;
     packages = with pkgs; [
-      noto-fonts                # ui sans + serif, broad latin and ~900 script faces, no cjk
+      noto-fonts                # ui sans and serif, broad latin and ~900 script faces, no cjk
       noto-fonts-cjk-sans       # chinese/japanese/korean sans, base noto ships none
       noto-fonts-cjk-serif      # cjk serif counterpart
       noto-fonts-color-emoji    # emoji
-      nerd-fonts.atkynson-mono  # mono, atkinson hyperlegible, terminal + monospace role
+      nerd-fonts.atkynson-mono  # mono, atkinson hyperlegible, terminal and monospace role
       # nerd-fonts.caskaydia-cove # alt mono, patched cascadia code
       # nerd-fonts.sauce-code-pro # alt mono, source code pro
     ];
@@ -155,8 +155,9 @@ in
     git
     alacritty # terminal
     fuzzel # launcher
-    bluetui # Bluetooth TUI
-    wiremix # audio TUI
+    bluetui # bluetooth tui
+    wiremix # audio tui
+    btop # resource monitor tui
     trashy # recoverable delete
     wl-clipboard # wayland clipboard tools
     cliphist # clipboard history

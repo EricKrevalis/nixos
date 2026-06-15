@@ -1,9 +1,8 @@
 { config, lib, ... }:
 
-# proprietary nvidia driver for wayland + gaming, active when host.nvidia = true.
-# open = true uses the open kernel modules (Turing/Ampere or newer), still the proprietary
-# userspace driver, not nouveau. if the display flickers or suspend breaks, set open = false
-# and rebuild.
+# proprietary nvidia driver for wayland and gaming, active when host.nvidia = true.
+# open = true uses the open kernel modules (Turing/Ampere or newer), still proprietary userspace, not nouveau.
+# flicker or broken suspend, set open = false and rebuild.
 lib.mkIf config.host.nvidia {
   services.xserver.videoDrivers = [ "nvidia" ];
   hardware.nvidia = {

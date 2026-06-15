@@ -28,20 +28,20 @@
         sshIdentities = {
           "github.com" = "id_ed25519_github";
         };
-        nvidia = false; # set true per host for the proprietary nvidia stack
-        extended = false; # feature complete desktop for normal use
-        specializedDev = false; # dev tools layer on top of extended
-        specializedGame = false; # gaming layer on top of extended
+        polish = false; # the polished, feature complete desktop for normal use
+        dev = false; # dev tools layer on top of polish
+        gaming = false; # gaming layer on top of polish
+        nvidia = false; # the proprietary nvidia gpu stack
       };
 
-      # one call per machine, settings is common merged with per-host overrides, threaded
-      # to every module via specialArgs. modules/options.nix is the typed schema these
-      # values feed into.
+      # one mkHost call per machine, settings is common merged with per-host overrides,
+      # threaded to modules via specialArgs and typed by core/modules/toggles.nix.
+      # core/ is the shared engine, doubles as the fork template.
       mkHost = settings: lib.nixosSystem {
         system = settings.system or "x86_64-linux";
         specialArgs = { inherit settings; };
         modules = [
-          ./modules/basic.nix
+          ./core/modules/base.nix
           ./hosts/${settings.hostname}/configuration.nix
           sops-nix.nixosModules.sops
           home-manager.nixosModules.home-manager
@@ -51,7 +51,7 @@
             home-manager.backupFileExtension = "backup";
             home-manager.extraSpecialArgs = { inherit settings; };
             home-manager.users.${settings.username}.imports = [
-              ./home/basic.nix
+              ./core/home/base.nix
               ./hosts/${settings.hostname}/home.nix
             ];
           }
@@ -63,23 +63,25 @@
         desktop = mkHost (common // {
           hostname = "desktop";
           nvidia = true; # RTX 3060 Ti
-          extended = true;
-          specializedDev = true;
-          specializedGame = true;
+          polish = true;
+          dev = true;
+          gaming = true;
           sshIdentities = common.sshIdentities // {
             "git.haw-hamburg.de" = "id_ed25519_haw";
           };
         });
 
-        # laptop stays out until hosts/laptop/hardware-configuration.nix exists, the stub
-        # cannot evaluate and would break nix flake check. re-enable the line below then.
+        # laptop out until hosts/laptop/hardware-configuration.nix exists, the stub breaks flake check.
+        # re-enable the line below then.
         # laptop = mkHost (common // { hostname = "laptop"; });
       };
 
-      # forkable starter, scaffold a new repo with nix flake init -t github:owner/repo
+      # forkable starter, scaffold a fork with:
+      #   nix flake init -t github:EricKrevalis/nixos
+      # core/ is the single engine source, shared with the hosts above, so the template never drifts.
       templates.default = {
-        path = ./template;
-        description = "sway desktop starter, set your values in flake.nix common";
+        path = ./core;
+        description = "sway desktop starter, set your values in core/flake.nix common";
       };
     };
 }
