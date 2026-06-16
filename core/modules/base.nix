@@ -179,6 +179,8 @@ in
     p7zip # 7z and zip backend xarchiver calls
     unzip # zip extraction
     zip # zip creation
+    fd # faster friendlier find
+    bat # cat with syntax highlighting
   ];
 
   services.openssh = {
