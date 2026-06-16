@@ -44,9 +44,16 @@ in
       nrs = "sudo nixos-rebuild switch --flake ~/.config/nixos";
       nrb = "sudo nixos-rebuild boot --flake ~/.config/nixos";
     };
-    initContent = ''
-      export PATH="$HOME/.local/bin:$PATH"
-    '';
+    initContent = lib.mkMerge [
+      ''
+        export PATH="$HOME/.local/bin:$PATH"
+      ''
+      # init after starship or zoxide's precmd hook isn't last and it warns every prompt.
+      # --cmd cd makes cd a frecency-aware superset of the builtin, real paths still work.
+      (lib.mkAfter ''
+        eval "$(zoxide init zsh --cmd cd)"
+      '')
+    ];
   };
 
   # shell companions wired into zsh:
@@ -374,8 +381,7 @@ in
   };
   programs.zoxide = {
     enable = true;
-    enableZshIntegration = true;
-    options = [ "--cmd cd" ]; # replace builtin cd, still a superset (real paths work, frecency fills the rest)
+    enableZshIntegration = false; # init by hand in initContent, must run after starship
   };
   programs.fzf = {
     enable = true;
