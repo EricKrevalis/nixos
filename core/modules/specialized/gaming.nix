@@ -16,6 +16,6 @@ lib.mkIf config.host.gaming {
   # per-title cpu governor + scheduling boost, add gamemoderun to a game's launch options
   programs.gamemode.enable = true;
 
-  # discord fork with working wayland screen share and audio
-  environment.systemPackages = [ pkgs.vesktop ];
+  # discord fork with working wayland screen share and audio, plus the in-game perf overlay
+  environment.systemPackages = [ pkgs.vesktop pkgs.mangohud ];
 }
