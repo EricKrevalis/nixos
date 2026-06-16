@@ -396,7 +396,7 @@ in
   programs.fuzzel = {
     enable = true;
     package = null; # fuzzel is installed system-wide, home-manager only writes the config
-    # without this fuzzel launches Terminal=true entries (btop, etc.) with its xterm default, which is not installed
+    # fuzzel runs Terminal=true apps in xterm by default, we don't install xterm
     settings.main.terminal = "alacritty -e";
   };
 
