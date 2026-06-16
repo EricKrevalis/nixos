@@ -16,6 +16,9 @@ lib.mkIf config.host.gaming {
   # per-title cpu governor + scheduling boost, add gamemoderun to a game's launch options
   programs.gamemode.enable = true;
 
+  # some proton titles crash on the default mmap limit, steamos/fedora ship this value
+  boot.kernel.sysctl."vm.max_map_count" = 2147483642;
+
   # discord fork with working wayland screen share and audio
   environment.systemPackages = [ pkgs.vesktop ];
 }
