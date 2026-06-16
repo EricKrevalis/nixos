@@ -12,4 +12,18 @@ lib.mkIf config.host.nvidia {
     package = config.boot.kernelPackages.nvidiaPackages.stable; # stable branch
     powerManagement.enable = false; # enable if suspend/resume corrupts the display
   };
+
+  # btop finds the gpu only via libnvidia-ml, kept off the linker path on nixos
+  nixpkgs.overlays = [
+    (final: prev: {
+      btop = prev.symlinkJoin {
+        name = "btop";
+        paths = [ prev.btop ];
+        nativeBuildInputs = [ prev.makeWrapper ];
+        postBuild = ''
+          wrapProgram $out/bin/btop --prefix LD_LIBRARY_PATH : /run/opengl-driver/lib
+        '';
+      };
+    })
+  ];
 }
