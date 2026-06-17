@@ -93,8 +93,6 @@ in
     };
   };
 
-  programs.firefox.enable = true;
-
   services.udisks2.enable = true; # drive mounting backend, needed for USB automount and udisksctl
 
   programs.thunar = {
@@ -134,8 +132,7 @@ in
     info.enable = false;
   };
 
-  # explicit font set, the default bundle drags in 100+ MiB of cjk we do not need
-  # one proportional sans for ui, one nerd-font mono for terminal and editor
+  # explicit font set
   fonts = {
     enableDefaultPackages = false;
     packages = with pkgs; [
@@ -181,6 +178,7 @@ in
     zip # zip creation
     fd # faster friendlier find
     bat # cat with syntax highlighting
+    mullvad-browser # privacy-hardened default browser, safe out of the box
   ];
 
   services.openssh = {

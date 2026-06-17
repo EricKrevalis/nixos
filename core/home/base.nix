@@ -541,7 +541,7 @@ in
   };
 
   # default handler per file type: swayimg images, zathura documents, mpv media,
-  # neovim text, firefox web
+  # neovim text, mullvad browser web (a host can override web to its own browser)
   xdg.mimeApps = {
     enable = true;
     defaultApplications =
@@ -566,7 +566,7 @@ in
           "text/plain" "text/markdown" "application/json"
           "application/x-shellscript" "text/x-python" "text/x-csrc"
         ]
-        // forEach "firefox.desktop" [
+        // forEach "mullvad-browser.desktop" [
           "text/html" "x-scheme-handler/http" "x-scheme-handler/https"
         ];
   };
