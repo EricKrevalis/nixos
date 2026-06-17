@@ -1,4 +1,4 @@
-{ settings, lib, ... }:
+{ settings, lib, pkgs, ... }:
 let
   mod = "Mod4";
 in
@@ -8,6 +8,13 @@ in
 
   home.username = settings.username;
   home.homeDirectory = "/home/${settings.username}";
+
+  home.pointerCursor = {
+    package = pkgs.bibata-cursors;
+    name    = "Bibata-Modern-Classic";
+    size    = 20;
+    sway.enable = true; # writes seat "*" { xcursor_theme = "..."; } into the sway config
+  };
 
   # one block per git host from settings.sshIdentities, IdentitiesOnly so the agent never offers the wrong key.
   # the identities live in flake.nix common, this stays generic.
