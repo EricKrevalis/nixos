@@ -14,6 +14,11 @@ let
 in
 
 {
+  # goxlr-daemon doesn't autostart on sway (xdg autostart is a gnome/kde thing)
+  wayland.windowManager.sway.config.startup = [
+    { command = "goxlr-daemon"; }
+  ];
+
   # HDMI-A-1 = Zowie XL    (sn GAG02576SL0)    left,   60Hz
   # DP-1     = Zowie XL    (sn EBM2M00765SL0)  middle, 240Hz (main)
   # DP-2     = BenQ RL2455 (sn S4D05178SL0)    right,  60Hz

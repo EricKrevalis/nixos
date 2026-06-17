@@ -655,9 +655,9 @@ in
 
   home.file."Pictures/.keep".text = ""; # creates ~/Pictures before the first save
 
-  xdg.configFile."nvim/init.lua".text = ''
-    vim.opt.clipboard = "unnamedplus"
-  '';
+  xdg.configFile."nvim/init.lua".text =
+    ''vim.opt.clipboard = "unnamedplus"'' + "\n\n" +
+    builtins.readFile ../configs/nvim/init.lua;
 
   # usb/drive automount, read by thunar-volman
   xfconf.settings.thunar-volman = {
