@@ -27,7 +27,7 @@ done: clipboard history, notifications, gui auth (soteria), media keys, night li
 - [~] archive handling
 - [~] default app per file type (md, txt, pdf, images, audio, video)
 - [ ] gpu fan and clock control that works on wayland (LACT is the tool, deferred to the gaming module, only worth it if performance turns out bad)
-- [ ] firefox settings in the repo (prefs, not just visuals), not hand-pasted into ~/.mozilla
+- [~] firefox settings in the repo (prefs, not just visuals), not hand-pasted into ~/.mozilla
 - [ ] configure visuals (mouse cursor, bars, etc.)
 - [ ] sway tiling functionality (how they split) + fix not being able to grab them without titlebars
 - [ ] ...
@@ -66,6 +66,14 @@ game:
 - [ ] udev rules for the input and audio peripherals
 - [ ] mic interface utility service
 - [ ] usb dac control
+
+## maintenance
+
+cleanup nix doesn't handle on its own.
+- [x] cleared old flatpak browser junk (~/.var/app) and the broken firefox state (~/.config/mozilla, ~/.cache/mozilla)
+- [x] firefox profile lives in ~/.config/mozilla. home-manager writes there on this version (xdg) and firefox 147+ reads it there, so that's the right spot, the ~/.mozilla idea was wrong. arkenfox applies cleanly there, parrot reports SUCCESS.
+- [ ] sweep stray dotdirs and ~/.cache bloat that builds up over time
+- [ ] decide if a short cleanup guide is worth writing, deeper gc than nixos-collect-garbage (journal, ~/.cache, old downloads)
 
 ## audio
 
