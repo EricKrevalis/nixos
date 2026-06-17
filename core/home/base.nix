@@ -455,6 +455,10 @@ in
         titlebar = false;
         commands = [
           {
+            criteria.title = "popup-terminal";
+            command = "floating enable, resize set 900 550";
+          }
+          {
             # proton/xwayland windows tile by default, force them fullscreen. class is steam_app_<id>
             criteria.class = "^steam_app_[0-9]+$";
             command = "fullscreen enable";
@@ -494,7 +498,7 @@ in
       };
 
       keybindings = lib.mkOptionDefault {
-        "${mod}+v"             = "exec bash -c 'cliphist list | fuzzel --dmenu | cliphist decode | tee >(wl-copy --primary) | wl-copy'";
+        "${mod}+c"             = "exec bash -c 'cliphist list | fuzzel --dmenu | cliphist decode | tee >(wl-copy --primary) | wl-copy'";
         "Print"                = "exec grim - | satty --filename -";
         "Shift+Print"          = "exec grim -g \"$(slurp)\" - | satty --filename -";
         "XF86AudioPlay"        = "exec playerctl play-pause";
@@ -578,8 +582,65 @@ in
         ];
   };
 
-  xdg.configFile."waybar/config.jsonc".source = ../configs/waybar/config.jsonc;
-  xdg.configFile."waybar/style.css".source   = ../configs/waybar/style.css;
+  xdg.configFile."waybar/config.jsonc".text = builtins.toJSON {
+    layer    = "top";
+    position = "top";
+    height   = 24;
+    "margin-top"   = 6;
+    "margin-left"  = 280;
+    "margin-right" = 280;
+    exclusive = false;
+    spacing   = 0;
+
+    "modules-left"   = [ "clock" ];
+    "modules-center" = [ "sway/workspaces" ];
+    "modules-right"  = [ "tray" "group/connectivity" ];
+
+    "sway/workspaces" = {
+      format             = "●";
+      "disable-scroll"   = true;
+      "persistent-workspaces" = settings.persistentWorkspaces;
+    };
+
+    "group/connectivity" = {
+      orientation = "horizontal";
+      modules     = [ "pulseaudio" "bluetooth" "network" ];
+    };
+
+    tray = {
+      "icon-size" = 16;
+      spacing     = 6;
+    };
+
+    pulseaudio = {
+      format         = "{volume}% {icon}";
+      "format-muted" = "mute 󰝟";
+      "format-icons" = { default = [ "󰕿" "󰖀" "󰕾" ]; };
+      "on-click"     = "alacritty --title popup-terminal -e wiremix";
+    };
+
+    bluetooth = {
+      format                     = "󰂯";
+      "format-connected"         = "󰂱 {device_alias}";
+      "format-connected-battery" = "󰂱 {device_alias} {device_battery_percentage}%";
+      tooltip    = false;
+      "on-click" = "alacritty --title popup-terminal -e bluetui";
+    };
+
+    network = {
+      "format-wifi"        = "󰤨 {essid}";
+      "format-ethernet"    = "󰈀";
+      "format-disconnected" = "󰤭";
+      tooltip    = false;
+      "on-click" = "alacritty --title popup-terminal -e nmtui";
+    };
+
+    clock = {
+      format = "{:%Y-%m-%d  %H:%M}";
+    };
+  };
+
+  xdg.configFile."waybar/style.css".source = ../configs/waybar/style.css;
 
   xdg.configFile."satty/config.toml".text = ''
     [general]

@@ -1,43 +1,59 @@
 {
     "layer": "top",
     "position": "top",
-    "height": 28,
-    "spacing": 4,
+    "height": 24,
+    "margin-top": 6,
+    "margin-left": 280,
+    "margin-right": 280,
+    "exclusive": false,
+    "spacing": 0,
 
-    "modules-left": [
-        "sway/workspaces",
-        "wlr/taskbar"
-    ],
-    "modules-center": [],
-    "modules-right": [
-        "tray",
-        "pulseaudio",
-        "clock"
-    ],
+    "modules-left": ["clock"],
+    "modules-center": ["sway/workspaces"],
+    "modules-right": ["tray", "group/connectivity"],
 
     "sway/workspaces": {
-        "disable-scroll": true
+        "format": "●",
+        "disable-scroll": true,
+        "persistent-workspaces": {
+            "1": [], "2": [], "3": [], "4": [], "5": [],
+            "6": [], "7": [], "8": [], "9": [], "10": []
+        }
     },
 
-    "wlr/taskbar": {
-        "on-click": "activate",
-        "on-click-right": "close",
-        "icon-size": 16,
-        "tooltip": false
+    "group/connectivity": {
+        "orientation": "horizontal",
+        "modules": ["pulseaudio", "bluetooth", "network"]
     },
 
     "tray": {
         "icon-size": 16,
-        "spacing": 8
+        "spacing": 6
     },
 
     "pulseaudio": {
         "format": "{volume}% {icon}",
-        "format-muted": "muted",
+        "format-muted": "mute 󰝟",
         "format-icons": {
             "default": ["󰕿", "󰖀", "󰕾"]
         },
         "on-click": "wiremix"
+    },
+
+    "bluetooth": {
+        "format": "󰂯",
+        "format-connected": "󰂱 {device_alias}",
+        "format-connected-battery": "󰂱 {device_alias} {device_battery_percentage}%",
+        "tooltip": false,
+        "on-click": "alacritty -e bluetui"
+    },
+
+    "network": {
+        "format-wifi": "󰤨 {essid}",
+        "format-ethernet": "󰈀",
+        "format-disconnected": "󰤭",
+        "tooltip": false,
+        "on-click": "alacritty -e nmtui"
     },
 
     "clock": {
