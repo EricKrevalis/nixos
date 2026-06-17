@@ -32,6 +32,7 @@
         dev = false; # dev tools layer on top of polish
         gaming = false; # gaming layer on top of polish
         nvidia = false; # the proprietary nvidia gpu stack
+        persistentWorkspaces = {}; # waybar persistent-workspaces map, empty = none
       };
 
       # one mkHost call per machine, settings is common merged with per-host overrides,
@@ -68,6 +69,11 @@
           gaming = true;
           sshIdentities = common.sshIdentities // {
             "git.haw-hamburg.de" = "id_ed25519_haw";
+          };
+          persistentWorkspaces = {
+            "1" = ["DP-1"]; "2" = ["DP-1"]; "3" = ["DP-1"]; "4" = ["DP-1"];
+            "5" = ["HDMI-A-1"]; "6" = ["HDMI-A-1"]; "7" = ["HDMI-A-1"];
+            "8" = ["DP-2"]; "9" = ["DP-2"]; "10" = ["DP-2"];
           };
         });
 
