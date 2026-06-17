@@ -54,7 +54,7 @@ in
 
   # autologin tty1 then exec sway, no display manager.
   # launch is system level via loginShellInit, independent of the login shell.
-  programs.sway.enable = true;
+  programs.sway.enable = true; # swap package = pkgs.swayfx for rounded corners + shadows
   # clear sway's default extras, we supply our own, laptop re-adds its tools
   programs.sway.extraPackages = [ ];
   # sway's graphical-desktop base turns on speech-dispatcher, it drags in 700+ MiB of tts voices

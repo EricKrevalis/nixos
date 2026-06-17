@@ -451,7 +451,7 @@ in
       };
 
       window = {
-        border = 1;
+        border = 2;
         titlebar = false;
         commands = [
           {
@@ -585,7 +585,7 @@ in
   xdg.configFile."waybar/config.jsonc".text = builtins.toJSON {
     layer    = "top";
     position = "top";
-    height   = 24;
+    height   = 20;
     "margin-top"   = 6;
     "margin-left"  = 280;
     "margin-right" = 280;
