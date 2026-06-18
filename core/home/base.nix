@@ -459,7 +459,7 @@ in
             command = "floating enable, resize set 960 540";
           }
           {
-            criteria.appid = "satty";
+            criteria.app_id = "satty";
             command = "floating enable, resize set 1600 900";
           }
           {
