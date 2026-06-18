@@ -456,8 +456,11 @@ in
         commands = [
           {
             criteria.title = "popup-terminal";
-            command = "floating enable, resize set 900 550";
+            command = "floating enable, resize set 960 540";
           }
+          {
+            criteria.appid = "satty";
+            command = "floating enable, resize set 1600 900";
           {
             # proton/xwayland windows tile by default, force them fullscreen. class is steam_app_<id>
             criteria.class = "^steam_app_[0-9]+$";
@@ -656,7 +659,7 @@ in
     copy-command = "wl-copy"
     initial-tool = "arrow"
     annotation-size-factor = 2
-    corner-roundness = 4
+    corner-roundness = 1
     '';
 
   home.file."Pictures/.keep".text = ""; # creates ~/Pictures before the first save
