@@ -451,7 +451,7 @@ in
       };
 
       window = {
-        border = 2;
+        border = 3;
         titlebar = false;
         commands = [
           {
@@ -468,25 +468,25 @@ in
 
       colors = {
         focused = {
-          border      = "#2d5a27";
-          background  = "#2d5a27";
+          border      = "#6A5535";
+          background  = "#6A5535";
           text        = "#ffffff";
-          indicator   = "#2d5a27";
-          childBorder = "#2d5a27";
+          indicator   = "#6A5535";
+          childBorder = "#6A5535";
         };
         unfocused = {
-          border      = "#1c1c1c";
-          background  = "#1c1c1c";
+          border      = "#3A2210";
+          background  = "#3A2210";
           text        = "#888888";
-          indicator   = "#1c1c1c";
-          childBorder = "#1c1c1c";
+          indicator   = "#3A2210";
+          childBorder = "#3A2210";
         };
         focusedInactive = {
-          border      = "#1c1c1c";
-          background  = "#1c1c1c";
+          border      = "#3A2210";
+          background  = "#3A2210";
           text        = "#888888";
-          indicator   = "#1c1c1c";
-          childBorder = "#1c1c1c";
+          indicator   = "#3A2210";
+          childBorder = "#3A2210";
         };
         urgent = {
           border      = "#cc3333";
@@ -513,8 +513,10 @@ in
       };
     };
     extraConfig = ''
-      corner_radius 8
+      corner_radius 6
       shadows enable
+      gaps inner 3
+      gaps outer 1
     '';
   };
 
@@ -589,8 +591,8 @@ in
   xdg.configFile."waybar/config.jsonc".text = builtins.toJSON {
     layer    = "top";
     position = "top";
-    height   = 16;
-    "margin-top"   = 1;
+    height   = 20;
+    "margin-top"   = 0;
     "margin-left"  = 280;
     "margin-right" = 280;
     exclusive = false;
@@ -612,8 +614,8 @@ in
     };
 
     tray = {
-      "icon-size" = 16;
-      spacing     = 6;
+      "icon-size" = 14;
+      spacing     = 8;
     };
 
     pulseaudio = {
