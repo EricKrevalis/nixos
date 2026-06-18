@@ -456,7 +456,7 @@ in
         commands = [
           {
             criteria.title = "popup-terminal";
-            command = "floating enable, resize set 960 540";
+            command = "floating enable, resize set 800 500";
           }
           {
             criteria.app_id = "satty";
