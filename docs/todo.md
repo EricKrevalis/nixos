@@ -21,13 +21,13 @@ https://github.com/Alexays/Waybar/wiki/Examples
 - [ ] images in cliphist possible?
 
 extended (feature complete desktop, later tier):
-- [ ] office suite (libreoffice), opening docx/xlsx/odt/pptx
-- [ ] email client
-- [ ] calendar
+- [ ] office suite (libreoffice), opening docx/xlsx/odt/pptx. also csv/rtf, no handler now
+- [ ] email client. wires mailto + .eml/mbox/.vcard, all unhandled now
+- [ ] calendar. wires .ics + webcal://, unhandled now
 - [ ] pdf annotation and forms (zathura is read-only, okular or similar)
-- [ ] image editor (gimp or krita)
+- [ ] image editor (gimp or krita). RAW + .xcf, swayimg only views raw, no edit
 - [ ] password manager: bitwarden, no browser extension. rbw + fuzzel (rofi-rbw/fuzzel-rbw), type via wtype not clipboard (cliphist captures it), argon2id kdf. vaultwarden self-host long-term. proton handles email/cloud separately
-- [ ] torrent client
+- [ ] torrent client. wires magnet:// + .torrent file, unhandled now
 - [ ] note taking
 - [ ] file sync (syncthing or similar)
 

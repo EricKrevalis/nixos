@@ -177,7 +177,8 @@ in
     swaybg # wallpaper renderer for sway
     swayimg # image viewer
     xarchiver # archive manager, thunar right-click frontend
-    p7zip # 7z and zip backend xarchiver calls
+    p7zip # 7z and zip backend xarchiver calls (maintained 17.06 fork)
+    unrar # rar extraction backend (nonfree)
     unzip # zip extraction
     zip # zip creation
     fd # faster friendlier find
