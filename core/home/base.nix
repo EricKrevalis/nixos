@@ -16,11 +16,23 @@ in
     sway.enable = true; # writes seat "*" { xcursor_theme = "..."; } into the sway config
   };
 
-  # no middle-click primary paste in gtk apps (thunar etc), rest of gtk theming stays default
+  # enabling gtk hands home-manager the settings.ini, so any pref we want has to be set here.
+  # prefer-dark keeps thunar etc dark (was inherited from the old plasma gtk config), primary-paste off kills middle-click paste.
   gtk = {
     enable = true;
-    gtk3.extraConfig.gtk-enable-primary-paste = false;
-    gtk4.extraConfig.gtk-enable-primary-paste = false;
+    # without a real icon theme installed gtk falls back to hicolor and draws crude pixelated stock icons
+    iconTheme = {
+      name = "Adwaita";
+      package = pkgs.adwaita-icon-theme;
+    };
+    gtk3.extraConfig = {
+      gtk-enable-primary-paste = false;
+      gtk-application-prefer-dark-theme = true;
+    };
+    gtk4.extraConfig = {
+      gtk-enable-primary-paste = false;
+      gtk-application-prefer-dark-theme = true;
+    };
   };
 
   # one block per git host from settings.sshIdentities, IdentitiesOnly so the agent never offers the wrong key.
