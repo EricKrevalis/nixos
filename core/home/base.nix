@@ -103,8 +103,7 @@ in
       ''
         export PATH="$HOME/.local/bin:$PATH"
       ''
-      # init after starship or zoxide's precmd hook isn't last and it warns every prompt.
-      # --cmd cd makes cd a frecency-aware superset of the builtin, real paths still work.
+      # --cmd cd makes cd a frecency-aware superset of the builtin, real paths still work
       (lib.mkAfter ''
         eval "$(zoxide init zsh --cmd cd)"
       '')
@@ -492,8 +491,7 @@ in
       terminal = "alacritty";
       menu = "fuzzel"; # Super+D launcher (native wayland, no xwayland)
       startup = [
-        # propagate session vars into the systemd user session
-        # so user services (polkit agents, etc.) can see XDG_SESSION_ID and wayland socket vars
+        # import session vars so user services (polkit agents, etc.) see the wayland socket and session id
         { command = "systemctl --user import-environment XDG_SESSION_ID XDG_SESSION_TYPE WAYLAND_DISPLAY DISPLAY"; }
         { command = "waybar"; }
         # wallpaper file stays out of the repo (licensing), the glob takes any png/jpg/jpeg
@@ -646,8 +644,9 @@ in
     mimeType = [ "application/x-cd-image" "application/x-iso9660-image" ];
   };
 
-  # default handler per file type: swayimg images, zathura documents, mpv media,
-  # neovim text, firefox web (a host can override web to its own browser)
+  # ~/.config copy is a read-only store symlink thunar can't write to, defaults fall back to ~/.local/share
+  xdg.configFile."mimeapps.list".enable = false;
+  # a host can override the web handler to its own browser
   xdg.mimeApps = {
     enable = true;
     defaultApplications =
@@ -674,6 +673,8 @@ in
           "application/xspf+xml"
         ]
         // forEach "nvim.desktop" [
+          # 0-byte files report x-zerosize
+          "application/x-zerosize"
           "text/plain" "text/markdown" "application/json"
           "application/x-shellscript" "text/x-python" "text/x-csrc"
           # textual files with their own mime, they don't inherit text/plain so pin each

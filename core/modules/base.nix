@@ -38,8 +38,8 @@ in
   time.timeZone = settings.timezone;
 
   i18n.defaultLocale = settings.locale;
-  # english ui, international formats. no single english locale does all of this,
-  # so the categories are split: ISO dates from en_DK, euro, metric and A4 from en_IE.
+  # english ui, international formats, no single english locale does both
+  # categories split: ISO dates from en_DK, euro, metric and A4 from en_IE
   i18n.extraLocaleSettings = {
     LC_TIME        = "en_DK.UTF-8"; # YYYY-MM-DD, 24-hour, Monday-first weeks
     LC_MEASUREMENT = "en_IE.UTF-8"; # metric (km, kg)
