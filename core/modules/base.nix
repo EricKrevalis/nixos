@@ -2,16 +2,6 @@
 
 # base system plus sway desktop, every host.
 # polish and specialized layers are opt in from flake.nix common, gated by toggles.nix.
-let
-  # nvidia needs two wlroots env vars and a sway flag, integrated gpus do not
-  # hardware cursors on, re-add WLR_NO_HARDWARE_CURSORS=1 if a game hides the cursor
-  nvidiaEnv = lib.optionalString config.host.nvidia ''
-    export GBM_BACKEND=nvidia-drm
-    export __GLX_VENDOR_LIBRARY_NAME=nvidia
-    export WLR_RENDERER=gles2
-  '';
-  swayFlags = lib.optionalString config.host.nvidia " --unsupported-gpu";
-in
 {
   imports = [
     ./toggles.nix
@@ -64,12 +54,13 @@ in
   # sway's graphical-desktop base turns on speech-dispatcher, it drags in 700+ MiB of tts voices
   services.speechd.enable = false;
   services.getty.autologinUser = settings.username;
+  # a hardware layer fills sessionPreExec and swayLaunchArgs, base itself stays gpu-agnostic
   environment.loginShellInit = ''
     if [ -z "$WAYLAND_DISPLAY" ] && [ "$XDG_VTNR" = 1 ]; then
-      ${nvidiaEnv}
+      ${config.host.sessionPreExec}
       # electron/chromium apps render on wayland instead of xwayland
       export NIXOS_OZONE_WL=1
-      exec sway${swayFlags}
+      exec sway ${toString config.host.swayLaunchArgs}
     fi
   '';
 
@@ -164,10 +155,8 @@ in
     fuzzel # launcher
     bluetui # bluetooth tui
     wiremix # audio tui
-    btop # resource monitor tui
     trashy # recoverable delete
     wl-clipboard # wayland clipboard tools
-    cliphist # clipboard history
     libnotify # notify-send for scripted notifications
     grim # wayland screenshot capture
     slurp # region selector, pairs with grim
@@ -181,9 +170,6 @@ in
     unrar # rar extraction backend (nonfree)
     unzip # zip extraction
     zip # zip creation
-    fd # faster friendlier find
-    bat # cat with syntax highlighting
-    mullvad-browser # privacy-hardened default browser, safe out of the box
   ];
 
   services.openssh = {

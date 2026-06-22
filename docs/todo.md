@@ -1,78 +1,161 @@
 # todo
 
-----------
+the sections below are the real list, each task lives in one with a status:
+  [ ] todo   [!] planned   [?] testing   [x] done
+TODO and testing at the top just mirror the [!] and [?] items. ideas is the tagged idea pool, done the archive.
 
-links for some sway setup:  
-https://github.com/swaywm/sway/wiki/Useful-add-ons-for-sway  
-https://github.com/Alexays/Waybar/wiki/Examples  
+refs: https://github.com/swaywm/sway/wiki/Useful-add-ons-for-sway
+      https://github.com/Alexays/Waybar/wiki/Examples
 
-----------
-- [x] test stack per file type (md, txt, pdf, images, audio, video)
-- [x] firefox settings in the repo (prefs, not just visuals), not hand-pasted into ~/.mozilla
-- [x] extensions handling (uBlock + theme sideloaded from the arkenfox layer, not policy)
-- [x] thunar "open with" failed read-only: home-manager no longer manages ~/.config/mimeapps.list,
-      it stays writable and our defaults fall back from the ~/.local/share copy. empty (x-zerosize)
-      files pinned to nvim so they open without a user override
-- [ ] add to extended: calculator, calendar, image editor
-- [x] copy/paste: Ctrl+C/V in gui apps (native), Ctrl+Shift+C/V in the terminal (alacritty default). no copy_or_interrupt on alacritty, so terminal stays shift-tier, that's the standard
-- [x] Shift+Enter for a newline in line-oriented prompts (alacritty sends LF on shift+enter)
-- [x] retired the primary/mouse clipboard, both copy and paste, layered:
-      - sway `primary_selection disabled` removes the wayland primary protocol wholesale, so native wayland apps neither write it on highlight nor paste it on middle-click
-      - per-toolkit for the xwayland edge (backend-agnostic): firefox clipboard.autocopy + middlemouse.paste off, gtk-enable-primary-paste off, alacritty middle=None
-      - dropped the `wl-paste --primary` cliphist watcher, highlights no longer pollute clipboard history
-      residual: a non-gtk/non-firefox xwayland app (steam search, a qt app) can still middle-paste its own X primary, no global x switch exists for that
-- [x] images in cliphist
+## TODO:
+- [!] plan out next todo steps
 
-extended (feature complete desktop, later tier):
-- [ ] office suite (libreoffice), opening docx/xlsx/odt/pptx. also csv/rtf, no handler now
-- [ ] email client. wires mailto + .eml/mbox/.vcard, all unhandled now
-- [ ] calendar. wires .ics + webcal://, unhandled now
+## testing / work-in-progress:
+
+## base-layer:
+
+- [ ] calculator (own app or fuzzel calc mode)
+
+## polish-layer:
+
+- [ ] office suite (libreoffice), docx/xlsx/odt/pptx, also csv/rtf, no handler now
+- [ ] email client, wires mailto + .eml/mbox/.vcard, all unhandled now
+- [ ] calendar, wires .ics + webcal://, unhandled now
 - [ ] pdf annotation and forms (zathura is read-only, okular or similar)
-- [ ] image editor (gimp or krita). RAW + .xcf, swayimg only views raw, no edit
-- [ ] password manager: bitwarden, no browser extension. rbw + fuzzel (rofi-rbw/fuzzel-rbw), type via wtype not clipboard (cliphist captures it), argon2id kdf. vaultwarden self-host long-term. proton handles email/cloud separately
-- [ ] torrent client. wires magnet:// + .torrent file, unhandled now
+- [ ] image editor (gimp or krita), RAW + .xcf, swayimg only views, no edit
+- [ ] password manager: bitwarden, no browser extension, rbw + fuzzel (rofi-rbw/fuzzel-rbw), type via wtype not clipboard, argon2id kdf, vaultwarden self-host long-term
+- [ ] torrent client, wires magnet:// + .torrent, unhandled now
 - [ ] note taking
 - [ ] file sync (syncthing or similar)
 
-dev:
+## specialized layer:
+
+### dev:
 - [ ] editors and lsp tooling
 - [ ] jupyter notebooks in neovim (jupytext + molten), needs a graphics-capable terminal for inline output
 - [ ] docker or podman
 - [ ] language toolchains as needed
 - [ ] ultra lategame: pi harness, ponytail/caveman, maybe open LLM, huge optimizations
 
-## hardware / system
+### gaming:
+- [ ] steam rebuilds its shader cache every reboot, re-validates and re-processes vulkan shaders on boot, investigate the cache setup
+- [ ] performance pass for the box (cpu, ram, gpu), research what's worth tuning for gaming
+- base stack complete (steam + GE-Proton, gamescope, gamemode, vesktop, mangohud), see done
 
-- [ ] hardware cursors: removed WLR_NO_HARDWARE_CURSORS, clean on desktop, retest with and without under a fullscreen xwayland game
-- [x] cpu microcode: amd microcode is managed (updateMicrocode on via redistributable firmware), running 0xa201030, bios already at that level
+### nvidia:
+- [ ] fan/clock control on wayland, nvidia-settings is useless there (needs Xorg), LACT is the lead candidate, research in depth
+
+## hardware / system:
+
 - [ ] udev rules for the input and audio peripherals
-- [ ] mic interface utility service
 - [ ] usb dac control
 
-## maintenance
+## maintenance:
 
 cleanup nix doesn't handle on its own.
-- [x] cleared old flatpak browser junk (~/.var/app) and the broken firefox state (~/.config/mozilla, ~/.cache/mozilla)
-- [x] firefox profile lives in ~/.config/mozilla. home-manager writes there on this version (xdg) and firefox 147+ reads it there, so that's the right spot, the ~/.mozilla idea was wrong. arkenfox applies cleanly there, parrot reports SUCCESS.
 - [ ] sweep stray dotdirs and ~/.cache bloat that builds up over time
-- [ ] decide if a short cleanup guide is worth writing, deeper gc than nixos-collect-garbage (journal, ~/.cache, old downloads)
+- [ ] decide if a short cleanup guide is worth writing, deeper gc than nix gc (journal, ~/.cache, old downloads)
 
-## audio
+## audio:
 
-- [x] pipewire sample rate + allowed rates (44.1k/48k) and resample quality set, quantum left default
-- [x] wireplumber config for the mic chain, goxlr mic only, extra channels hidden
-- [x] microphone settings live in the goxlr profile, versioned in configs/goxlr
-- [x] wireplumber config for the dac output, g6 prioritized, its capture dropped
-- [ ] test routing between both devices
+- [ ] test routing between both devices (mic interface and usb dac)
 
-## home manager
-- [x] zsh plugins, prompt: starship, zoxide (cd), fzf, autosuggestion, syntax highlighting
+## home-manager:
+
 - [ ] neovim config
 - [ ] remaining ssh work (tunnel/jump hosts, per secrets.md)
 
-## secrets
-- [ ] add the laptop host key as a recipient in .sops.yaml once that machine exists, then
-      run sops updatekeys on secrets/*
+## secrets:
 
-## repo
+- [ ] add the laptop host key as a recipient in .sops.yaml once that machine exists, then run sops updatekeys on secrets/*
+
+## repo:
+
 - [ ] laptop host: generate hardware config and re-enable in flake.nix
+
+## ideas:
+
+tagged brainstorm pool, layer-value prefix. question each before pulling into a section.
+
+- [ ] base-high: screen lock + idle (swayidle + swaylock), lock on idle and before suspend (gap, have neither)
+- [ ] base-high: xdg-user-dirs, auto-create ~/Downloads, ~/Documents, ~/Pictures etc.
+- [ ] base-med: logout/power menu (wlogout or a fuzzel script)
+- [ ] base-med: per-app window rules (float dialogs, workspace assigns, scratchpad terminal)
+- [ ] base-med: window resize/move binds and a dedicated mode
+- [ ] base-med: ffmpegthumbnailer for video thumbnails in thunar
+- [ ] base-med: pdf/poppler tumbler thumbnailers
+- [ ] base-med: gtk theme + icon + cursor via gtk.* in home-manager, consistent look across apps, mismatched now
+- [ ] base-med: qt theming to match gtk (qt.enable, platform theme, QT_QPA_PLATFORM=wayland)
+- [ ] base-med: kanshi output hotplug profiles, auto-apply layout on connect/disconnect (laptop win)
+- [ ] base-med: eza (ls replacement, colors/icons/git, tree mode)
+- [ ] base-med: ripgrep (fast gitignore-aware grep, also a telescope backend)
+- [ ] base-med: jq (json processor, box currently lacks it)
+- [ ] base-med: nh (nicer rebuild/gc wrapper with diff + tree, could replace nrs/nrb)
+- [ ] base-med: nix-output-monitor (nom), live build tree, pairs with nh
+- [ ] base-med: nixfmt or alejandra, a nix formatter, pick one
+- [ ] base-low: on-screen volume/brightness osd (only the wiremix tui now)
+- [ ] base-low: smart borders, gaps polish if i want the look
+- [ ] base-low: wdisplays gui for quick monitor tweaks
+- [ ] base-low: tealdeer (tldr client, fast per-command examples)
+- [ ] base-low: caps lock remap (escape or ctrl), other keyd-style remaps beyond the wooting
+- [ ] base-low: pointer settings (accel profile, scroll speed, natural scroll)
+- [ ] base-low: keybind cheatsheet / help overlay for sway
+- [ ] base-low: cliphist clear-on-boot or a size limit
+- [ ] base-low: quick clipboard-only screenshot grab, separate from the satty flow
+- [ ] base-low: do-not-disturb toggle for mako during games or calls
+- [ ] base-low: swaybg per-monitor wallpapers, or rotation
+- [ ] base-low: font rendering knobs (hinting, subpixel, fontconfig)
+- [ ] base-low: force dark mode across gtk apps, or auto dark/light
+- [ ] base-low: emoji/unicode picker on a keybind
+- [ ] base-low: alacritty scrollback size + pager keybind
+- [ ] base-low: scratch note / quick-capture keybind
+- [ ] polish-med: screen recording (wf-recorder or obs, obs pairs with the mic interface)
+- [ ] dev-med: direnv + nix-direnv, per-project dev shells on cd
+- [ ] dev-low: yazi (fast keyboard-driven tui file manager)
+- [ ] dev-low: atuin (sqlite shell history, timestamps/exit/dir, changes up-arrow, decide deliberately)
+- [ ] dev-low: dust (visual du) + duf (pretty df)
+- [ ] dev-low: sd (intuitive find-replace), yq (jq for yaml/toml), glow (render markdown in terminal)
+- [ ] dev-low: comma, run any nixpkgs program without installing
+- [ ] dev-low: nix-tree, explore closure sizes for bloat cutting
+- [ ] dev-low: nix-index
+- [ ] dev-low: tmux or zellij multiplexer
+- [ ] dev-low: git commit signing + a global gitignore
+- [ ] system-high: services.fstrim.enable for ssd health
+- [ ] system-high: swap config, zram or a real swap, none right now
+- [ ] system-high: earlyoom or systemd-oomd so heavy memory load doesn't hard-lock the box
+- [ ] system-high: firewall, confirm networking.firewall.enable and what's open
+- [ ] system-med: fwupd for firmware/bios updates from linux
+- [ ] system-med: boot.loader.systemd-boot.configurationLimit so the boot menu stops growing
+- [ ] system-med: scheduled backups (restic or borg), nothing protected in-repo now
+- [ ] system-low: btrfs/zfs snapshots if the filesystem supports it
+- [ ] system-low: dns hardening (systemd-resolved, optional doh)
+- [ ] system-low: printing (cups) + scanning (sane) + avahi discovery, if i ever print
+- [ ] system-low: vpn (tailscale or wireguard) for remote access
+- [ ] system-low: color profile / icc management for the monitors
+- [ ] system-low: hdr, not really there on sway yet, parked
+- [ ] system-low: apparmor profiles
+- [ ] system-low: secure boot via lanzaboote
+- [ ] system-low: polkit rules to tighten what soteria allows without a password
+- [ ] system-low: ntp/time sync confirmation, clock format i actually like
+- [ ] system-low: disable the pc speaker beep / system bell
+
+## done:
+
+- [x] layer restructure: leaner base, fzf/fd/bat to dev, mullvad/btop/cliphist to polish, steam rule to gaming, nvidia launch quirks to nvidia.nix
+- [x] file type handling tested (md, txt, pdf, images, audio, video)
+- [x] firefox prefs in-repo, not hand-pasted into the profile
+- [x] firefox extensions via profile (uBlock + theme), not enterprise policy
+- [x] thunar open-with read-only fixed (mimeapps.list unmanaged, x-zerosize files pinned to nvim)
+- [x] copy/paste: Ctrl+C/V in gui apps, Ctrl+Shift+C/V in the terminal; Shift+Enter newline in prompts
+- [x] primary/middle-click clipboard retired, both copy and paste
+- [x] images in cliphist
+- [x] cpu microcode managed (amd, 0xa201030)
+- [x] old flatpak + broken firefox state cleaned; profile in ~/.config/mozilla, arkenfox SUCCESS
+- [x] pipewire sample rate + allowed rates (44.1k/48k) + resample quality
+- [x] wireplumber mic chain (mic interface only) and dac output (usb dac prioritized)
+- [x] mic settings versioned in configs
+- [x] mic interface utility daemon enabled
+- [x] shell stack: starship, zoxide (cd), fzf, autosuggestion, syntax highlighting; delta + lazygit on the dev layer
+- [x] gaming stack: steam + GE-Proton, gamescope, gamemode, vesktop, mangohud, vm.max_map_count bump
+- [x] nvidia stable + open kernel modules, validated under load (thermals, suspend/resume, explicit-sync)
+- [x] hardware cursors retested under fullscreen xwayland, WLR_NO_HARDWARE_CURSORS stays removed
