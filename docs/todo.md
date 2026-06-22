@@ -7,9 +7,12 @@ https://github.com/swaywm/sway/wiki/Useful-add-ons-for-sway
 https://github.com/Alexays/Waybar/wiki/Examples  
 
 ----------
-- [~] test stack per file type (md, txt, pdf, images, audio, video)
-- [~] firefox settings in the repo (prefs, not just visuals), not hand-pasted into ~/.mozilla
-- [ ] + extensions handling
+- [x] test stack per file type (md, txt, pdf, images, audio, video)
+- [x] firefox settings in the repo (prefs, not just visuals), not hand-pasted into ~/.mozilla
+- [x] extensions handling (uBlock + theme sideloaded from the arkenfox layer, not policy)
+- [x] thunar "open with" failed read-only: home-manager no longer manages ~/.config/mimeapps.list,
+      it stays writable and our defaults fall back from the ~/.local/share copy. empty (x-zerosize)
+      files pinned to nvim so they open without a user override
 - [ ] add to extended: calculator, calendar, image editor
 - [x] copy/paste: Ctrl+C/V in gui apps (native), Ctrl+Shift+C/V in the terminal (alacritty default). no copy_or_interrupt on alacritty, so terminal stays shift-tier, that's the standard
 - [x] Shift+Enter for a newline in line-oriented prompts (alacritty sends LF on shift+enter)
@@ -18,7 +21,7 @@ https://github.com/Alexays/Waybar/wiki/Examples
       - per-toolkit for the xwayland edge (backend-agnostic): firefox clipboard.autocopy + middlemouse.paste off, gtk-enable-primary-paste off, alacritty middle=None
       - dropped the `wl-paste --primary` cliphist watcher, highlights no longer pollute clipboard history
       residual: a non-gtk/non-firefox xwayland app (steam search, a qt app) can still middle-paste its own X primary, no global x switch exists for that
-- [ ] images in cliphist possible?
+- [x] images in cliphist
 
 extended (feature complete desktop, later tier):
 - [ ] office suite (libreoffice), opening docx/xlsx/odt/pptx. also csv/rtf, no handler now
@@ -63,7 +66,7 @@ cleanup nix doesn't handle on its own.
 - [ ] test routing between both devices
 
 ## home manager
-- [ ] zsh plugins, prompt (starship or similar)
+- [x] zsh plugins, prompt: starship, zoxide (cd), fzf, autosuggestion, syntax highlighting
 - [ ] neovim config
 - [ ] remaining ssh work (tunnel/jump hosts, per secrets.md)
 

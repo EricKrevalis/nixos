@@ -35,8 +35,8 @@
         arkenfox = false; # arkenfox-hardened firefox, requires uBlock script handling knowledge and exception management
       };
 
-      # one mkHost call per machine, settings is common merged with per-host overrides,
-      # threaded to modules via specialArgs and typed by modules/toggles.nix.
+      # one call per machine, settings is common merged with per-host overrides
+      # threaded to modules via specialArgs, typed by modules/toggles.nix
       mkHost = settings: lib.nixosSystem {
         system = settings.system or "x86_64-linux";
         specialArgs = { inherit settings; };
