@@ -2,6 +2,14 @@
 
 # home-side gaming tooling, gated like core/modules/specialized/gaming.nix.
 lib.mkIf settings.gaming {
+  # proton/xwayland windows tile by default, force them fullscreen. class is steam_app_<id>
+  wayland.windowManager.sway.config.window.commands = [
+    {
+      criteria.class = "^steam_app_[0-9]+$";
+      command = "fullscreen enable";
+    }
+  ];
+
   # enable installs mangohud and manages the conf, so the package isn't in systemPackages
   programs.mangohud = {
     enable = true;

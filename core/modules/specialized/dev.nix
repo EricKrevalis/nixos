@@ -4,5 +4,7 @@
 lib.mkIf config.host.dev {
   environment.systemPackages = with pkgs; [
     claude-code
+    fd # faster friendlier find, also backs the fzf widgets
+    bat # cat with syntax highlighting
   ];
 }

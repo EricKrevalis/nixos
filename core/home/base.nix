@@ -110,8 +110,7 @@ in
     ];
   };
 
-  # shell companions wired into zsh:
-  # starship prompt, zoxide dir-jump (z), fzf history (Ctrl+R) and file search (Ctrl+T).
+  # shell companions wired into zsh: starship prompt and zoxide dir-jump (z).
   programs.starship = {
     enable = true;
     enableZshIntegration = true;
@@ -437,12 +436,6 @@ in
     enable = true;
     enableZshIntegration = false; # init by hand in initContent, must run after starship
   };
-  programs.fzf = {
-    enable = true;
-    enableZshIntegration = true;
-    defaultOptions = [ "--height 40%" "--layout reverse" "--border" ];
-  };
-
   programs.alacritty = {
     enable = true;
     package = null; # alacritty is installed system-wide, home-manager only writes the config
@@ -496,8 +489,6 @@ in
         { command = "waybar"; }
         # wallpaper file stays out of the repo (licensing), the glob takes any png/jpg/jpeg
         { command = ''swaybg -m fill -i "$(ls /home/${settings.username}/Pictures/wallpaper.* 2>/dev/null | head -n1)"''; }
-        # store clipboard history, skipping file-manager copies (they land as a useless path/uri)
-        { command = "wl-paste --watch sh -c 'wl-paste --list-types | grep -q gnome-copied-files || cliphist store'"; }
       ];
       bars = [ ]; # waybar runs from startup, drop the default swaybar
 
@@ -517,11 +508,6 @@ in
           {
             criteria.app_id = "satty";
             command = "floating enable, resize set 1600 900";
-          }
-          {
-            # proton/xwayland windows tile by default, force them fullscreen. class is steam_app_<id>
-            criteria.class = "^steam_app_[0-9]+$";
-            command = "fullscreen enable";
           }
         ];
       };
@@ -558,7 +544,6 @@ in
       };
 
       keybindings = lib.mkOptionDefault {
-        "${mod}+c"             = "exec bash -c 'cliphist list | fuzzel --dmenu | cliphist decode | wl-copy'";
         "Print"                = "exec grim - | satty --filename -";
         "Shift+Print"          = "exec grim -g \"$(slurp)\" - | satty --filename -";
         "XF86AudioPlay"        = "exec playerctl play-pause";
@@ -573,7 +558,8 @@ in
       };
     };
     extraConfig = ''
-      primary_selection disabled # is this required? swaymsg rejects it as an unknown command
+      # disables the middle-click primary-selection buffer wayland-wide (config-load only, swaymsg rejects it at runtime)
+      primary_selection disabled
       corner_radius 6
       shadows enable
       gaps inner 3

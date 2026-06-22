@@ -14,4 +14,17 @@
     lib.mkEnableOption "the proprietary nvidia gpu stack (driver plus wlroots quirks)";
   options.host.arkenfox =
     lib.mkEnableOption "arkenfox-hardened firefox, requires uBlock script handling knowledge and exception management";
+
+  # internal session-launch hooks a hardware layer fills, not user-facing toggles.
+  # base stays gpu-agnostic, the nvidia layer supplies its own launch env and sway flags.
+  options.host.sessionPreExec = lib.mkOption {
+    type = lib.types.lines;
+    default = "";
+    description = "shell run in the login shell right before sway launches";
+  };
+  options.host.swayLaunchArgs = lib.mkOption {
+    type = lib.types.listOf lib.types.str;
+    default = [ ];
+    description = "extra flags appended to the sway launch command";
+  };
 }

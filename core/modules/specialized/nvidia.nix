@@ -4,6 +4,16 @@
 # open = true uses the open kernel modules (Turing/Ampere or newer), still proprietary userspace, not nouveau.
 # flicker or broken suspend, set open = false and rebuild.
 lib.mkIf config.host.nvidia {
+  # base runs sessionPreExec right before launching sway and appends swayLaunchArgs to the command.
+  # sway needs the gles2 renderer and --unsupported-gpu on nvidia, integrated gpus do not.
+  # hardware cursors on, re-add WLR_NO_HARDWARE_CURSORS=1 here if a game hides the cursor.
+  host.sessionPreExec = ''
+    export GBM_BACKEND=nvidia-drm
+    export __GLX_VENDOR_LIBRARY_NAME=nvidia
+    export WLR_RENDERER=gles2
+  '';
+  host.swayLaunchArgs = [ "--unsupported-gpu" ];
+
   services.xserver.videoDrivers = [ "nvidia" ];
   hardware.nvidia = {
     modesetting.enable = true; # required for wayland, enables explicit sync path
