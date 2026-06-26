@@ -12,12 +12,13 @@ refs: https://github.com/swaywm/sway/wiki/Useful-add-ons-for-sway
 - [!] dev layer buildout, the editor and toolchains for real productivity, tasks in the dev section.
 
 ## testing / work-in-progress:
-- [?] power menu (fuzzel --dmenu, own config), Mod+Shift+e + waybar button + fuzzel entry, verify lock/suspend/reboot/shutdown fire
-- [?] terminal foot (replaced alacritty), verify shift+enter newline in claude, popups float, "open terminal here", no middle-click paste, scrollback search (Ctrl+Shift+R)
-- [?] float dialogs, for_window on dialog role/type, verify x/xwayland dialogs float
-- [?] screen lock (swaylock + swayidle), verify unlock and lock-before-sleep
-- [?] xdg-user-dirs, verify the dirs recreate on build
-- [?] nvidia suspend/resume clean with powerManagement on, test under real load
+
+nvim dev stack, mostly checked and fine, confirm the rest next session:
+- [?] lsp attaches for lua, nix, bash, markdown (python verified)
+- [?] blink completion: passive popup, Ctrl-y accepts, enter stays a newline, self. lists lsp items
+- [?] conform <leader>cf formats nix/lua/python/bash (after nrs pulls the formatter binaries)
+- [?] lualine statusline appears after restart
+- [?] <leader>e diagnostic float, and treesitter folds (zM zR za)
 
 ## base-layer:
 
@@ -38,11 +39,28 @@ refs: https://github.com/swaywm/sway/wiki/Useful-add-ons-for-sway
 ## specialized layer:
 
 ### dev:
-- [ ] editors and lsp tooling
-- [ ] jupyter notebooks in neovim (jupytext + molten), needs a graphics-capable terminal for inline output
+- [ ] lsp + completion foundation: servers from nixpkgs (no mason), calm manual completion, nix/lua/bash/python/markdown
+- [ ] nvim colorscheme parked for the stylix pass, theme nvim with windows and bars off one palette, not on its own
+- [ ] typst: treesitter grammar + tinymist server, typst-preview for live preview
+- [ ] latex: treesitter grammar + texlab server + vimtex for build and forward/inverse pdf search
+- [ ] jupyter notebooks in neovim (jupytext + molten), needs a graphics-capable terminal for inline output, foot is sixel not kitty graphics
+- [ ] per-project dev environments: learn flake devShells + direnv/nix-direnv first, reproducible isolated toolchains per repo, lsp servers from the project shell
+- [ ] compare devenv vs plain devShells: devenv adds services/presets but its own cli steps outside flakes, reach for it when a project needs services, not by default
+- [ ] revisit python lsp: on basedpyright + ruff now, re-evaluate pyrefly (1.0) and ty (still beta) once they harden
 - [ ] docker or podman
 - [ ] language toolchains as needed
 - [ ] ultra lategame: pi harness, ponytail/caveman, maybe open LLM, huge optimizations
+
+### nvim, to explore later:
+- [ ] gitsigns: git gutter signs, stage/reset/navigate hunks, inline blame, complements lazygit's commit view
+- [ ] mini.surround: add/change/delete the pair around text, manual so not aggressive
+- [ ] treesitter-textobjects: function/class/argument motions, source matched from nix like the grammars
+- [ ] telescope-ui-select: route lsp pickers like code actions through telescope, not a bare list
+- [ ] fidget: lsp progress spinner
+- [ ] trouble: project-wide diagnostics panel
+- [ ] luasnip + friendly-snippets: snippet library, blink's builtin covers the basics for now
+- [ ] render-markdown: in-buffer markdown rendering
+- [ ] docs/nvim.md: write up the dev-layer decisions (treesitter from nix, blink lua matcher, basedpyright + ruff, format on demand)
 
 ### gaming:
 - [ ] steam rebuilds its shader cache every reboot, re-validates and re-processes vulkan shaders on boot, investigate the cache setup
@@ -114,7 +132,6 @@ tagged brainstorm pool, layer-value prefix. question each before pulling into a 
 - [ ] base-low: alacritty scrollback size + pager keybind
 - [ ] base-low: scratch note / quick-capture keybind
 - [ ] polish-med: screen recording (wf-recorder or obs, obs pairs with the mic interface)
-- [ ] dev-med: direnv + nix-direnv, per-project dev shells on cd
 - [ ] dev-low: yazi (fast keyboard-driven tui file manager)
 - [ ] dev-low: atuin (sqlite shell history, timestamps/exit/dir, changes up-arrow, decide deliberately)
 - [ ] dev-low: dust (visual du) + duf (pretty df)
@@ -145,6 +162,12 @@ tagged brainstorm pool, layer-value prefix. question each before pulling into a 
 
 ## done:
 
+- [x] power menu (fuzzel --dmenu, own config), fires lock/suspend/reboot/shutdown from Mod+Shift+e, the waybar button and the fuzzel entry
+- [x] foot replaced alacritty: shift+enter newline in claude, popups float, "open terminal here", no middle-click paste, Ctrl+Shift+R scrollback search
+- [x] float dialogs via sway's built-in auto-float, no explicit for_window rule needed
+- [x] screen lock (swaylock + swayidle), unlocks and locks before sleep
+- [x] xdg-user-dirs recreate on build
+- [x] nvidia suspend/resume clean with powerManagement on, tested under load
 - [x] layer restructure: leaner base, fzf/fd/bat to dev, mullvad/btop/cliphist to polish, steam rule to gaming, nvidia launch quirks to nvidia.nix
 - [x] file type handling tested (md, txt, pdf, images, audio, video)
 - [x] firefox prefs in-repo, not hand-pasted into the profile
