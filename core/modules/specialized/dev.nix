@@ -4,7 +4,8 @@
 lib.mkIf config.host.dev {
   environment.systemPackages = with pkgs; [
     claude-code
-    fd # faster friendlier find, also backs the fzf widgets
+    fd # faster friendlier find, backs the fzf widgets and telescope find-files
+    ripgrep # fast grep, backs telescope live-grep
     bat # cat with syntax highlighting
   ];
 }
