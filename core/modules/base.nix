@@ -168,8 +168,9 @@
     slurp # region selector, pairs with grim
     satty # screenshot annotation
     playerctl # media key control (MPRIS)
-    waybar # status bar
-    swaybg # wallpaper renderer for sway
+    waybar        # status bar
+    swaybg        # wallpaper renderer for sway
+    (callPackage ../configs/autotile { }) # autotiler, sets split direction from the focused window's live geometry
     swayimg # image viewer
     xarchiver # archive manager, thunar right-click frontend
     p7zip # 7z and zip backend xarchiver calls (maintained 17.06 fork)

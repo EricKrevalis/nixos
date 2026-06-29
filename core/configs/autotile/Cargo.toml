@@ -1,0 +1,11 @@
+[package]
+name = "sway-autotile"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+swayipc = "3"
+
+[profile.release]
+lto = true
+strip = true
