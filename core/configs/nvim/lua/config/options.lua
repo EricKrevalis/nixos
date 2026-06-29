@@ -18,7 +18,7 @@ opt.smartcase = true -- case-sensitive only once a capital is typed
 
 opt.signcolumn = "yes" -- always reserve the gutter so text doesn't jump
 opt.updatetime = 250   -- ms of idle before swap write and CursorHold
-opt.timeoutlen = 500   -- ms to wait for a mapped sequence, e.g. after leader
+opt.timeoutlen = 300   -- ms to wait for a mapped sequence, e.g. after leader
 
 opt.splitright = true
 opt.splitbelow = true

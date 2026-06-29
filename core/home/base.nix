@@ -184,6 +184,7 @@ in
         # import session vars so user services (polkit agents, etc.) see the wayland socket and session id
         { command = "systemctl --user import-environment XDG_SESSION_ID XDG_SESSION_TYPE WAYLAND_DISPLAY DISPLAY"; }
         { command = "waybar"; }
+        { command = "sway-autotile"; }
         # wallpaper file stays out of the repo (licensing), the glob takes any png/jpg/jpeg
         { command = ''swaybg -m fill -i "$(ls /home/${settings.username}/Pictures/wallpaper.* 2>/dev/null | head -n1)"''; }
       ];
@@ -249,6 +250,8 @@ in
       };
 
       keybindings = lib.mkOptionDefault {
+        "${mod}+v"             = "splith"; # vertical line, tiles side by side
+        "${mod}+b"             = "splitv"; # horizontal line, tiles top/bottom
         "${mod}+Shift+e"       = "exec powermenu"; # power menu, replaces the default exit nag
         "Print"                = "exec grim - | satty --filename -";
         "Shift+Print"          = "exec grim -g \"$(slurp)\" - | satty --filename -";
