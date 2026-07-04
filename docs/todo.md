@@ -9,13 +9,15 @@ refs: https://github.com/swaywm/sway/wiki/Useful-add-ons-for-sway
 
 ## TODO:
 - [ ] stylix, parked for now. one base16 palette drives every app, override waybar + sway to keep the hand-tuned look, see docs/colors.md
-- [!] dev layer buildout, the editor and toolchains for real productivity, tasks in the dev section.
+- [ ] discord (vesktop) screenshare still a bit buggy, wayland screencast portal/pipewire, details in the gaming section.
 
 ## testing / work-in-progress:
 - [?] cfgs/keybinds in current stack (py, sh, lua, md / nvim / sway / plugins)
 - [?] typst stack (tinymist + typstyle + browser preview)
 - [?] jupyter (jupyterlab in a firefox window, default kernel from nix, opened from nvim)
 - [?] language toolchains (rust, c/c++, js/ts, python via the jupyter env) + direnv
+- [?] dev layer buildout, editor and toolchains, granular tasks in the dev section
+- [?] preview fix landed, typst/md dedicated firefox instance + :q teardown, verifying in use
 
 ## base-layer:
 
@@ -36,6 +38,7 @@ refs: https://github.com/swaywm/sway/wiki/Useful-add-ons-for-sway
 ## specialized layer:
 
 ### dev:
+- [?] previews fixed, typst/md open a dedicated firefox instance (own profile under firefox-previews/), autostart + :q teardown, no orphan servers, super+shift+q clean. verifying in use.
 - [ ] lsp + completion foundation: servers from nixpkgs (no mason), calm manual completion, nix/lua/bash/python/markdown
 - [ ] nvim colorscheme parked for the stylix pass, theme nvim with windows and bars off one palette, not on its own
 - [?] typst: treesitter grammar + tinymist server, typstyle format, typst-preview.nvim live browser preview
@@ -62,6 +65,7 @@ refs: https://github.com/swaywm/sway/wiki/Useful-add-ons-for-sway
 ### gaming:
 - [ ] steam rebuilds its shader cache every reboot, re-validates and re-processes vulkan shaders on boot, investigate the cache setup
 - [ ] performance pass for the box (cpu, ram, gpu), research what's worth tuning for gaming
+- [ ] discord (vesktop) screenshare still a bit buggy, likely a wayland screencast portal/pipewire issue, investigate
 - base stack complete (steam + GE-Proton, gamescope, gamemode, vesktop, mangohud), see done
 
 ### nvidia:

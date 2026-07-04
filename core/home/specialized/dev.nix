@@ -45,7 +45,7 @@ let
     fi
 
     log=$(mktemp)
-    profile="''${XDG_DATA_HOME:-$HOME/.local/share}/jlab/firefox"
+    profile="''${XDG_DATA_HOME:-$HOME/.local/share}/firefox-previews/jlab"
     mkdir -p "$profile"
 
     target="/lab"
