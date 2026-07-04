@@ -9,12 +9,14 @@
     ./specialized/dev.nix # inert unless host.dev = true
     ./specialized/gaming.nix # inert unless host.gaming = true
     ./specialized/nvidia.nix # inert unless host.nvidia = true
+    ./specialized/work.nix # inert unless host.work = true
   ];
 
   # per-host settings feed the typed host.* schema in toggles.nix
   host.polish = settings.polish;
   host.dev = settings.dev;
   host.gaming = settings.gaming;
+  host.work = settings.work;
   host.nvidia = settings.nvidia;
   host.arkenfox = settings.arkenfox; # typed here, the layer itself is home-side
 

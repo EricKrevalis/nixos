@@ -10,6 +10,8 @@
     lib.mkEnableOption "dev tools layer on top of polish";
   options.host.gaming =
     lib.mkEnableOption "gaming layer on top of polish";
+  options.host.work =
+    lib.mkEnableOption "work layer, eduvpn client for the institutional wireguard vpn";
   options.host.nvidia =
     lib.mkEnableOption "the proprietary nvidia gpu stack (driver plus wlroots quirks)";
   options.host.arkenfox =

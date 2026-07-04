@@ -31,6 +31,7 @@
         polish = false; # the polished, feature complete desktop for normal use
         dev = false; # dev tools layer on top of polish
         gaming = false; # gaming layer on top of polish
+        work = false; # work layer, needs only base
         nvidia = false; # the proprietary nvidia gpu stack
         arkenfox = false; # arkenfox-hardened firefox, needs manual uBlock and exception upkeep
         persistentWorkspaces = {}; # waybar persistent-workspaces map, empty = none
@@ -68,6 +69,7 @@
           polish = true;
           dev = true;
           gaming = true;
+          work = true;
           arkenfox = true; # arkenfox-hardened firefox, needs manual uBlock and exception upkeep
           sshIdentities = common.sshIdentities // {
             "git.haw-hamburg.de" = "id_ed25519_haw";
