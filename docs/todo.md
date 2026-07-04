@@ -13,6 +13,9 @@ refs: https://github.com/swaywm/sway/wiki/Useful-add-ons-for-sway
 
 ## testing / work-in-progress:
 - [?] cfgs/keybinds in current stack (py, sh, lua, md / nvim / sway / plugins)
+- [?] typst stack (tinymist + typstyle + browser preview)
+- [?] jupyter (jupyterlab in a firefox window, default kernel from nix, opened from nvim)
+- [?] language toolchains (rust, c/c++, js/ts, python via the jupyter env) + direnv
 
 ## base-layer:
 
@@ -35,14 +38,14 @@ refs: https://github.com/swaywm/sway/wiki/Useful-add-ons-for-sway
 ### dev:
 - [ ] lsp + completion foundation: servers from nixpkgs (no mason), calm manual completion, nix/lua/bash/python/markdown
 - [ ] nvim colorscheme parked for the stylix pass, theme nvim with windows and bars off one palette, not on its own
-- [ ] typst: treesitter grammar + tinymist server, typst-preview for live preview
+- [?] typst: treesitter grammar + tinymist server, typstyle format, typst-preview.nvim live browser preview
 - [ ] latex: treesitter grammar + texlab server + vimtex for build and forward/inverse pdf search
-- [ ] jupyter notebooks in neovim (jupytext + molten), needs a graphics-capable terminal for inline output, foot is sixel not kitty graphics
-- [ ] per-project dev environments: learn flake devShells + direnv/nix-direnv first, reproducible isolated toolchains per repo, lsp servers from the project shell
+- [?] jupyter notebooks: jupyterlab in a firefox window, opened from nvim. molten/sixel dropped, too fragile on foot/nvidia
+- [?] per-project dev environments: direnv + nix-direnv wired, learn flake devShells next, lsp servers from the project shell
 - [ ] compare devenv vs plain devShells: devenv adds services/presets but its own cli steps outside flakes, reach for it when a project needs services, not by default
 - [ ] revisit python lsp: on basedpyright + ruff now, re-evaluate pyrefly (1.0) and ty (still beta) once they harden
 - [ ] docker or podman
-- [ ] language toolchains as needed
+- [?] language toolchains: rust, c/c++, js/ts global for scratch use, python rides the jupyter env, projects pin their own via devShells
 - [ ] ultra lategame: pi harness, ponytail/caveman, maybe open LLM, huge optimizations
 
 ### nvim, to explore later:

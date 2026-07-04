@@ -7,5 +7,12 @@ lib.mkIf config.host.dev {
     fd # faster friendlier find, backs the fzf widgets and telescope find-files
     ripgrep # fast grep, backs telescope live-grep
     bat # cat with syntax highlighting
+    # global toolchains for scratch files, projects pin their own via devShells.
+    # python comes from the home-side jupyter env
+    rustc
+    cargo
+    clippy
+    gcc
+    nodejs
   ];
 }

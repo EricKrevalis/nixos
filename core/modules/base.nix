@@ -126,6 +126,9 @@
   programs.zsh.enable = true;
 
   nixpkgs.config.allowUnfree = true;
+  # pnpm builds the electron apps and never lands in the system, the CVEs target interactive use.
+  # drop once nixpkgs moves pnpm_10 past 10.29.2
+  nixpkgs.config.permittedInsecurePackages = [ "pnpm-10.29.2" ];
 
   # keep man pages, skip the nixos manual rebuild and the html/info trees
   documentation = {

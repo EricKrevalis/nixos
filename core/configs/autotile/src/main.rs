@@ -1,5 +1,6 @@
 // set the focused window's split direction from its live geometry.
-// re-checks on focus, new, move, floating and fullscreen: a reshape with no refocus still updates.
+// re-checks on focus, new, move, floating, fullscreen and close: a reshape with no refocus still updates.
+// closing a sibling regrows the survivor, so recheck it too.
 // a pure tiled resize fires no ipc event, it self-corrects on the next focus or move.
 
 use swayipc::{
@@ -19,6 +20,7 @@ fn main() -> Fallible<()> {
                     | WindowChange::Move
                     | WindowChange::Floating
                     | WindowChange::FullscreenMode
+                    | WindowChange::Close
             ),
             Event::Workspace(_) => true,
             _ => false,

@@ -13,6 +13,10 @@ return {
       ".luarc.json", ".luarc.jsonc", ".emmyrc.json", ".luacheckrc",
       "stylua.toml", ".stylua.toml", "selene.toml", "selene.yml",
       ".marksman.toml",
+      "typst.toml",
+      "Cargo.toml",
+      "compile_commands.json", ".clangd",
+      "package.json", "tsconfig.json",
       ".git",
     }
 
@@ -38,12 +42,16 @@ return {
 
     -- turn on the servers, defaults from nvim-lspconfig, binaries from the nix dev layer.
     vim.lsp.enable({
-      "nixd",         -- nix
-      "lua_ls",       -- lua
-      "bashls",       -- bash
-      "basedpyright", -- python types, completion, navigation
-      "ruff",         -- python lint and format
-      "marksman",     -- markdown
+      "nixd",          -- nix
+      "lua_ls",        -- lua
+      "bashls",        -- bash
+      "basedpyright",  -- python types, completion, navigation
+      "ruff",          -- python lint and format
+      "marksman",      -- markdown
+      "tinymist",      -- typst
+      "rust_analyzer", -- rust
+      "clangd",        -- c/c++
+      "ts_ls",         -- js/ts
     })
 
     -- calm diagnostics: signs in the gutter, message on demand, nothing inline or while typing.

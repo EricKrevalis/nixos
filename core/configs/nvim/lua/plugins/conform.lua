@@ -14,6 +14,13 @@ return {
       python = { "ruff_organize_imports", "ruff_format" },
       sh = { "shfmt" },
       bash = { "shfmt" },
+      typst = { "typstyle" },
+      rust = { "rustfmt" },
+      c = { "clang-format" },
+      cpp = { "clang-format" },
+      javascript = { "prettier" },
+      typescript = { "prettier" },
+      json = { "prettier" },
     },
   },
 }
