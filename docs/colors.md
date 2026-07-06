@@ -2,6 +2,9 @@
 
 every color the config sets by hand, what it does, and exactly where it lives. written before moving theming to stylix so the hand-tuned work isn't lost: stylix drives everything from one base16 palette, this is the record of what i had so i can rebuild it as overrides or seed the palette from it.
 
+the palette now lives in core/modules/polish.nix as the stylix base16 scheme, seeded from the table below.
+this file stays as the record of the original hand-tuned values.
+
 the look is a warm forest scheme, not one tight palette: forest green plus burnt orange plus brown, dark backgrounds. the accent shifts per surface (sway borders brown, waybar accent orange, starship green/orange), so a base16 mapping has to spread these across the accent slots rather than collapse them to one.
 
 ## palette

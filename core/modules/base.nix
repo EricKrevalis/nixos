@@ -77,6 +77,21 @@
   # lets swaylock verify the password and unlock, without it the session is a one-way trap
   security.pam.services.swaylock = { };
 
+  # two local patches to xdg-desktop-portal-wlr, both fix discord screenshare freezing.
+  # destroy-stale-frame: portal reused a frame without freeing the old one, sway killed the session. upstream PR #380.
+  # more-buffers: a pipewire pool of 2 starved the portal and froze the stream, bumped to 6, clear at 1080p60.
+  # if a portal release fixes either the patch stops applying and the build fails, drop that file.
+  nixpkgs.overlays = [
+    (final: prev: {
+      xdg-desktop-portal-wlr = prev.xdg-desktop-portal-wlr.overrideAttrs (old: {
+        patches = (old.patches or [ ]) ++ [
+          ./patches/xdpw-destroy-stale-frame.patch
+          ./patches/xdpw-more-buffers.patch
+        ];
+      });
+    })
+  ];
+
   xdg.portal = {
     enable = true;
     wlr.enable = true;
@@ -87,8 +102,7 @@
       "org.freedesktop.impl.portal.ScreenCast"  = [ "wlr" ];
       "org.freedesktop.impl.portal.Screenshot"  = [ "wlr" ];
     };
-    # chooser_type=simple runs slurp directly instead of hunting a dmenu it can't find.
-    # 0.8.x needs the "Monitor: " prefix and an absolute slurp path.
+    # slurp draws a crosshair, click a monitor to pick it
     wlr.settings.screencast = {
       chooser_type = "simple";
       chooser_cmd = "${pkgs.slurp}/bin/slurp -f 'Monitor: %o' -or";

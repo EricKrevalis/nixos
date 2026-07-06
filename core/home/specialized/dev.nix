@@ -118,6 +118,9 @@ lib.mkIf settings.dev {
         # - -Wextra  # unused params, sign-compare, noisier. per-project if wanted
   '';
 
+  # nvim theming stays with lazy.nvim, stylix stays out
+  stylix.targets.neovim.enable = false;
+
   # out-of-store symlink to the live repo, lua edits are instant, lazy writes lazy-lock.json back. neovim from base
   xdg.configFile."nvim".source =
     config.lib.file.mkOutOfStoreSymlink

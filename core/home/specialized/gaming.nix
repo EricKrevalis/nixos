@@ -10,6 +10,9 @@ lib.mkIf settings.gaming {
     }
   ];
 
+  # the overlay below is tuned for low visibility, stylix would force its own alpha
+  stylix.targets.mangohud.enable = false;
+
   # enable installs mangohud and manages the conf, so the package isn't in systemPackages
   programs.mangohud = {
     enable = true;

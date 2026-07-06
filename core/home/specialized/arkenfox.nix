@@ -24,6 +24,9 @@ let
 in
 
 lib.mkIf settings.arkenfox {
+  # the sideloaded theme owns the firefox look, stylix stays out
+  stylix.targets.firefox.enable = false;
+
   # enable lives in home base, firefox is always installed, this only adds the profile
   programs.firefox = {
     profiles.arkenfox-tinkered = {

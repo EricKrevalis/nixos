@@ -11,9 +11,13 @@
       url = "github:Mic92/sops-nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    stylix = {
+      url = "github:nix-community/stylix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
-  outputs = { nixpkgs, home-manager, sops-nix, ... }:
+  outputs = { nixpkgs, home-manager, sops-nix, stylix, ... }:
     let
       lib = nixpkgs.lib;
 
@@ -44,6 +48,7 @@
           ./modules/base.nix
           ./hosts/${settings.hostname}/configuration.nix
           sops-nix.nixosModules.sops
+          stylix.nixosModules.stylix
           home-manager.nixosModules.home-manager
           {
             home-manager.useGlobalPkgs = true;

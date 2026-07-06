@@ -8,10 +8,10 @@ refs: https://github.com/swaywm/sway/wiki/Useful-add-ons-for-sway
       https://github.com/Alexays/Waybar/wiki/Examples
 
 ## TODO:
-- [ ] stylix, parked for now. one base16 palette drives every app, override waybar + sway to keep the hand-tuned look, see docs/colors.md
 - [ ] discord (vesktop) screenshare still a bit buggy, wayland screencast portal/pipewire, details in the gaming section.
 
 ## testing / work-in-progress:
+- [?] stylix live behind polish, palette seeded from docs/colors.md, the PROVISIONAL slots (base00/05/06/07/0A/0D) need tuning on the live system. visual pass: foot, fuzzel, mako, zathura, gtk apps, fzf, lazygit, swaylock. waybar, sway, firefox and nvim stay exempt. btop and bat unthemed for now, system packages without home config. decide later: waybar exempt for good or its css colors generated from the palette.
 - [?] cfgs/keybinds in current stack (py, sh, lua, md / nvim / sway / plugins)
 - [?] typst stack (tinymist + typstyle + browser preview)
 - [?] jupyter (jupyterlab in a firefox window, default kernel from nix, opened from nvim)
@@ -40,7 +40,7 @@ refs: https://github.com/swaywm/sway/wiki/Useful-add-ons-for-sway
 ### dev:
 - [?] previews fixed, typst/md open a dedicated firefox instance (own profile under firefox-previews/), autostart + :q teardown, no orphan servers, super+shift+q clean. verifying in use.
 - [ ] lsp + completion foundation: servers from nixpkgs (no mason), calm manual completion, nix/lua/bash/python/markdown
-- [ ] nvim colorscheme parked for the stylix pass, theme nvim with windows and bars off one palette, not on its own
+- [ ] nvim colorscheme off the stylix palette, a base16 colorscheme in lazy reading the generated scheme, not its own theme
 - [?] typst: treesitter grammar + tinymist server, typstyle format, typst-preview.nvim live browser preview
 - [ ] latex: treesitter grammar + texlab server + vimtex for build and forward/inverse pdf search
 - [?] jupyter notebooks: jupyterlab in a firefox window, opened from nvim. molten/sixel dropped, too fragile on foot/nvidia

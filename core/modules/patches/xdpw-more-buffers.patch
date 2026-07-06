@@ -1,0 +1,9 @@
+diff --git a/include/pipewire_screencast.h b/include/pipewire_screencast.h
+--- a/include/pipewire_screencast.h
++++ b/include/pipewire_screencast.h
+@@ -6,3 +6,3 @@
+-#define XDPW_PWR_BUFFERS 2
+-#define XDPW_PWR_BUFFERS_MIN 2
++#define XDPW_PWR_BUFFERS 6
++#define XDPW_PWR_BUFFERS_MIN 6
+ #define XDPW_PWR_ALIGN 16

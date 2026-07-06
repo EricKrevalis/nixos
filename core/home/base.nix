@@ -139,9 +139,8 @@ in
     enable = true;
     settings = {
       main = {
-        # mono variant keeps icons single-width so columns stay aligned
-        font = "AtkynsonMono Nerd Font Mono:size=12";
-        # colors left unset, foot's defaults stand in until stylix owns the palette
+        # default font, stylix replaces it when enabled
+        font = lib.mkDefault "AtkynsonMono Nerd Font Mono:size=12";
         # don't auto-copy a selection anywhere (default is primary), the primary-selection path is retired.
         selection-target = "none";
       };
@@ -170,6 +169,9 @@ in
     X-XFCE-CommandsWithParameter=foot %s
   '';
   xdg.configFile."xfce4/helpers.rc".text = "TerminalEmulator=foot\n";
+
+  # the border colors below are hand-tuned, stylix stays out of the sway config
+  stylix.targets.sway.enable = false;
 
   # sway base. per-host monitor layout lives in hosts/<host>/home.nix.
   # the session launch is system-level (core/modules/base.nix), not here.
@@ -276,11 +278,11 @@ in
     '';
   };
 
-  # screen locker. minimal forest-tinted look now, stylix takes it over later.
+  # screen locker. dark green fallback, stylix recolors it when enabled.
   programs.swaylock = {
     enable = true;
     settings = {
-      color = "0f2910"; # dark green background while locked
+      color = lib.mkDefault "0f2910"; # dark green background while locked
       indicator-radius = 90;
       indicator-thickness = 8;
     };
@@ -564,6 +566,8 @@ in
     };
   };
 
+  # the style.css is hand-tuned, stylix stays out of waybar
+  stylix.targets.waybar.enable = false;
   xdg.configFile."waybar/style.css".source = ../configs/waybar/style.css;
 
   xdg.configFile."satty/config.toml".text = ''
