@@ -1,10 +1,10 @@
 # jupyter
 
-basics for now, more later. on the dev layer (`host.dev`).
+basics for now, more later.
 
 ## what's set up
 
-all in `core/home/specialized/dev.nix`:
+all in `home/jupyter.nix`:
 
 - `jupyterEnv`: python with jupyterlab, ipykernel, numpy, pandas, matplotlib, on PATH. the lab binaries are re-wrapped there to fix a nixpkgs bug (#423927) that stopped lab from starting.
 - a default kernel, `python3 (default)`.
@@ -28,13 +28,13 @@ for a kernel available everywhere, add another env and kernel.json next to the d
 
 ## theme and font size
 
-the theme and code font are in the `apputils-extension/themes` setting, written by home-manager. the keys are `code-font-family` and `code-font-size`. it's read-only, so to change the size, edit the px in dev.nix and rebuild, not the gui. downside: this one setting can't be changed in the gui, everything else still can.
+the theme and code font are in the `apputils-extension/themes` setting, written by home-manager. the keys are `code-font-family` and `code-font-size`. it's read-only, so to change the size, edit the px in jupyter.nix and rebuild, not the gui. downside: this one setting can't be changed in the gui, everything else still can.
 
 font size is 14px, change it there and rebuild.
 
 ## opening files from nvim
 
-`core/configs/nvim/lua/config/openexternal.lua`. files that aren't for editing open in their app instead, and the empty buffer is dropped:
+`configs/nvim/lua/config/openexternal.lua`. files that aren't for editing open in their app instead, and the empty buffer is dropped:
 
 - `.ipynb` opens in `jlab`.
 - pdf, images, video, audio open via `xdg-open`, which routes to swayimg, zathura, mpv.

@@ -1,69 +1,51 @@
 # modules
 
-what each module holds and where new things go. paths are under `core/`.
+what each file holds and where new things go.
+`modules/default.nix` and `home/default.nix` are the tables of contents, this is the prose version.
 
-## modules/base.nix
+## modules/ (system side, one file per domain, all always on)
 
-every host gets this:
+- `boot.nix`: systemd-boot.
+- `network.nix`: hostname, NetworkManager, openssh (key generation only, firewall closed).
+- `locale.nix`: timezone plus the en_US/en_DK/en_IE locale split.
+- `desktop.nix`: the session. tty autologin, sway launch via `loginShellInit`, swayfx, hardware.graphics, xdg portals (with the screenshare patches), soteria polkit agent, swaylock pam. also declares the launch hooks (`host.sessionPreExec`, `host.swayLaunchArgs`) the nvidia module fills.
+- `audio.nix`: pipewire stack, bluetooth.
+- `storage.nix`: thunar plus volman and archive plugins, gvfs, tumbler, udisks2, fwupd toggle (off).
+- `fonts.nix`: the explicit font set, default packages off.
+- `stylix.nix`: system-wide theming, the forest base16 palette.
+- `packages.nix`: system packages (core cli, desktop tooling, global toolchains) and the nixpkgs config.
+- `users.nix`: the user account, zsh system wide so it works as the login shell.
+- `nix.nix`: flakes, store optimization, weekly gc, sops-nix age key config.
 
-- bootloader (systemd-boot)
-- networking (NetworkManager)
-- locale and timezone
-- tty autologin plus sway launch via `loginShellInit`
-- hardware.graphics (mesa, accelerated GL)
-- pipewire audio stack
-- openssh (key generation only, firewall closed)
-- file manager stack: thunar plus volman and archive plugins, gvfs, tumbler, udisks2
-- bluetooth
-- firefox
-- xdg portals, soteria polkit agent
-- core cli packages: neovim, git, alacritty, fuzzel, bluetui, wiremix, btop, trashy,
-  clipboard, screenshot and media-key tooling, waybar
-- zsh system wide so it works as the login shell
-- sops-nix age key config
-- nix flakes, store optimization, weekly gc
+## modules/optional/ (toggled)
 
-## modules/polish.nix
+- `gaming.nix` (`gaming`): steam + GE-Proton, gamescope, gamemode, vesktop, 32-bit GL, vm.max_map_count bump.
+- `nvidia.nix` (`nvidia`): proprietary driver, modesetting, open kernel modules, the wlroots env vars and `--unsupported-gpu` fed through the launch hooks.
+- `work.nix` (`work`): eduvpn client, teams, the vpn network tweaks.
 
-enabled by `host.polish`. the polished feature complete desktop on top of base. empty
-placeholder for now, base already covers a usable desktop.
+## home/ (one file per program, all always on)
 
-## modules/specialized/dev.nix
+each file is named for the program it configures, so the answer to "how is X set up" is `home/X.nix`.
+the exceptions that bundle a bit more:
 
-enabled by `host.dev`:
+- `theme.nix`: gtk dark, icon theme, cursor.
+- `shell.nix`: zsh, starship, zoxide, fzf, direnv.
+- `mime.nix`: default apps plus the iso-mount helper.
+- `waybar.nix`: the bar, also declares `host.persistentWorkspaces`, the workspace map a host fills in its `home.nix` next to the monitor layout.
+- `nvim.nix`: the editor tooling (grammars, lsp servers, formatters), the lua config is an out-of-store symlink to `configs/nvim`.
 
-- dev tools (currently claude-code)
+## home/optional/ (toggled)
 
-the home-side counterpart `home/specialized/dev.nix` adds delta and lazygit.
-
-## modules/specialized/gaming.nix
-
-enabled by `host.gaming`:
-
-- 32-bit GL (`hardware.graphics.enable32Bit`) for Steam/Proton
-
-## modules/specialized/nvidia.nix
-
-enabled by `host.nvidia`:
-
-- proprietary nvidia driver
-- modesetting
-- open kernel modules
-- wlroots env vars, set via `loginShellInit` in base.nix, gated on this toggle
-
-## modules/toggles.nix
-
-typed boolean schema for the `host.*` toggles. a wrong value fails at eval, not at runtime,
-and it is the one place to see what knobs exist.
+- `gaming.nix` (`gaming`): steam fullscreen rule, mangohud.
+- `arkenfox.nix` (`arkenfox`): the hardened firefox profile, user.js, ublock, theme.
 
 ## where new things go
 
 | what | where |
 |------|-------|
-| works on any machine | `base.nix` or `home/base.nix` |
-| polished desktop, daily use | `polish.nix` |
-| dev tools | `specialized/dev.nix` (or `home/specialized/dev.nix`) |
-| gaming | `specialized/gaming.nix` |
-| gpu specific | `specialized/nvidia.nix` or a new hardware module |
+| a system domain setting | the matching `modules/<domain>.nix` |
+| a new program's user config | a new `home/<program>.nix`, imported in `home/default.nix` |
+| gaming | `modules/optional/gaming.nix` or `home/optional/gaming.nix` |
+| gpu specific | `modules/optional/nvidia.nix` or a new hardware module |
 | one machine only | `hosts/<host>/configuration.nix` or `hosts/<host>/home.nix` |
-| new toggle | add to `toggles.nix`, `flake.nix` common, and the relevant module |
+| new toggle | a boolean in `flake.nix` common, `lib.mkIf settings.<toggle>` in the module |

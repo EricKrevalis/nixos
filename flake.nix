@@ -32,23 +32,19 @@
         sshIdentities = {
           "github.com" = "id_ed25519_github";
         };
-        polish = false; # the polished, feature complete desktop for normal use
-        dev = false; # dev tools layer on top of polish
-        gaming = false; # gaming layer on top of polish
-        work = false; # work layer, needs only base
+        gaming = false; # steam, gamescope, gamemode, vesktop
+        work = false; # eduvpn client for the institutional wireguard vpn, teams
         nvidia = false; # the proprietary nvidia gpu stack
         arkenfox = false; # arkenfox-hardened firefox, needs manual uBlock and exception upkeep
-        persistentWorkspaces = {}; # waybar persistent-workspaces map, empty = none
       };
 
       # one mkHost call per machine, settings is common merged with per-host overrides,
-      # threaded to modules via specialArgs and typed by core/modules/toggles.nix.
-      # core/ is the shared engine, doubles as the fork template.
+      # threaded to every module via specialArgs.
       mkHost = settings: lib.nixosSystem {
         system = settings.system or "x86_64-linux";
         specialArgs = { inherit settings; };
         modules = [
-          ./core/modules/base.nix
+          ./modules
           ./hosts/${settings.hostname}/configuration.nix
           sops-nix.nixosModules.sops
           stylix.nixosModules.stylix
@@ -59,7 +55,7 @@
             home-manager.backupFileExtension = "backup";
             home-manager.extraSpecialArgs = { inherit settings; };
             home-manager.users.${settings.username}.imports = [
-              ./core/home/base.nix
+              ./home
               ./hosts/${settings.hostname}/home.nix
             ];
           }
@@ -71,32 +67,29 @@
         desktop = mkHost (common // {
           hostname = "desktop";
           nvidia = true; # RTX 3060 Ti
-          polish = true;
-          dev = true;
           gaming = true;
           work = true;
-          arkenfox = true; # arkenfox-hardened firefox, needs manual uBlock and exception upkeep
+          arkenfox = true;
           sshIdentities = common.sshIdentities // {
             "git.haw-hamburg.de" = "id_ed25519_haw";
           };
-          persistentWorkspaces = {
-            "1" = ["DP-1"]; "2" = ["DP-1"]; "3" = ["DP-1"]; "4" = ["DP-1"];
-            "5" = ["HDMI-A-1"]; "6" = ["HDMI-A-1"]; "7" = ["HDMI-A-1"];
-            "8" = ["DP-2"]; "9" = ["DP-2"]; "10" = ["DP-2"];
-          };
         });
 
-        # laptop out until hosts/laptop/hardware-configuration.nix exists, the stub breaks flake check.
+        # laptop out until hosts/laptop/hardware-configuration.nix exists, the placeholder breaks flake check.
         # re-enable the line below then.
         # laptop = mkHost (common // { hostname = "laptop"; });
+
+        # starter host for a fork, uncomment after generating hosts/nixos/hardware-configuration.nix
+        # nixos = mkHost (common // { hostname = "nixos"; });
       };
 
-      # forkable starter, scaffold a fork with:
+      # starter for a fork, copy this repo with:
       #   nix flake init -t github:EricKrevalis/nixos
-      # core/ is the single engine source, shared with the hosts above, so the template never drifts.
+      # the template is this whole repo: delete hosts/desktop and hosts/laptop,
+      # set your values in common above, then start from the nixos host entry.
       templates.default = {
-        path = ./core;
-        description = "sway desktop starter, set your values in core/flake.nix common";
+        path = ./.;
+        description = "sway desktop flake, start from the hosts/nixos starter host";
       };
     };
 }

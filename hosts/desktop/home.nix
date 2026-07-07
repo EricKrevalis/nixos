@@ -26,26 +26,33 @@
     workspace number 1
   '';
 
+  # waybar workspace dots, mirrors the assignments above
+  host.persistentWorkspaces = {
+    "1" = [ "DP-1" ]; "2" = [ "DP-1" ]; "3" = [ "DP-1" ]; "4" = [ "DP-1" ];
+    "5" = [ "HDMI-A-1" ]; "6" = [ "HDMI-A-1" ]; "7" = [ "HDMI-A-1" ];
+    "8" = [ "DP-2" ]; "9" = [ "DP-2" ]; "10" = [ "DP-2" ];
+  };
+
   # pin notifications to the main monitor
   services.mako.settings.output = "DP-1";
 
-  # generic audio drop-in only, device-specific ones are in configs/wireplumber
-  xdg.configFile."wireplumber/wireplumber.conf.d".source = ../../configs/wireplumber;
+  # generic audio drop-in only, device-specific ones are in ./configs/wireplumber
+  xdg.configFile."wireplumber/wireplumber.conf.d".source = ./configs/wireplumber;
 
   # pipewire daemon drop-in, clock rate and resampler quality
-  xdg.configFile."pipewire/pipewire.conf.d/99-sample-rate.conf".source = ../../configs/pipewire/99-sample-rate.conf;
+  xdg.configFile."pipewire/pipewire.conf.d/99-sample-rate.conf".source = ./configs/pipewire/99-sample-rate.conf;
 
   # sync the goxlr profile, mic profile and presets from the repo on every rebuild
   # copy not symlink, a read-only store link blocks the daemon writing this dir
   # repo wins each build, tweak it in the UI then copy back here to keep a change
   home.activation.syncGoxlr = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-    src=${../../configs/goxlr}
+    src=${./configs/goxlr}
     data="$HOME/.local/share/goxlr-utility"
     cfg="$HOME/.config/goxlr-utility"
     run mkdir -p "$data" "$cfg"
     run cp -r --no-preserve=mode "$src/profiles" "$src/mic-profiles" "$src/presets" "$data/"
     run cp --no-preserve=mode "$src/settings.json" "$cfg/settings.json"
-    # hot-load the refreshed profiles by name, no-ops if the daemon is not up yet
+    # load the refreshed profiles by name, does nothing if the daemon is not up yet
     run ${pkgs.goxlr-utility}/bin/goxlr-client profiles device load Default || true
     run ${pkgs.goxlr-utility}/bin/goxlr-client profiles microphone load DEFAULT || true
   '';

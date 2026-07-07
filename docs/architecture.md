@@ -2,24 +2,16 @@
 
 ## the flake
 
-`flake.nix` holds a `common` attrset shared by every host (username, timezone, locale, git
-config, layer toggles) and a `mkHost` function that builds a nixos system from `common`
-merged with per-host overrides.
+`flake.nix` holds a `common` attrset shared by every host (username, timezone, locale, git config, toggles) and a `mkHost` function that builds a nixos system from `common` merged with per-host overrides.
 
-the merged result is `settings`, threaded into every module through `specialArgs`. so any
-module can read `settings.username`, `settings.nvidia` and so on without importing anything.
+the merged result is `settings`, passed to every module through `specialArgs`.
+so any module can read `settings.username`, `settings.nvidia` and so on without importing anything.
 
-## software layers
+## no layers
 
-the stack layers bottom to top, each layer opt in per host:
-
-- base, base system plus sway, audio, bluetooth, file manager, core cli. every host gets this.
-- polish, the polished feature complete desktop on top of base.
-- dev, dev tools on top of polish.
-- gaming, gaming tools and 32-bit GL on top of polish.
-
-`nvidia` is a separate hardware toggle, not a layer. it pulls in the proprietary driver and
-sets the wlroots env vars sway needs on that gpu.
+the old base/polish/dev layers are gone.
+the system is built to work as one piece, so it ships as one piece: everything shared is always on.
+only what genuinely splits off cleanly is a toggle, hardware (`nvidia`) and machine roles (`gaming`, `work`, `arkenfox`).
 
 the toggles live in `flake.nix` per host:
 
@@ -27,48 +19,46 @@ the toggles live in `flake.nix` per host:
 desktop = mkHost (common // {
   hostname = "desktop";
   nvidia   = true;
-  polish   = true;
-  dev      = true;
   gaming   = true;
+  work     = true;
+  arkenfox = true;
 });
 ```
 
-`core/modules/toggles.nix` types them as booleans, so a wrong value is a build error.
+each optional module gates itself with `lib.mkIf settings.<toggle>`, system and home side alike.
+a misspelled toggle is a missing attribute, so it fails at eval, never silently.
 
 ## module layout
 
 ```
-core/modules/
-  toggles.nix       typed schema for the host.* toggles
-  base.nix          always loaded, conditionally imports the rest
-  polish.nix        guarded by host.polish
-  specialized/
-    dev.nix         guarded by host.dev
-    gaming.nix      guarded by host.gaming
-    nvidia.nix      guarded by host.nvidia
+modules/            system side, one file per domain
+  default.nix       entry, imports everything
+  boot/network/locale/desktop/audio/storage/fonts/stylix/packages/users/nix .nix
+  optional/         gaming.nix, nvidia.nix, work.nix, guarded by their toggle
+home/               home manager side, one file per program
+  default.nix       entry, imports everything
+  theme/shell/ssh/git/foot/fuzzel/sway/... .nix
+  optional/         gaming.nix, arkenfox.nix, guarded by their toggle
 ```
 
-host specific config (hardware, drive mounts, monitor layout) lives under `hosts/<host>/`,
-not in the modules. the modules stay portable across machines.
+the unit rule: home splits per program (one file answers "how is X configured"), modules per domain (system options rarely belong to one program and only make sense jointly, the session launch spans getty, sway, pam and portals in `desktop.nix`).
+
+host specific config (hardware, drive mounts, monitor layout) lives under `hosts/<host>/`, not in the modules.
+the modules stay portable across machines.
 
 ## home manager
 
 home manager runs as a nixos module so it rebuilds with the system. each host gets:
 
-- `core/home/base.nix`, shared user config: git, zsh, ssh, sway base, shell companions.
-- `core/home/specialized/dev.nix`, dev user tooling (delta, lazygit), gated by the dev toggle.
+- `home/`, the shared user config, every program its own file.
 - `hosts/<host>/home.nix`, per-host overrides: monitor layout, device specific bits.
 
-## the core/ engine and the template
+## the template
 
-`core/` is the one copy of the engine. the real hosts at the repo root import it, and
-`templates.default` points at the same `core/`, so the fork starter and what actually runs
-are the same files, nothing to keep in sync:
+`templates.default` points at the whole repo, so the fork starter and what actually runs are the same files, nothing to keep in sync:
 
 ```bash
 nix flake init -t github:EricKrevalis/nixos
 ```
 
-a fork gets `core/` as its whole repo (its own `flake.nix`, the modules, the home config, a
-stub host). my `flake.nix`, `hosts/`, and host-specific `configs/` stay at the root and
-never ship.
+a fork copies everything, deletes `hosts/desktop` and `hosts/laptop`, and starts from the commented `nixos` host entry with the empty `hosts/nixos` host.

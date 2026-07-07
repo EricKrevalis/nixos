@@ -11,19 +11,19 @@ refs: https://github.com/swaywm/sway/wiki/Useful-add-ons-for-sway
 - [ ] discord (vesktop) screenshare still a bit buggy, wayland screencast portal/pipewire, details in the gaming section.
 
 ## testing / work-in-progress:
-- [?] stylix live behind polish, palette seeded from docs/colors.md, the PROVISIONAL slots (base00/05/06/07/0A/0D) need tuning on the live system. visual pass: foot, fuzzel, mako, zathura, gtk apps, fzf, lazygit, swaylock. waybar, sway, firefox and nvim stay exempt. btop and bat unthemed for now, system packages without home config. decide later: waybar exempt for good or its css colors generated from the palette.
+- [?] stylix live, palette seeded from docs/colors.md, the PROVISIONAL slots (base00/05/06/07/0A/0D) need tuning on the live system. visual pass: foot, fuzzel, mako, zathura, gtk apps, fzf, lazygit, swaylock. waybar, sway, firefox and nvim stay exempt. btop and bat unthemed for now, system packages without home config. decide later: waybar exempt for good or its css colors generated from the palette.
 - [?] cfgs/keybinds in current stack (py, sh, lua, md / nvim / sway / plugins)
 - [?] typst stack (tinymist + typstyle + browser preview)
 - [?] jupyter (jupyterlab in a firefox window, default kernel from nix, opened from nvim)
 - [?] language toolchains (rust, c/c++, js/ts, python via the jupyter env) + direnv
-- [?] dev layer buildout, editor and toolchains, granular tasks in the dev section
-- [?] preview fix landed, typst/md dedicated firefox instance + :q teardown, verifying in use
+- [?] dev buildout, editor and toolchains, the full task list in the dev section
+- [?] preview fix landed, typst/md open a dedicated firefox instance, :q closes it, verifying in use
 
-## base-layer:
+## base:
 
 - [ ] calculator (own app or fuzzel calc mode)
 
-## polish-layer:
+## polish:
 
 - [ ] office suite (libreoffice), docx/xlsx/odt/pptx, also csv/rtf, no handler now
 - [ ] email client, wires mailto + .eml/mbox/.vcard, all unhandled now
@@ -35,10 +35,10 @@ refs: https://github.com/swaywm/sway/wiki/Useful-add-ons-for-sway
 - [ ] note taking
 - [ ] file sync (syncthing or similar)
 
-## specialized layer:
+## specialized:
 
 ### dev:
-- [?] previews fixed, typst/md open a dedicated firefox instance (own profile under firefox-previews/), autostart + :q teardown, no orphan servers, super+shift+q clean. verifying in use.
+- [?] previews fixed, typst/md open a dedicated firefox instance (own profile under firefox-previews/), opens with the file, :q closes window and server, nothing left running, super+shift+q clean. verifying in use.
 - [ ] lsp + completion foundation: servers from nixpkgs (no mason), calm manual completion, nix/lua/bash/python/markdown
 - [ ] nvim colorscheme off the stylix palette, a base16 colorscheme in lazy reading the generated scheme, not its own theme
 - [?] typst: treesitter grammar + tinymist server, typstyle format, typst-preview.nvim live browser preview
@@ -160,7 +160,7 @@ not committed. pull one up into a section above when it's worth doing.
 - [x] conform <leader>cf formats nix/lua/python/bash (after nrs pulls the formatter binaries)
 - [x] lualine statusline appears after restart
 - [x] <leader>e diagnostic float, and treesitter folds (zM zR za)
-- [x] custom autotiler (core/configs/autotile) replaces autotiling-rs, splits from live window geometry not just on focus. resize fires no ipc event, self-corrects on next focus/move
+- [x] custom autotiler (configs/autotile) replaces autotiling-rs, splits from live window geometry not just on focus. resize fires no ipc event, self-corrects on next focus/move
 - [x] power menu (fuzzel --dmenu, own config), fires lock/suspend/reboot/shutdown from Mod+Shift+e, the waybar button and the fuzzel entry
 - [x] foot replaced alacritty: shift+enter newline in claude, popups float, "open terminal here", no middle-click paste, Ctrl+Shift+R scrollback search
 - [x] float dialogs via sway's built-in auto-float, no explicit for_window rule needed

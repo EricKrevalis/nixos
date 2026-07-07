@@ -2,7 +2,7 @@
 
 every color the config sets by hand, what it does, and exactly where it lives. written before moving theming to stylix so the hand-tuned work isn't lost: stylix drives everything from one base16 palette, this is the record of what i had so i can rebuild it as overrides or seed the palette from it.
 
-the palette now lives in core/modules/polish.nix as the stylix base16 scheme, seeded from the table below.
+the palette now lives in modules/stylix.nix as the stylix base16 scheme, seeded from the table below.
 this file stays as the record of the original hand-tuned values.
 
 the look is a warm forest scheme, not one tight palette: forest green plus burnt orange plus brown, dark backgrounds. the accent shifts per surface (sway borders brown, waybar accent orange, starship green/orange), so a base16 mapping has to spread these across the accent slots rather than collapse them to one.
@@ -29,7 +29,7 @@ the look is a warm forest scheme, not one tight palette: forest green plus burnt
 
 ## sway window borders
 
-core/home/base.nix, the `colors` block (around line 515). focused windows get the brown, everything dim gets the dark brown, urgent gets red. text is white on the active surfaces, grey on the dim ones.
+home/sway.nix, the `colors` block. focused windows get the brown, everything dim gets the dark brown, urgent gets red. text is white on the active surfaces, grey on the dim ones.
 
 ```nix
 colors = {
@@ -54,7 +54,7 @@ colors = {
 
 ## waybar
 
-core/configs/waybar/style.css. transparent bar, each module a rounded pill: dark green translucent fill, sage border. orange is the running accent (default text, clock, focused workspace, the audio/bt/net icons), greens carry the workspace states, grey-green marks muted or disconnected.
+configs/waybar/style.css. transparent bar, each module a rounded pill: dark green translucent fill, sage border. orange is the running accent (default text, clock, focused workspace, the audio/bt/net icons), greens carry the workspace states, grey-green marks muted or disconnected.
 
 - bar text default: `color: #d4783a` (line 11)
 - pill background: `background: rgba(15, 41, 16, 0.8)` (#0f2910 at 80%, line 19)
@@ -70,7 +70,7 @@ core/configs/waybar/style.css. transparent bar, each module a rounded pill: dark
 
 ## starship prompt
 
-core/home/base.nix, the starship `character` settings (around line 121). the » arrow turns forest green after a command succeeds, burnt orange after one fails.
+home/shell.nix, the starship `character` settings. the » arrow turns forest green after a command succeeds, burnt orange after one fails.
 
 ```nix
 character = {
@@ -81,7 +81,7 @@ character = {
 
 ## computer icon overlay
 
-core/home/base.nix, the inline `computer.svg` (around line 7). papirus-dark reuses its light computer glyph, too dark on this desktop, so i lifted three greys to make it read. greys, not part of the accent scheme, but a deliberate edit.
+home/theme.nix, the inline `computer.svg`. papirus-dark reuses its light computer glyph, too dark on this desktop, so i lifted three greys to make it read. greys, not part of the accent scheme, but a deliberate edit.
 
 - body `#333333` -> `#585858`
 - edge `#595959` -> `#6b6b6b`
@@ -90,19 +90,19 @@ core/home/base.nix, the inline `computer.svg` (around line 7). papirus-dark reus
 
 ## firefox theme
 
-core/home/specialized/arkenfox.nix (line 14). a sideloaded amo theme, "natural forest green" 1.0, not a hex set i control. the colors live inside the xpi, listed here so the green firefox chrome isn't forgotten when matching the rest.
+home/optional/arkenfox.nix. a sideloaded amo theme, "natural forest green" 1.0, not a hex set i control. the colors live inside the xpi, listed here so the green firefox chrome isn't forgotten when matching the rest.
 
 ## swaylock
 
-core/home/base.nix, `programs.swaylock.settings`. only the background is set, `color = "0f2910"` (the same dark green as the waybar pill, no leading #). the indicator ring keeps swaylock's defaults for now, radius 90 and thickness 8 are sizes not colors.
+home/swaylock.nix, `programs.swaylock.settings`. only the background is set, `color = "0f2910"` (the same dark green as the waybar pill, no leading #). the indicator ring keeps swaylock's defaults for now, radius 90 and thickness 8 are sizes not colors.
 
-## power menu (gum)
+## power menu (fuzzel dmenu)
 
-core/home/base.nix, the `powermenu` script. gum draws the list, the highlight cursor is set to the orange accent, `--cursor.foreground "#d4783a"`. everything else stays gum's default.
+home/fuzzel.nix, the `powermenu` script's embedded fuzzel config. dark brown background `2a1c0e` at ~95%, muted text `9a8f80`, the orange accent `d4783a` on matches, the sway focus brown `6a5535` on the selection and border, white selection text.
 
 ## not colors (so they don't get grepped in by mistake)
 
-- core/modules/specialized/gaming.nix line 10: `nixpkgs#351516` is a github issue reference.
-- core/home/specialized/gaming.nix: mangohud `background_alpha = 0.25` is opacity.
-- mako (core/home/base.nix) sets only `border-radius`, no colors yet, it still uses mako's default palette.
-- alacritty and fuzzel set no colors, both fall back to their built-in defaults (fuzzel's default is light, the one mismatch).
+- modules/optional/gaming.nix: `nixpkgs#351516` is a github issue reference.
+- home/optional/gaming.nix: mangohud `background_alpha = 0.25` is opacity.
+- mako (home/mako.nix) sets only `border-radius`, no colors yet, it still uses mako's default palette.
+- foot sets no colors yet, left for stylix.
