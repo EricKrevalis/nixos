@@ -1,4 +1,6 @@
--- live typst preview in the browser, follows the cursor. opens with the file, closes with it.
+-- live typst preview in the browser, follows the cursor.
+-- one preview at a time, it hands off to whichever typst file is focused.
+-- two previews would collide on the single reused firefox profile lock and sync would die.
 return {
   "chomosuke/typst-preview.nvim",
   ft = "typst",
@@ -20,37 +22,52 @@ return {
 
     local group = vim.api.nvim_create_augroup("typst_preview_auto", { clear = true })
 
+    -- buffer that currently owns the one preview, nil when none is up
+    local active = nil
+
     -- close the preview window, does nothing if it's already gone
     local function close_window()
       vim.system({ "swaymsg", '[app_id="typst-preview"] kill' })
     end
 
-    -- open the preview as soon as a typst file opens, it updates live, no save needed
-    local function start(buf)
-      if vim.b[buf].typst_preview_started then return end
+    -- stop the preview the active buffer owns, if any
+    local function stop_active()
+      if not active then return end
+      local buf = active
+      active = nil
+      if vim.api.nvim_buf_is_valid(buf) then
+        vim.b[buf].typst_preview_started = nil
+        -- TypstPreviewStop acts on the focused file, focus this one first
+        vim.api.nvim_buf_call(buf, function() vim.cmd("TypstPreviewStop") end)
+      end
+      close_window()
+    end
+
+    -- hand the single preview to the focused typst buffer, stopping the old owner first.
+    -- callers fire this only from the focused buffer, TypstPreview lands on the right file
+    local function switch_to(buf)
+      if active == buf then return end
+      stop_active()
+      active = buf
       vim.b[buf].typst_preview_started = true
       vim.cmd("TypstPreview")
     end
 
-    -- on :q, stop this file's server and close its window
-    -- the plugin only cleans up on full exit, closing one file alone would leave both running
-    local function stop(buf)
-      if not vim.b[buf].typst_preview_started then return end
-      vim.b[buf].typst_preview_started = nil
-      -- TypstPreviewStop acts on the focused file, focus this one first
-      vim.api.nvim_buf_call(buf, function() vim.cmd("TypstPreviewStop") end)
-      close_window()
-    end
-
-    vim.api.nvim_create_autocmd("FileType", {
+    -- focusing a typst file takes the preview over to it
+    vim.api.nvim_create_autocmd("BufEnter", {
       group = group,
-      pattern = "typst",
-      callback = function(ev) start(ev.buf) end,
+      pattern = "*.typ",
+      callback = function(ev)
+        if vim.bo[ev.buf].filetype == "typst" then switch_to(ev.buf) end
+      end,
     })
+    -- closing the owner stops the preview, another open typst file reopens it on BufEnter
     vim.api.nvim_create_autocmd("BufUnload", {
       group = group,
       pattern = "*.typ",
-      callback = function(ev) stop(ev.buf) end,
+      callback = function(ev)
+        if active == ev.buf then stop_active() end
+      end,
     })
     -- safety net on :qa, kill any preview window left behind
     vim.api.nvim_create_autocmd("VimLeavePre", {
@@ -58,7 +75,7 @@ return {
       callback = close_window,
     })
 
-    -- the file that loaded this plugin already passed its autostart trigger, start it here
-    if vim.bo.filetype == "typst" then start(0) end
+    -- the file that loaded this plugin already passed its BufEnter, start it here
+    if vim.bo.filetype == "typst" then switch_to(vim.api.nvim_get_current_buf()) end
   end,
 }

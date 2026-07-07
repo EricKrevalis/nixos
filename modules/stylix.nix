@@ -27,11 +27,19 @@
     };
     # pin the fonts already in use, stylix would default to dejavu
     fonts = {
-      sansSerif = { package = pkgs.noto-fonts; name = "Noto Sans"; };
-      serif     = { package = pkgs.noto-fonts; name = "Noto Serif"; };
-      monospace = { package = pkgs.nerd-fonts.atkynson-mono; name = "AtkynsonMono Nerd Font Mono"; };
+      # mono on every role, atkinson mono reads easiest, sans and serif get it too
+      sansSerif = { package = pkgs.atkinson-hyperlegible-mono; name = "Atkinson Hyperlegible Mono"; };
+      serif     = { package = pkgs.atkinson-hyperlegible-mono; name = "Atkinson Hyperlegible Mono"; };
+      monospace = { package = pkgs.atkinson-hyperlegible-mono; name = "Atkinson Hyperlegible Mono"; };
       emoji     = { package = pkgs.noto-fonts-color-emoji; name = "Noto Color Emoji"; };
-      sizes.terminal = 12;
+      # all four roles pinned above, nothing rides a hidden default
+      # applications drives the gtk ui font
+      sizes = {
+        applications = 10; # gtk ui, file dialogs, firefox chrome
+        desktop      = 10; # titlebars, status bars
+        popups       = 10; # notifications, launcher
+        terminal     = 12; # foot, editors
+      };
     };
   };
 }

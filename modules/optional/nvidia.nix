@@ -15,6 +15,11 @@ lib.mkIf settings.nvidia {
   host.swayLaunchArgs = [ "--unsupported-gpu" ];
 
   services.xserver.videoDrivers = [ "nvidia" ];
+
+  # nixpkgs loads these only when services.xserver.enable is set, off on a wayland-only session.
+  # without nvidia_drm there's no KMS, sway drops to the EFI framebuffer.
+  boot.kernelModules = [ "nvidia_modeset" "nvidia_drm" ];
+
   hardware.nvidia = {
     modesetting.enable = true; # required for wayland, enables explicit sync path
     open = true; # see header for the closed-module fallback

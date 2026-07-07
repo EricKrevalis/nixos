@@ -88,18 +88,18 @@ in
     language = "python";
   };
 
-  # lab ui seeded declaratively: dark theme, atkynson everywhere.
+  # lab ui seeded declaratively: dark theme, atkinson mono everywhere.
   # the three sizes are the knobs, change them here and rebuild.
   # read-only symlink, so this plugin's settings can't be changed from the gui, other plugins stay writable.
   home.file.".jupyter/lab/user-settings/@jupyterlab/apputils-extension/themes.jupyterlab-settings".text =
-    let font = "AtkynsonMono Nerd Font Mono";
+    let font = "Atkinson Hyperlegible Mono";
     in builtins.toJSON {
       theme = "JupyterLab Dark";
       overrides = {
         "code-font-family" = font;     # cell editors
-        "code-font-size" = "16px";
+        "code-font-size" = "14px";
         "content-font-family" = font;  # rendered markdown and text output
-        "content-font-size1" = "14px";
+        "content-font-size1" = "13px";
         "ui-font-family" = font;       # menus, sidebar, tabs
         "ui-font-size1" = "12px";
       };

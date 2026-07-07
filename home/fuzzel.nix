@@ -18,7 +18,7 @@
       let
         menuConfig = pkgs.writeText "fuzzel-powermenu.ini" ''
           [main]
-          font=AtkynsonMono Nerd Font Mono:size=22
+          font=Atkinson Hyperlegible Mono:size=22, Symbols Nerd Font Mono:size=22
           hide-prompt=yes
           # without this, focus_follows_mouse makes the menu vanish the moment the pointer leaves it
           exit-on-keyboard-focus-loss=no

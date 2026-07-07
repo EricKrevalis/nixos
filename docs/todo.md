@@ -49,6 +49,11 @@ refs: https://github.com/swaywm/sway/wiki/Useful-add-ons-for-sway
 - [ ] revisit python lsp: on basedpyright + ruff now, re-evaluate pyrefly (1.0) and ty (still beta) once they harden
 - [ ] docker or podman
 - [?] language toolchains: rust, c/c++, js/ts global for scratch use, python rides the jupyter env, projects pin their own via devShells
+- [ ] research the top employable languages more before adding toolchains, current landscape read: python, js/ts, java, c#, c/c++, go, sql, rust
+- [ ] learning track, cover languages worth learning for hire, not just ones already written. settled set: typescript, go, sql on postgres. skip java (known, disliked) and c# for now
+- [ ] typescript: tsc global, typescript-language-server + prettier, ts/tsx grammar. formatter choice prettier over biome, verify attrs
+- [ ] go: go toolchain global (gofmt and gopls builtin), gopls lsp, goimports format, go grammar
+- [ ] sql/postgres: postgres engine (always-on local service vs per-project devShell tbd), sqls lsp over postgres-lsp, sqlfluff format on the postgres dialect, sql grammar
 - [ ] ultra lategame: pi harness, ponytail/caveman, maybe open LLM, huge optimizations
 
 ### nvim, to explore later:
@@ -117,6 +122,7 @@ not committed. pull one up into a section above when it's worth doing.
 - [ ] per-monitor wallpapers or rotation
 - [ ] font rendering knobs (hinting, subpixel)
 - [ ] force or auto dark mode across gtk apps
+- [ ] gammastep tray icon (gammastep-indicator), same schedule. trying `tray = true` now, verify the indicator and the fixed-time service coexist, roll back if the applet wants to own scheduling.
 - [ ] cliphist size limit or clear on boot
 - [ ] clipboard-only screenshot grab, separate from satty
 - [ ] scratch note / quick-capture keybind

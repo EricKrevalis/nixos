@@ -7,8 +7,9 @@
     enable = true;
     settings = {
       main = {
-        # default font, stylix replaces it when enabled
-        font = lib.mkDefault "AtkynsonMono Nerd Font Mono:size=12";
+        # default font plus the nerd-icon fallback, else fontconfig hands icon slots to dejavu
+        # stylix replaces it when enabled
+        font = lib.mkDefault "Atkinson Hyperlegible Mono:size=12, Symbols Nerd Font Mono:size=12";
         # don't auto-copy a selection anywhere (default is primary), the primary-selection path is retired.
         selection-target = "none";
       };

@@ -38,6 +38,35 @@
           success_symbol = "[»](#346b30)";
           error_symbol = "[»](#bc4e20)";
         };
+        # symbols inherit their module's style, and bold smears them
+        # drop bold from every module shown, colors are the starship defaults minus the weight
+        directory.style = "cyan";
+        git_branch.style = "purple";
+        git_commit.style = "green";
+        git_state.style = "yellow";
+        git_status.style = "red";
+        git_metrics = { added_style = "green"; deleted_style = "red"; };
+        hostname.style = "dimmed green";
+        username = { style_user = "yellow"; style_root = "red"; };
+        nix_shell.style = "blue";
+        package.style = "208";
+        cmd_duration.style = "yellow";
+        jobs.style = "blue";
+        memory_usage.style = "white dimmed";
+        shlvl.style = "yellow";
+        sudo.style = "blue";
+        container.style = "red dimmed";
+        direnv.style = "orange";
+        docker_context.style = "blue";
+        # language and tool modules
+        c.style = "149";
+        cpp.style = "149";
+        golang.style = "cyan";
+        lua.style = "blue";
+        nodejs.style = "green";
+        python.style = "yellow";
+        rust.style = "red";
+        typst.style = "#0093A7";
       };
   };
 

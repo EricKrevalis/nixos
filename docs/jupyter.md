@@ -9,7 +9,7 @@ all in `home/jupyter.nix`:
 - `jupyterEnv`: python with jupyterlab, ipykernel, numpy, pandas, matplotlib, on PATH. the lab binaries are re-wrapped there to fix a nixpkgs bug (#423927) that stopped lab from starting.
 - a default kernel, `python3 (default)`.
 - `jlab`: a small script that runs lab headless and opens it in a throwaway firefox window off the main profile. closing that window shuts the server down, so nothing lingers. takes an optional notebook path.
-- the theme and code font are preset: dark, atkynson.
+- the theme and code font are preset: dark, atkinson mono.
 
 ## running it
 

@@ -33,7 +33,7 @@ in
       };
 
       window = {
-        border = 3;
+        border = 4;
         titlebar = false;
         commands = [
           {
@@ -49,9 +49,9 @@ in
         ];
       };
 
-      # floating windows match tiled: same 3px border, no titlebar
+      # floating windows match tiled: same 4px border, no titlebar
       floating = {
-        border = 3;
+        border = 4;
         titlebar = false;
       };
 
