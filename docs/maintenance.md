@@ -51,6 +51,24 @@ sops-nix updates freely, no secrets defined.
 
 after any update run the checks above.
 
+## updates outside the flake
+
+these are not pulled by `nix flake update`.
+
+- neovim plugins: `:Lazy update` inside nvim, writes `configs/nvim/lazy-lock.json`, a repo change to commit.
+- autotile deps: `cargo update` in `configs/autotile`, bumps `Cargo.lock`. rarely needed, minimal deps.
+- ublock filter lists: manual refresh from the ublock dashboard, not declarative.
+- firmware: `services.fwupd.enable` is false in `modules/storage.nix`.
+  flip on, `nrs`, `fwupdmgr refresh && fwupdmgr update`, then flip off. the flash persists on the device.
+- arkenfox `user.js`: review a new upstream baseline by hand into the repo file.
+  never run `configs/firefox/updater.sh` in the repo, it appends the full upstream baseline to the deployed `user.js`.
+
+## don't
+
+- no imperative upgrades: `nix-env -u`, `nix-channel --update`. they break the declarative model, the flake ignores channels.
+- don't hand-pin the nvidia driver. `nvidiaPackages.latest` already tracks the branch through the flake update.
+- don't bump `stateVersion`. it is a compatibility marker, not a version to keep current.
+
 ## clearing old generations and garbage
 
 nix gc runs weekly, 30-day retention, set in `modules/nix.nix`.
