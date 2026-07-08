@@ -129,9 +129,28 @@ kept here so the hand-tuned forest palette isn't lost once a bundle takes over b
 | base0E | aa6a42 | magenta slot, brown orange |
 | base0F | bc4e20 | burnt orange |
 
+## stylix sweep, dropping hand-tuned overrides
+
+modules/stylix.nix now points base16Scheme at a pkgs.base16-schemes bundle (gruvbox-material-dark-hard) instead of the inline hexes above.
+the apps hand-tuned around the old forest hexes now follow stylix's own targets, so they track whatever bundle is set instead of staying pinned to forest.
+
+changes:
+
+- home/sway.nix: drop `stylix.targets.sway.enable = false` and the hand-tuned `colors` block, stylix themes the borders.
+- home/fuzzel.nix, main launcher: drop the `lib.mkForce` `settings.colors` block, stylix's fuzzel target colors it with its own role mapping (base00 background, base05 text, base0A match, base02 selection, base0D border).
+- home/fuzzel.nix, powermenu script: its ini is a separate `pkgs.writeText` config, not the `programs.fuzzel` module, the stylix target never reaches it. interpolated instead from `config.lib.stylix.colors`, same role mapping as the main launcher, both stay in sync without hand-picked hex. opacity suffix on the background (f2, ~95%) stays a static cosmetic choice, not a color. the main launcher's background follows `stylix.opacity.popups` instead, fully opaque at the default 1.0, so the two differ slightly there.
+- configs/waybar/style.css: hand-tuned hex backed up unchanged to configs/waybar/archive/style-hand-tuned-forest.css. the live stylesheet moves into home/waybar.nix as an interpolated string, colors read from `config.lib.stylix.colors.withHashtag`, same pill/tab layout kept. role mapping carries over the old slot choices from the pre-bundle snapshot above, those slots were originally picked to match: base09 (bar text, clock, custom-module icons, focused workspace dot), base0C (pill border, hover background), base0B (persistent workspace dot), base0E (workspace hover text), base04 (idle workspace dot, muted/disconnected icons), base01 (pill background, at 80%).
+  stylix's own waybar target isn't used here: it hooks into the `programs.waybar` home-manager module, this config writes `config.jsonc`/`style.css` straight to `xdg.configFile`, the target has nothing to attach to.
+- home/nvim.nix: the neovim target stays off, it only writes into the unused `programs.neovim` wrapper. the palette gets there anyway: home/nvim.nix exports the 16 hexes as a lua data file under xdg data, configs/nvim/lua/plugins/colorscheme.lua reads it and hands it to base16-nvim, the same setup() call the stylix target would have made.
+
+staying hand-tuned, not part of this sweep:
+
+- home/optional/gaming.nix, mangohud: `stylix.targets.mangohud.enable = false` stays. the overlay's alpha (0.35 / 0.25) is tuned for low visibility on purpose, and the stylix target would force its own opacity along with color, not just recolor it.
+- home/optional/arkenfox.nix, firefox: color target stays off. the sideloaded "natural forest green" theme is a real firefox extension with its own palette, turning the target on would just fight it.
+
 ## not colors (so they don't get grepped in by mistake)
 
 - modules/optional/gaming.nix: `nixpkgs#351516` is a github issue reference.
 - home/optional/gaming.nix: mangohud `background_alpha = 0.25` is opacity.
-- mako (home/mako.nix) sets only `border-radius`, no colors yet, it still uses mako's default palette.
-- foot sets no colors yet, left for stylix.
+- mako (home/mako.nix) sets only `border-radius`, its colors come from stylix's mako target.
+- foot (home/foot.nix) sets no colors, they come from stylix's foot target.

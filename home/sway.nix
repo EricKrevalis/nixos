@@ -3,9 +3,6 @@ let
   mod = "Mod4";
 in
 {
-  # the border colors below are hand-tuned, stylix stays out of the sway config
-  stylix.targets.sway.enable = false;
-
   # sway base. per-host monitor layout lives in hosts/<host>/home.nix.
   # the session launch is system level (modules/desktop.nix), not here.
   wayland.windowManager.sway = {
@@ -57,37 +54,6 @@ in
       floating = {
         border = 4;
         titlebar = false;
-      };
-
-      colors = {
-        focused = {
-          border      = "#6A5535";
-          background  = "#6A5535";
-          text        = "#ffffff";
-          indicator   = "#6A5535";
-          childBorder = "#6A5535";
-        };
-        unfocused = {
-          border      = "#3A2210";
-          background  = "#3A2210";
-          text        = "#888888";
-          indicator   = "#3A2210";
-          childBorder = "#3A2210";
-        };
-        focusedInactive = {
-          border      = "#3A2210";
-          background  = "#3A2210";
-          text        = "#888888";
-          indicator   = "#3A2210";
-          childBorder = "#3A2210";
-        };
-        urgent = {
-          border      = "#cc3333";
-          background  = "#cc3333";
-          text        = "#ffffff";
-          indicator   = "#cc3333";
-          childBorder = "#cc3333";
-        };
       };
 
       keybindings = lib.mkOptionDefault {

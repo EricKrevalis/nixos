@@ -1,4 +1,5 @@
 {
+  "base16-nvim": { "branch": "master", "commit": "21233d5fd574439ae1e2f5e4bfbc574214f4ab3d" },
   "blink.cmp": { "branch": "main", "commit": "78336bc89ee5365633bcf754d93df01678b5c08f" },
   "conform.nvim": { "branch": "master", "commit": "619363c30309d29ffa631e67c8183f2a72caa373" },
   "lazy.nvim": { "branch": "main", "commit": "306a05526ada86a7b30af95c5cc81ffba93fef97" },

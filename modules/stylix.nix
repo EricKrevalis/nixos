@@ -1,30 +1,15 @@
 { pkgs, ... }:
 
 {
-  # one base16 palette for every themed app, seeded from the hand-tuned forest colors
+  # one base16 palette for every themed app, trying pkgs.base16-schemes bundles
   # targets auto-enable per installed app, the opt-outs sit next to the app they exempt
+  # hand-tuned forest hexes are the pre-bundle snapshot in docs/colors.md
   stylix = {
     enable = true;
     polarity = "dark";
     # no image set, swaybg keeps owning the wallpaper
-    base16Scheme = {
-      base00 = "16120b"; # background, warm near black, PROVISIONAL
-      base01 = "2a1c0e"; # lighter background
-      base02 = "3a2210"; # selection, dark brown
-      base03 = "6a5535"; # comments, brown
-      base04 = "9a8f80"; # dim foreground
-      base05 = "d8cfc0"; # foreground, warm off white, PROVISIONAL
-      base06 = "e8e2d5"; # light foreground, PROVISIONAL
-      base07 = "f5f1e8"; # lightest, PROVISIONAL
-      base08 = "cc3333"; # red
-      base09 = "d4783a"; # orange accent
-      base0A = "c9a554"; # yellow, PROVISIONAL
-      base0B = "6b8a62"; # green
-      base0C = "7d9470"; # cyan slot, sage
-      base0D = "8a9bab"; # blue slot, grey blue, palette has no blue, PROVISIONAL
-      base0E = "aa6a42"; # magenta slot, brown orange
-      base0F = "bc4e20"; # burnt orange
-    };
+    base16Scheme = "${pkgs.base16-schemes}/share/themes/gruvbox-material-dark-hard.yaml";
+    # full stock palette, no overrides, including its base0D teal as the system accent
     # pin the fonts already in use, stylix would default to dejavu
     fonts = {
       # sans and serif get next, its proportional spacing sits better in gtk ui, mono stays for code

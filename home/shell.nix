@@ -1,5 +1,4 @@
 { lib, ... }:
-
 {
   programs.zsh = {
     enable = true;
@@ -33,10 +32,10 @@
       {
         add_newline = false;    # no blank line between prompts, keeps it compact
         command_timeout = 1000; # ms before a slow module is skipped, avoids prompt stalls
-        # » arrow, forest green on success and burnt orange when the last command failed
+        # » arrow, the names resolve through stylix's injected base16 palette
         character = {
-          success_symbol = "[»](#346b30)";
-          error_symbol = "[»](#bc4e20)";
+          success_symbol = "[»](green)";
+          error_symbol = "[»](red)";
         };
         # symbols inherit their module's style, and bold smears them
         # drop bold from every module shown, colors are the starship defaults minus the weight
@@ -66,7 +65,7 @@
         nodejs.style = "green";
         python.style = "yellow";
         rust.style = "red";
-        typst.style = "#0093A7";
+        typst.style = "blue";
       };
   };
 

@@ -24,12 +24,11 @@
     unzip # zip extraction
     zip # zip creation
     mullvad-browser # safe-by-default second browser, firefox is the actual default web handler
-    btop # resource monitor tui
+    btop # resource monitor tui, themed config in home/btop.nix
     cliphist # clipboard history, the watcher and picker keybind are home-side
     claude-code
     fd # faster friendlier find, backs the fzf widgets and telescope find-files
     ripgrep # fast grep, backs telescope live-grep
-    bat # cat with syntax highlighting
     tree # directory listing as a tree
     # global toolchains for scratch files, projects pin their own via devShells.
     # python comes from the home-side jupyter env

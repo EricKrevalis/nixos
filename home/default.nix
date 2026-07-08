@@ -25,6 +25,8 @@
     ./nvim.nix # editor tooling, treesitter, lsp, formatters
     ./jupyter.nix # notebooks
     ./yazi.nix # terminal file navigator, quitting y cds the shell there
+    ./btop.nix # resource monitor config, package stays system-side
+    ./bat.nix # cat with syntax highlighting
     ./optional/gaming.nix # mangohud, steam window rule
     ./optional/arkenfox.nix # hardened firefox profile
   ];

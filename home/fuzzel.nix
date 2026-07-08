@@ -1,5 +1,9 @@
-{ pkgs, lib, ... }:
+{ config, pkgs, lib, ... }:
 
+let
+  # same role mapping as stylix's own fuzzel target, keeps the powermenu's separate ini in sync
+  colors = config.lib.stylix.colors;
+in
 {
   programs.fuzzel = {
     enable = true;
@@ -26,17 +30,7 @@
       width  = 3;
       radius = 6;
     };
-    # hardcoded to match the powermenu's own colors below, overrides stylix
-    # TODO: both should pull from the stylix palette instead once the full stylix sweep happens
-    settings.colors = {
-      background      = lib.mkForce "2a1c0ef2";
-      text            = lib.mkForce "9a8f80ff";
-      match           = lib.mkForce "d4783aff";
-      selection       = lib.mkForce "6a5535ff";
-      "selection-text"  = lib.mkForce "ffffffff";
-      "selection-match" = lib.mkForce "d4783aff";
-      border          = lib.mkForce "6a5535ff";
-    };
+    # colors left to stylix's fuzzel target
   };
 
   # power menu, launched from Mod+Shift+e, the waybar button and the fuzzel entry.
@@ -73,13 +67,13 @@
           cursor-home=a b c d e f g h i l m n o p r s t u v w x y z 1 2 3 4 5 6 7 8 9 0 minus equal space comma period slash semicolon apostrophe bracketleft bracketright backslash
 
           [colors]
-          background=2a1c0ef2
-          text=9a8f80ff
-          match=d4783aff
-          selection=6a5535ff
-          selection-text=ffffffff
-          selection-match=d4783aff
-          border=6a5535ff
+          background=${colors.base00}f2
+          text=${colors.base05}ff
+          match=${colors.base0A}ff
+          selection=${colors.base02}ff
+          selection-text=${colors.base05}ff
+          selection-match=${colors.base0A}ff
+          border=${colors.base0D}ff
         '';
       in
       pkgs.writeShellApplication {
