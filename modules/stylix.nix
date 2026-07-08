@@ -27,9 +27,9 @@
     };
     # pin the fonts already in use, stylix would default to dejavu
     fonts = {
-      # mono on every role, atkinson mono reads easiest, sans and serif get it too
-      sansSerif = { package = pkgs.atkinson-hyperlegible-mono; name = "Atkinson Hyperlegible Mono"; };
-      serif     = { package = pkgs.atkinson-hyperlegible-mono; name = "Atkinson Hyperlegible Mono"; };
+      # sans and serif get next, its proportional spacing sits better in gtk ui, mono stays for code
+      sansSerif = { package = pkgs.atkinson-hyperlegible-next; name = "Atkinson Hyperlegible Next"; };
+      serif     = { package = pkgs.atkinson-hyperlegible-next; name = "Atkinson Hyperlegible Next"; };
       monospace = { package = pkgs.atkinson-hyperlegible-mono; name = "Atkinson Hyperlegible Mono"; };
       emoji     = { package = pkgs.noto-fonts-color-emoji; name = "Noto Color Emoji"; };
       # all four roles pinned above, nothing rides a hidden default

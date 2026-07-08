@@ -23,10 +23,15 @@
     # the aliases above only reach apps asking for "monospace", ones naming a concrete family (foot, stylix) skip them
     # append symbols to every request, picked only for nerd icons the named font lacks, else those fall to dejavu
     # strong binding, a weak one loses the icon slot back to dejavu
+    # generic serif renders sans, no serif face used by default
     fontconfig.localConf = ''
       <?xml version="1.0"?>
       <!DOCTYPE fontconfig SYSTEM "urn:fontconfig:fonts.dtd">
       <fontconfig>
+        <match target="pattern">
+          <test name="family"><string>serif</string></test>
+          <edit name="family" mode="prepend"><string>sans-serif</string></edit>
+        </match>
         <match target="pattern">
           <edit name="family" mode="append" binding="strong">
             <string>Symbols Nerd Font Mono</string>

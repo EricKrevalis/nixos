@@ -1,6 +1,7 @@
 * {
     font-family: "Atkinson Hyperlegible Mono", "Symbols Nerd Font Mono";
-    font-size: 14px;
+    font-size: 10px;
+    font-weight: 800;
     border: none;
     border-radius: 0;
     min-height: 0;
@@ -19,40 +20,45 @@ window#waybar {
 #connectivity {
     background: rgba(15, 41, 16, 0.8);
     border: 1px solid #7d9470;
-    border-radius: 12px;
-    padding: 0 6px;
+    border-top: none;
+    border-radius: 0 0 6px 6px;
+    padding: 0 4px;
     margin: 0px 6px 0;
 }
 
 /* power button pill */
 #custom-power {
     color: #d4783a;
-    padding: 0 12px;
+    padding: 0 4px;
 }
 
 /* clock pill */
 #clock {
     color: #d4783a;
-    padding: 0 12px;
+    padding: 0 4px;
 }
 
 /* workspace dots */
+#workspaces {
+    padding: 0 2px;
+}
+
 #workspaces button {
-    padding: 0 4px;
+    padding: 0;
     color: #a8b898;
     background: transparent;
-    font-size: 14px;
+    font-size: 10px;
 }
 
 #workspaces button.focused {
     color: #d4783a;
-    font-size: 14px;
+    font-size: 10px;
     background: transparent;
 }
 
 #workspaces button.persistent {
     color: #6b8a62;
-    font-size: 14px;
+    font-size: 10px;
 }
 
 #workspaces button:hover {
@@ -63,19 +69,20 @@ window#waybar {
 
 /* tray pill */
 #tray {
-    padding: 0 10px;
+    padding: 0 4px;
     margin-right: 4px;
 }
 
 /* connectivity group pill */
 #connectivity {
+    padding: 0 2px;
     margin-left: 4px;
 }
 
 #pulseaudio,
 #bluetooth,
 #network {
-    padding: 0 6px;
+    padding: 0 4px;
     color: #d4783a;
 }
 

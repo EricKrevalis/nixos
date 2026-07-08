@@ -12,8 +12,8 @@
     xdg.configFile."waybar/config.jsonc".text = builtins.toJSON {
       layer    = "top";
       position = "top";
-      height   = 20;
-      "margin-top"   = 0;
+      height   = 14;
+      "margin-top"   = -2;
       "margin-left"  = 280;
       "margin-right" = 280;
       exclusive = false;
@@ -41,7 +41,7 @@
       };
 
       tray = {
-        "icon-size" = 14;
+        "icon-size" = 10;
         spacing     = 8;
       };
 
@@ -61,6 +61,7 @@
       };
 
       network = {
+        interval             = 0;
         "format-wifi"        = "󰤨 {essid}";
         "format-ethernet"    = "󰈀";
         "format-disconnected" = "󰤭";
