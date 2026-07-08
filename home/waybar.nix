@@ -19,14 +19,37 @@
       exclusive = false;
       spacing   = 0;
 
-      "modules-left"   = [ "custom/power" "clock" ];
+      "modules-left"   = [ "group/launcher" "clock" ];
       "modules-center" = [ "sway/workspaces" ];
       "modules-right"  = [ "tray" "group/connectivity" ];
+
+      "group/launcher" = {
+        orientation = "horizontal";
+        modules     = [ "custom/power" "custom/files" "custom/search" "custom/terminal" ];
+      };
 
       "custom/power" = {
         format     = "󰐥";
         tooltip    = false;
         "on-click" = "powermenu";
+      };
+
+      "custom/files" = {
+        format     = "󰉋";
+        tooltip    = false;
+        "on-click" = "thunar";
+      };
+
+      "custom/search" = {
+        format     = "󰍉";
+        tooltip    = false;
+        "on-click" = "fuzzel";
+      };
+
+      "custom/terminal" = {
+        format     = "󰆍";
+        tooltip    = false;
+        "on-click" = "foot";
       };
 
       "sway/workspaces" = {
@@ -41,8 +64,9 @@
       };
 
       tray = {
-        "icon-size" = 10;
-        spacing     = 8;
+        "icon-size"         = 10;
+        spacing             = 8;
+        "reverse-direction" = true;
       };
 
       pulseaudio = {

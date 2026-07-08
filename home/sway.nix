@@ -45,6 +45,10 @@ in
             criteria.app_id = "satty";
             command = "floating enable, resize set 1600 900, move position center";
           }
+          {
+            criteria.app_id = "thunar";
+            command = "floating enable, resize set 1200 750, move position center";
+          }
           # no dialog float rule needed. sway already auto-floats modal, transient, fixed-size and _NET_WM_WINDOW_TYPE dialog/utility/toolbar/splash windows.
         ];
       };

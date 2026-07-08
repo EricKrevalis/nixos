@@ -79,6 +79,8 @@ character = {
 };
 ```
 
+typst module gets its own accent, unrelated to the forest scheme: `typst.style = "#0093A7"` (teal, typst's own brand color).
+
 ## computer icon overlay
 
 home/theme.nix, the inline `computer.svg`. papirus-dark reuses its light computer glyph, too dark on this desktop, so i lifted three greys to make it read. greys, not part of the accent scheme, but a deliberate edit.
@@ -96,9 +98,36 @@ home/optional/arkenfox.nix. a sideloaded amo theme, "natural forest green" 1.0, 
 
 home/swaylock.nix, `programs.swaylock.settings`. only the background is set, `color = "0f2910"` (the same dark green as the waybar pill, no leading #). the indicator ring keeps swaylock's defaults for now, radius 90 and thickness 8 are sizes not colors.
 
-## power menu (fuzzel dmenu)
+## fuzzel, main launcher and power menu
 
-home/fuzzel.nix, the `powermenu` script's embedded fuzzel config. dark brown background `2a1c0e` at ~95%, muted text `9a8f80`, the orange accent `d4783a` on matches, the sway focus brown `6a5535` on the selection and border, white selection text.
+home/fuzzel.nix. both the main launcher's `settings.colors` and the `powermenu` script's embedded fuzzel config
+hardcode the same palette, `lib.mkForce` on the main launcher since stylix's fuzzel target sets its own colors first.
+dark brown background `2a1c0e` at ~95%, muted text `9a8f80`, the orange accent `d4783a` on matches,
+the sway focus brown `6a5535` on the selection and border, white selection text.
+
+## live base16 scheme, pre-bundle snapshot
+
+modules/stylix.nix, the full 16 slots as hand-set before switching to a bundled base16 scheme.
+kept here so the hand-tuned forest palette isn't lost once a bundle takes over base16Scheme.
+
+| slot | hex | role |
+| --- | --- | --- |
+| base00 | 16120b | background |
+| base01 | 2a1c0e | lighter background |
+| base02 | 3a2210 | selection, dark brown |
+| base03 | 6a5535 | comments, brown |
+| base04 | 9a8f80 | dim foreground |
+| base05 | d8cfc0 | foreground |
+| base06 | e8e2d5 | light foreground |
+| base07 | f5f1e8 | lightest |
+| base08 | cc3333 | red |
+| base09 | d4783a | orange accent |
+| base0A | c9a554 | yellow |
+| base0B | 6b8a62 | green |
+| base0C | 7d9470 | cyan slot, sage |
+| base0D | 8a9bab | blue slot, grey blue |
+| base0E | aa6a42 | magenta slot, brown orange |
+| base0F | bc4e20 | burnt orange |
 
 ## not colors (so they don't get grepped in by mistake)
 

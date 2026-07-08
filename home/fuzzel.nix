@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, lib, ... }:
 
 {
   programs.fuzzel = {
@@ -6,7 +6,37 @@
     package = null; # fuzzel is installed system-wide, home-manager only writes the config
     # fuzzel runs Terminal=true apps in xterm by default, xterm isn't installed here.
     # foot takes the command as trailing args, so no -e, just "foot".
-    settings.main.terminal = "foot";
+    settings.main = {
+      terminal = "foot";
+      # unset falls back to the literal theme named "default" (the cursor theme), not the desktop icon theme
+      "icon-theme" = "Papirus-Dark-eric";
+      # stylix drives the popup font size, forced here to grow only the launcher
+      font     = lib.mkForce "Atkinson Hyperlegible Next:size=14";
+      lines    = 16;
+      width    = 30; # keep this close to actual entry length, extra chars become dead space on the right
+      # stops focus_follows_mouse from killing the launcher the moment the pointer leaves it
+      "exit-on-keyboard-focus-loss" = false;
+      "horizontal-pad" = 80;
+      "vertical-pad"   = 24;
+      "inner-pad"      = 16;
+      "letter-spacing" = 2;
+      "line-height"    = 24; # taller rows per entry, on top of the outer padding
+    };
+    settings.border = {
+      width  = 3;
+      radius = 6;
+    };
+    # hardcoded to match the powermenu's own colors below, overrides stylix
+    # TODO: both should pull from the stylix palette instead once the full stylix sweep happens
+    settings.colors = {
+      background      = lib.mkForce "2a1c0ef2";
+      text            = lib.mkForce "9a8f80ff";
+      match           = lib.mkForce "d4783aff";
+      selection       = lib.mkForce "6a5535ff";
+      "selection-text"  = lib.mkForce "ffffffff";
+      "selection-match" = lib.mkForce "d4783aff";
+      border          = lib.mkForce "6a5535ff";
+    };
   };
 
   # power menu, launched from Mod+Shift+e, the waybar button and the fuzzel entry.
@@ -34,11 +64,13 @@
           radius=6
 
           [key-bindings]
-          # testing j/k navigation here, scoped to this config so the launcher keeps them as plain input
+          # testing j/k navigation here, scoped to this config, the launcher keeps them as plain input
           prev=Up k
           next=Down j
+          # q cancels the menu alongside the default Escape and Ctrl+c
+          quit=Escape Control+c q
           # letters do nothing here, a stray key can't filter the hidden list
-          cursor-home=a b c d e f g h i l m n o p q r s t u v w x y z space comma period slash semicolon apostrophe bracketleft bracketright backslash
+          cursor-home=a b c d e f g h i l m n o p r s t u v w x y z 1 2 3 4 5 6 7 8 9 0 minus equal space comma period slash semicolon apostrophe bracketleft bracketright backslash
 
           [colors]
           background=2a1c0ef2

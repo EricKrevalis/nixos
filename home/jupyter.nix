@@ -81,6 +81,17 @@ let
 in
 
 {
+  # packaged jupyterlab.desktop runs jupyter-lab in a terminal, this runs jlab instead
+  xdg.desktopEntries.jupyterlab = {
+    name = "JupyterLab";
+    genericName = "Run JupyterLab";
+    icon = "jupyterlab";
+    exec = "jlab %f";
+    terminal = false;
+    mimeType = [ "application/x-ipynb+json" ];
+    categories = [ "Development" "Education" ];
+  };
+
   # default kernel, discovered through this spec
   xdg.dataFile."jupyter/kernels/python3/kernel.json".text = builtins.toJSON {
     argv = [ "${jupyterEnv}/bin/python3" "-m" "ipykernel_launcher" "-f" "{connection_file}" ];

@@ -5,6 +5,7 @@
   xdg.desktopEntries.nvim = {
     name = "Neovim";
     genericName = "Text Editor";
+    icon = "nvim";
     exec = "foot nvim %F";
     terminal = false;
     mimeType = [ "text/plain" ];

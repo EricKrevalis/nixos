@@ -24,6 +24,7 @@
     ./tidal.nix # music streaming
     ./nvim.nix # editor tooling, treesitter, lsp, formatters
     ./jupyter.nix # notebooks
+    ./yazi.nix # terminal file navigator, quitting y cds the shell there
     ./optional/gaming.nix # mangohud, steam window rule
     ./optional/arkenfox.nix # hardened firefox profile
   ];
