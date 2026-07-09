@@ -102,7 +102,8 @@ cleanup nix doesn't handle on its own.
 
 ## repo:
 
-- [ ] surface host: generate hardware config and re-enable in flake.nix
+- [x] surface host: generate hardware config and re-enable in flake.nix
+- [ ] surface: ipts.enable and surface-control.enable (+ the extraGroups line) are commented out in hosts/surface/configuration.nix, had to drop them to get the first install to build/boot. retry enabling them one at a time now that the base system is stable and confirm each builds and actually works (touch/pen digitizer, performance mode control) before re-enabling for good.
 
 ## ideas:
 
