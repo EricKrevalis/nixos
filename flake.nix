@@ -76,7 +76,12 @@
           };
         });
 
-        surface = mkHost (common // { hostname = "surface"; });
+        surface = mkHost (common // {
+          hostname = "surface";
+          gaming = true;
+          arkenfox = true;
+          work = true;
+        });
 
         # starter host for a fork, uncomment after generating hosts/nixos/hardware-configuration.nix
         # nixos = mkHost (common // { hostname = "nixos"; });
