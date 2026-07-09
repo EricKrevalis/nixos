@@ -13,6 +13,8 @@
     initContent = lib.mkMerge [
       ''
         export PATH="$HOME/.local/bin:$PATH"
+        # zsh auto-selects vi keymaps when EDITOR/VISUAL contains "vi", and "nvim" matches. force emacs.
+        bindkey -e
       ''
       # --cmd cd makes cd a frecency-aware superset of the builtin, real paths still work
       (lib.mkAfter ''

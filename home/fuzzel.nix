@@ -67,7 +67,7 @@ in
           cursor-home=a b c d e f g h i l m n o p r s t u v w x y z 1 2 3 4 5 6 7 8 9 0 minus equal space comma period slash semicolon apostrophe bracketleft bracketright backslash
 
           [colors]
-          background=${colors.base00}f2
+          background=${colors.base00}ff
           text=${colors.base05}ff
           match=${colors.base0A}ff
           selection=${colors.base02}ff
