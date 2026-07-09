@@ -109,6 +109,7 @@ cleanup nix doesn't handle on its own.
 not committed. pull one up into a section above when it's worth doing.
 
 ### desktop
+- [ ] removable drive tray icon/applet, so usb sticks can be ejected safely without a terminal
 - [ ] per-app window rules: workspace assigns, scratchpad terminal
 - [ ] window resize/move binds, a dedicated resize mode
 - [ ] thunar thumbnails: ffmpegthumbnailer for video, poppler for pdf

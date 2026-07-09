@@ -82,6 +82,16 @@
 
         # starter host for a fork, uncomment after generating hosts/nixos/hardware-configuration.nix
         # nixos = mkHost (common // { hostname = "nixos"; });
+
+        # standalone installer iso, working wifi on the surface via the same hardware module.
+        # build with: nix build .#nixosConfigurations.surface-installer.config.system.build.isoImage
+        surface-installer = lib.nixosSystem {
+          system = "x86_64-linux";
+          modules = [
+            "${nixpkgs}/nixos/modules/installer/cd-dvd/installation-cd-minimal.nix"
+            nixos-hardware.nixosModules.microsoft-surface-pro-intel
+          ];
+        };
       };
 
       # starter for a fork, copy this repo with:
