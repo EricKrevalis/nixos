@@ -1,5 +1,5 @@
 {
-  description = "NixOS configuration for desktop and laptop";
+  description = "NixOS configuration for desktop and surface";
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
@@ -15,9 +15,10 @@
       url = "github:nix-community/stylix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    nixos-hardware.url = "github:NixOS/nixos-hardware/master";
   };
 
-  outputs = { nixpkgs, home-manager, sops-nix, stylix, ... }:
+  outputs = { nixpkgs, home-manager, sops-nix, stylix, nixos-hardware, ... }:
     let
       lib = nixpkgs.lib;
 
@@ -59,7 +60,7 @@
               ./hosts/${settings.hostname}/home.nix
             ];
           }
-        ];
+        ] ++ lib.optional (settings.hostname == "surface") nixos-hardware.nixosModules.microsoft-surface-pro-intel;
       };
     in
     {
@@ -75,9 +76,9 @@
           };
         });
 
-        # laptop out until hosts/laptop/hardware-configuration.nix exists, the placeholder breaks flake check.
+        # surface out until hosts/surface/hardware-configuration.nix exists, the placeholder breaks flake check.
         # re-enable the line below then.
-        # laptop = mkHost (common // { hostname = "laptop"; });
+        # surface = mkHost (common // { hostname = "surface"; });
 
         # starter host for a fork, uncomment after generating hosts/nixos/hardware-configuration.nix
         # nixos = mkHost (common // { hostname = "nixos"; });
@@ -85,7 +86,7 @@
 
       # starter for a fork, copy this repo with:
       #   nix flake init -t github:EricKrevalis/nixos
-      # the template is this whole repo: delete hosts/desktop and hosts/laptop,
+      # the template is this whole repo: delete hosts/desktop and hosts/surface,
       # set your values in common above, then start from the nixos host entry.
       templates.default = {
         path = ./.;

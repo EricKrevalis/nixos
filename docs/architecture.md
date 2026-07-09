@@ -61,4 +61,4 @@ home manager runs as a nixos module so it rebuilds with the system. each host ge
 nix flake init -t github:EricKrevalis/nixos
 ```
 
-a fork copies everything, deletes `hosts/desktop` and `hosts/laptop`, and starts from the commented `nixos` host entry with the empty `hosts/nixos` host.
+a fork copies everything, deletes `hosts/desktop` and `hosts/surface`, and starts from the commented `nixos` host entry with the empty `hosts/nixos` host.

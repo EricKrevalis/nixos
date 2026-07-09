@@ -98,11 +98,11 @@ cleanup nix doesn't handle on its own.
 
 ## secrets:
 
-- [ ] add the laptop host key as a recipient in .sops.yaml once that machine exists, then run sops updatekeys on secrets/*
+- [ ] add the surface host key as a recipient in .sops.yaml once that machine exists, then run sops updatekeys on secrets/*
 
 ## repo:
 
-- [ ] laptop host: generate hardware config and re-enable in flake.nix
+- [ ] surface host: generate hardware config and re-enable in flake.nix
 
 ## ideas:
 

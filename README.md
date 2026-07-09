@@ -63,7 +63,7 @@ nix flake init -t github:EricKrevalis/nixos
 
 that copies this whole repo into an empty dir. then:
 
-1. delete `hosts/desktop` and `hosts/laptop`, they describe my hardware
+1. delete `hosts/desktop` and `hosts/surface`, they describe my hardware
 2. edit `flake.nix` `common` with your name, email, timezone
 3. uncomment the `nixos` host entry, flip the toggles you want
 4. generate your hardware config:
