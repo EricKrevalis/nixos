@@ -27,7 +27,7 @@
         username = "eric";
         timezone = "Europe/Berlin";
         locale = "en_US.UTF-8";
-        gitName = "EricKrevalis";
+        gitName = "Eric Krevalis";
         gitEmail = "eric.krevalis@gmail.com";
         # "<host>" = "<key filename in ~/.ssh>", per-host blocks can extend this
         sshIdentities = {
