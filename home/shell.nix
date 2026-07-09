@@ -95,6 +95,8 @@
 
   # claude-code fullscreen (alternate-screen) renderer, the declarative equivalent of /tui fullscreen
   home.sessionVariables.CLAUDE_CODE_NO_FLICKER = "1";
+  # stray clicks were hitting claude code's own prompts, wheel scroll still works
+  home.sessionVariables.CLAUDE_CODE_DISABLE_MOUSE_CLICKS = "1";
 
   # NixOS defaults EDITOR to nano, this overrides it everywhere: git, crontab, yazi's file opener
   home.sessionVariables.EDITOR = "nvim";

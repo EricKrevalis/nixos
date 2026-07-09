@@ -8,7 +8,7 @@
     enable = true;
     polarity = "dark";
     # no image set, swaybg keeps owning the wallpaper
-    base16Scheme = "${pkgs.base16-schemes}/share/themes/gruvbox-material-dark-hard.yaml";
+    base16Scheme = "${pkgs.base16-schemes}/share/themes/gruvbox-material-dark-medium.yaml";
     # full stock palette, no overrides, including its base0D teal as the system accent
     # pin the fonts already in use, stylix would default to dejavu
     fonts = {

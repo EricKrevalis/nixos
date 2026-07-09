@@ -16,6 +16,9 @@ lib.mkIf settings.gaming {
   # per-title cpu governor + scheduling boost, add gamemoderun to a game's launch options
   programs.gamemode.enable = true;
 
+  # gamemode's polkit rule only grants cpugovctl/procsysctl to this group, membership is never automatic
+  users.users.${settings.username}.extraGroups = [ "gamemode" ];
+
   # some proton titles crash on the default mmap limit, steamos/fedora ship this value
   boot.kernel.sysctl."vm.max_map_count" = 2147483642;
 

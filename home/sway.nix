@@ -1,6 +1,23 @@
-{ settings, lib, ... }:
+{ settings, lib, config, ... }:
 let
   mod = "Mod4";
+  # stylix's sway target uses base0D for focused and base0B for the indicator, the mismatched
+  # colors this overrides.
+  # indicator is the edge highlight for where the next window opens, forced equal to the
+  # border here, never a separate color.
+  c = config.lib.stylix.colors.withHashtag;
+  focusedColor = c.base0F; # brown
+  unfocusedColor = c.base02; # selection-bg
+  urgentColor = c.base08; # red
+  windowColors =
+    { border }:
+    {
+      inherit border;
+      childBorder = border;
+      indicator = border;
+      background = c.base00;
+      text = c.base05;
+    };
 in
 {
   # sway base. per-host monitor layout lives in hosts/<host>/home.nix.
@@ -24,13 +41,22 @@ in
       ];
       bars = [ ]; # waybar runs from startup, drop the default swaybar
 
+      colors = lib.mkForce {
+        background = c.base00;
+        focused = windowColors { border = focusedColor; };
+        focusedInactive = windowColors { border = unfocusedColor; };
+        unfocused = windowColors { border = unfocusedColor; };
+        placeholder = windowColors { border = unfocusedColor; };
+        urgent = windowColors { border = urgentColor; };
+      };
+
       input."type:keyboard" = {
         repeat_delay = "200"; # ms before a held key starts repeating
         repeat_rate = "60";   # repeats per second once it kicks in
       };
 
       window = {
-        border = 4;
+        border = 3;
         titlebar = false;
         commands = [
           {
@@ -52,7 +78,7 @@ in
 
       # floating windows match tiled: same 4px border, no titlebar
       floating = {
-        border = 4;
+        border = 3;
         titlebar = false;
       };
 

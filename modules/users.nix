@@ -5,6 +5,7 @@
     isNormalUser = true;
     description = settings.username;
     extraGroups = [ "networkmanager" "wheel" ];
+    # gaming toggle adds "gamemode" here too, see modules/optional/gaming.nix
     shell = pkgs.zsh; # home-manager configures zsh, this makes it the login shell
   };
   # zsh must be enabled system-wide for the login shell above (adds /etc/shells, completion).

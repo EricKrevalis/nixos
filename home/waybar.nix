@@ -117,7 +117,7 @@
 
         window#waybar {
             background: transparent;
-            color: #${c.base09};
+            color: #${c.base0F};
         }
 
         /* shared pill base */
@@ -126,8 +126,8 @@
         #workspaces,
         #tray,
         #connectivity {
-            background: ${rgba "base01" "0.8"};
-            border: 1px solid #${c.base0C};
+            background: #${c.base01};
+            border: 1px solid #${c.base0F};
             border-top: none;
             border-radius: 0 0 6px 6px;
             padding: 0 4px;
@@ -145,12 +145,12 @@
         #custom-terminal {
             padding: 0 6px;
             font-size: 9px;
-            color: #${c.base09};
+            color: #${c.base0F};
         }
 
         /* clock pill */
         #clock {
-            color: #${c.base09};
+            color: #${c.base0A};
             padding: 0 6px;
         }
 
@@ -161,26 +161,30 @@
 
         #workspaces button {
             padding: 0 2px;
-            color: #${c.base06};
+            color: #${c.base0A};
             background: transparent;
             font-size: 10px;
         }
 
         #workspaces button.focused {
-            color: #${c.base09};
+            color: #${c.base0F};
             font-size: 10px;
             background: transparent;
         }
 
-        #workspaces button.persistent {
-            color: #${c.base0B};
+        #workspaces button.persistent.empty {
+            color: #${c.base03};
             font-size: 10px;
         }
 
         #workspaces button:hover {
-            background: ${rgba "base0C" "0.35"};
-            border-radius: 6px;
-            color: #${c.base0A};
+            background: ${rgba "base0F" "0.1"};
+            border-radius: 0 0 4px 4px;
+            color: #${c.base0C};
+        }
+
+        #workspaces button.persistent.empty:hover {
+            color: #${c.base0C};
         }
 
         /* tray pill */
@@ -199,7 +203,7 @@
         #bluetooth,
         #network {
             padding: 0 6px;
-            color: #${c.base09};
+            color: #${c.base0F};
         }
 
         #pulseaudio.muted {

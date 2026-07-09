@@ -36,6 +36,11 @@ lib.mkIf settings.arkenfox {
         "intl.locale.requested" = "en-US";    # built-in ui locale, no langpack install prompt
         "extensions.activeThemeID" = themeId; # select the forest green theme once it's installed
         "extensions.autoDisableScopes" = 0;   # auto-enable the profile-installed extensions, no approval prompt
+
+        # default fonts, only backs pages that don't set their own
+        "font.name.sans-serif.x-western" = "Atkinson Hyperlegible Next";
+        "font.name.serif.x-western"      = "Atkinson Hyperlegible Next";
+        "font.name.monospace.x-western"  = "Atkinson Hyperlegible Mono";
       };
       # arkenfox base then my overrides, the same order arkenfox's own updater uses
       extraConfig = builtins.readFile ../../configs/firefox/user.js

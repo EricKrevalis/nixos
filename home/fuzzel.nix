@@ -3,6 +3,8 @@
 let
   # same role mapping as stylix's own fuzzel target, keeps the powermenu's separate ini in sync
   colors = config.lib.stylix.colors;
+  # border color, used by both the main launcher and the powermenu ini below
+  border = "${colors.base0F}ff";
 in
 {
   programs.fuzzel = {
@@ -13,7 +15,7 @@ in
     settings.main = {
       terminal = "foot";
       # unset falls back to the literal theme named "default" (the cursor theme), not the desktop icon theme
-      "icon-theme" = "Papirus-Dark-eric";
+      "icon-theme" = "Papirus-Dark";
       # stylix drives the popup font size, forced here to grow only the launcher
       font     = lib.mkForce "Atkinson Hyperlegible Next:size=14";
       lines    = 16;
@@ -30,7 +32,8 @@ in
       width  = 3;
       radius = 6;
     };
-    # colors left to stylix's fuzzel target
+    # rest of the colors left to stylix's fuzzel target, border alone pulled off it
+    settings.colors.border = lib.mkForce border;
   };
 
   # power menu, launched from Mod+Shift+e, the waybar button and the fuzzel entry.
@@ -62,7 +65,7 @@ in
           prev=Up k
           next=Down j
           # q cancels the menu alongside the default Escape and Ctrl+c
-          quit=Escape Control+c q
+          cancel=Escape Control+c q
           # letters do nothing here, a stray key can't filter the hidden list
           cursor-home=a b c d e f g h i l m n o p r s t u v w x y z 1 2 3 4 5 6 7 8 9 0 minus equal space comma period slash semicolon apostrophe bracketleft bracketright backslash
 
@@ -73,7 +76,7 @@ in
           selection=${colors.base02}ff
           selection-text=${colors.base05}ff
           selection-match=${colors.base0A}ff
-          border=${colors.base0D}ff
+          border=${border}
         '';
       in
       pkgs.writeShellApplication {
