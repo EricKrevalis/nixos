@@ -76,9 +76,7 @@
           };
         });
 
-        # surface out until hosts/surface/hardware-configuration.nix exists, the placeholder breaks flake check.
-        # re-enable the line below then.
-        # surface = mkHost (common // { hostname = "surface"; });
+        surface = mkHost (common // { hostname = "surface"; });
 
         # starter host for a fork, uncomment after generating hosts/nixos/hardware-configuration.nix
         # nixos = mkHost (common // { hostname = "nixos"; });
