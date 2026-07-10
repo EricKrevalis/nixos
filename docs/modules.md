@@ -22,6 +22,7 @@ what each file holds and where new things go.
 - `gaming.nix` (`gaming`): steam + GE-Proton, gamescope, gamemode, vesktop, 32-bit GL, vm.max_map_count bump.
 - `nvidia.nix` (`nvidia`): proprietary driver, modesetting, open kernel modules, the wlroots env vars and `--unsupported-gpu` fed through the launch hooks.
 - `work.nix` (`work`): eduvpn client, teams, the vpn network tweaks.
+- `laptop.nix` (`laptop`): brightnessctl for backlight control.
 
 ## home/ (one file per program, all always on)
 
@@ -38,6 +39,7 @@ the exceptions that bundle a bit more:
 
 - `gaming.nix` (`gaming`): steam fullscreen rule, mangohud.
 - `arkenfox.nix` (`arkenfox`): the hardened firefox profile, user.js, ublock, theme.
+- `laptop.nix` (`laptop`): brightness keybinds via brightnessctl.
 
 ## where new things go
 
@@ -47,5 +49,6 @@ the exceptions that bundle a bit more:
 | a new program's user config | a new `home/<program>.nix`, imported in `home/default.nix` |
 | gaming | `modules/optional/gaming.nix` or `home/optional/gaming.nix` |
 | gpu specific | `modules/optional/nvidia.nix` or a new hardware module |
+| laptop specific | `modules/optional/laptop.nix` or `home/optional/laptop.nix` |
 | one machine only | `hosts/<host>/configuration.nix` or `hosts/<host>/home.nix` |
 | new toggle | a boolean in `flake.nix` common, `lib.mkIf settings.<toggle>` in the module |

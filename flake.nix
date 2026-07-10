@@ -37,6 +37,7 @@
         work = false; # eduvpn client for the institutional wireguard vpn, teams
         nvidia = false; # the proprietary nvidia gpu stack
         arkenfox = false; # arkenfox-hardened firefox, needs manual uBlock and exception upkeep
+        laptop = false; # backlight control and other laptop-only hardware bits
       };
 
       # one mkHost call per machine, settings is common merged with per-host overrides,
@@ -78,23 +79,24 @@
 
         surface = mkHost (common // {
           hostname = "surface";
+          nvidia = false;
           gaming = true;
-          arkenfox = true;
           work = true;
+          arkenfox = true;
+          laptop = true;
         });
 
-        # starter host for a fork, uncomment after generating hosts/nixos/hardware-configuration.nix
-        # nixos = mkHost (common // { hostname = "nixos"; });
-
-        # standalone installer iso, working wifi on the surface via the same hardware module.
-        # build with: nix build .#nixosConfigurations.surface-installer.config.system.build.isoImage
-        surface-installer = lib.nixosSystem {
-          system = "x86_64-linux";
-          modules = [
-            "${nixpkgs}/nixos/modules/installer/cd-dvd/installation-cd-minimal.nix"
-            nixos-hardware.nixosModules.microsoft-surface-pro-intel
-          ];
-        };
+        # starter host for a fork, uncomment after generating hosts/nixos/hardware-configuration.nix.
+        # every toggle is spelled out at false here so a fork can see what's available and flip
+        # what it needs, common already defaults them the same way.
+        # nixos = mkHost (common // {
+        #   hostname = "nixos";
+        #   gaming = false;
+        #   work = false;
+        #   nvidia = false;
+        #   arkenfox = false;
+        #   laptop = false;
+        # });
       };
 
       # starter for a fork, copy this repo with:

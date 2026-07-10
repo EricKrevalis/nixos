@@ -29,6 +29,7 @@
     ./bat.nix # cat with syntax highlighting
     ./optional/gaming.nix # mangohud, steam window rule
     ./optional/arkenfox.nix # hardened firefox profile
+    ./optional/laptop.nix # brightness keybinds
   ];
 
   home.username = settings.username;

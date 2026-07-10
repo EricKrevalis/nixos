@@ -19,5 +19,6 @@
     ./optional/gaming.nix # steam, gamescope, gamemode, vesktop
     ./optional/nvidia.nix # nvidia driver, wlroots quirks, btop wrapper
     ./optional/work.nix # eduvpn, teams
+    ./optional/laptop.nix # brightnessctl
   ];
 }

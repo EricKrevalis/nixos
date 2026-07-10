@@ -1,10 +1,7 @@
-{ settings, pkgs, ... }:
+{ settings, ... }:
 
 {
   imports = [ ./hardware-configuration.nix ];
-
-  # backlight control, surface only. swaylock/swayidle already come from the shared home modules.
-  programs.sway.extraPackages = with pkgs; [ brightnessctl ];
 
   # TESTING: linux-surface's default kernel branch, retest against "stable" after the first real boot.
   hardware.microsoft-surface.kernelVersion = "longterm";
