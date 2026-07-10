@@ -81,8 +81,14 @@ lib.mkIf settings.arkenfox {
           "amazondotcom-us".metaData.hidden = true;
           wikipedia.metaData.hidden = true;
           ecosia.metaData.hidden = true;	# morally nice, but not privacy focused
-          qwant.metaData.hidden = false;	# privacy focused EU. ES region bound
           perplexity.metaData.hidden = true;
+          # builtin qwant sends client=brz-moz, qwant 403s that now
+          # full override here, not metaData.hidden, key stays "qwant" for default/order above
+          qwant = {
+            name = "Qwant";
+            urls = [{ template = "https://www.qwant.com/?q={searchTerms}&t=web"; }];
+            icon = "https://www.qwant.com/favicon.ico";
+          };
         };
       };
     };
