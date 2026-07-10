@@ -15,6 +15,12 @@
         export PATH="$HOME/.local/bin:$PATH"
         # zsh auto-selects vi keymaps when EDITOR/VISUAL contains "vi", and "nvim" matches. force emacs.
         bindkey -e
+
+        # copies flake.nix and .envrc from the devshell template into the current dir
+        # turns direnv on for it
+        initDev() {
+          nix flake init -t ~/.config/nixos#devshell && direnv allow
+        }
       ''
       # --cmd cd makes cd a frecency-aware superset of the builtin, real paths still work
       (lib.mkAfter ''

@@ -84,6 +84,9 @@
           work = true;
           arkenfox = true;
           laptop = true;
+          sshIdentities = common.sshIdentities // {
+            "git.haw-hamburg.de" = "id_ed25519_haw";
+          };
         });
 
         # starter host for a fork, uncomment after generating hosts/nixos/hardware-configuration.nix.
@@ -106,6 +109,13 @@
       templates.default = {
         path = ./.;
         description = "sway desktop flake, start from the hosts/nixos starter host";
+      };
+
+      # per-project devShell starter files, see templates/devshell/
+      # copied in with initDev, home/shell.nix
+      templates.devshell = {
+        path = ./templates/devshell;
+        description = "flake devShell scaffold, direnv-ready, uncomment the languages you need";
       };
     };
 }
