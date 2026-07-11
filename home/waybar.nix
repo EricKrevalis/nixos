@@ -72,6 +72,8 @@
         "icon-size"         = 10;
         spacing             = 8;
         "reverse-direction" = true;
+        # tray's own tooltip popup steals hover focus and drops the pill's :hover background
+        tooltip             = false;
       };
 
       pulseaudio = {
@@ -105,7 +107,13 @@
     } // lib.optionalAttrs settings.laptop {
       "group/laptop" = {
         orientation = "horizontal";
-        modules     = [ "battery" ];
+        modules     = [ "backlight" "battery" ];
+      };
+
+      backlight = {
+        format         = "{percent}% {icon}";
+        "format-icons" = [ "󰃞" "󰃟" "󰃠" ];
+        tooltip        = false;
       };
 
       # click opens the profile picker
@@ -250,6 +258,7 @@
             margin-left: 4px;
         }
 
+        #backlight,
         #battery {
             padding: 0 6px;
             color: #${c.base0F};
@@ -271,6 +280,7 @@
         #pulseaudio:hover,
         #bluetooth:hover,
         #network:hover,
+        #backlight:hover,
         #battery:hover,
         #tray:hover,
         #workspaces button:hover {

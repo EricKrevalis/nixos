@@ -56,9 +56,9 @@ lib.mkIf settings.arkenfox {
       # no aliases on my engines, i don't want urlbar search shortcuts.
       search = {
         force = true;
-        default = "qwant";
-        privateDefault = "qwant";
-        order = [ "qwant" "startpage" "mojeek" "ddg" "brave" ];
+        default = "ddg";
+        privateDefault = "ddg";
+        order = [ "ddg" "startpage" "qwant" "mojeek" "brave" ];
         engines = {
           startpage = {
             name = "Startpage";
@@ -73,7 +73,7 @@ lib.mkIf settings.arkenfox {
           brave = {
             name = "Brave Search";
             urls = [{ template = "https://search.brave.com/search?q={searchTerms}"; }];
-            icon = "https://search.brave.com/favicon.ico";
+            icon = "https://brave.com/favicon.ico"; # search.brave.com/favicon.ico 404s, brave.com has the real icon
           };
           google.metaData.hidden = true;
           bing.metaData.hidden = true;
