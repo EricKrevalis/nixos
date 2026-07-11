@@ -1,4 +1,4 @@
-{ config, lib, ... }:
+{ config, settings, lib, ... }:
 
 {
   # per-host workspace dots, filled by hosts/<host>/home.nix next to its monitor layout
@@ -9,7 +9,7 @@
   };
 
   config = {
-    xdg.configFile."waybar/config.jsonc".text = builtins.toJSON {
+    xdg.configFile."waybar/config.jsonc".text = builtins.toJSON ({
       layer    = "top";
       position = "top";
       height   = 14;
@@ -21,7 +21,12 @@
 
       "modules-left"   = [ "group/launcher" "clock" ];
       "modules-center" = [ "sway/workspaces" ];
-      "modules-right"  = [ "tray" "group/connectivity" ];
+      "modules-right"  = [ "group/systray" "group/connectivity" ] ++ lib.optionals settings.laptop [ "group/laptop" ];
+
+      "group/systray" = {
+        orientation = "horizontal";
+        modules     = [ "tray" ];
+      };
 
       "group/launcher" = {
         orientation = "horizontal";
@@ -86,8 +91,9 @@
 
       network = {
         interval             = 0;
-        "format-wifi"        = "󰤨 {essid}";
+        "format-wifi"        = "󰤨";
         "format-ethernet"    = "󰈀";
+        "format-linked"      = "󰈀"; # raw iface name shows without this
         "format-disconnected" = "󰤭";
         tooltip    = false;
         "on-click" = "foot --app-id=popup-terminal nmtui";
@@ -96,7 +102,22 @@
       clock = {
         format = "{:%Y-%m-%d  %H:%M}";
       };
-    };
+    } // lib.optionalAttrs settings.laptop {
+      "group/laptop" = {
+        orientation = "horizontal";
+        modules     = [ "battery" ];
+      };
+
+      # click opens the profile picker
+      battery = {
+        states = { warning = 20; critical = 10; };
+        format          = "{capacity}% {icon}";
+        "format-charging" = "{capacity}% 󰂄";
+        "format-icons"  = [ "󰁺" "󰁼" "󰁾" "󰂀" "󰁹" ];
+        tooltip         = false;
+        "on-click"      = "laptop-menu";
+      };
+    });
 
     # xdg.configFile writes style.css directly, stylix's waybar target has no programs.waybar module to hook into
     # css layout is hand-tuned, colors interpolated from config.lib.stylix.colors below
@@ -108,7 +129,7 @@
       ''
         * {
             font-family: "Atkinson Hyperlegible Mono", "Symbols Nerd Font Mono";
-            font-size: 10px;
+            font-size: 9px;
             font-weight: 700;
             border: none;
             border-radius: 0;
@@ -124,8 +145,9 @@
         #launcher,
         #clock,
         #workspaces,
-        #tray,
-        #connectivity {
+        #systray,
+        #connectivity,
+        #laptop {
             background: #${c.base01};
             border: 1px solid #${c.base0F};
             border-top: none;
@@ -144,7 +166,6 @@
         #custom-search,
         #custom-terminal {
             padding: 0 6px;
-            font-size: 9px;
             color: #${c.base0F};
         }
 
@@ -163,22 +184,21 @@
             padding: 0 2px;
             color: #${c.base0A};
             background: transparent;
-            font-size: 10px;
+            font-size: 9px;
         }
 
         #workspaces button.focused {
             color: #${c.base0F};
-            font-size: 10px;
+            font-size: 9px;
             background: transparent;
         }
 
         #workspaces button.persistent.empty {
             color: #${c.base03};
-            font-size: 10px;
+            font-size: 9px;
         }
 
         #workspaces button:hover {
-            background: ${rgba "base0F" "0.1"};
             border-radius: 0 0 4px 4px;
             color: #${c.base0C};
         }
@@ -187,10 +207,14 @@
             color: #${c.base0C};
         }
 
-        /* tray pill */
+        /* systray group pill */
+        #systray {
+            padding: 0 2px;
+            margin-right: 4px;
+        }
+
         #tray {
             padding: 0 6px;
-            margin-right: 4px;
         }
 
         /* connectivity group pill */
@@ -213,6 +237,44 @@
         #bluetooth.disconnected,
         #network.disconnected {
             color: #${c.base04};
+        }
+
+        /* cable in, no internet, same muted color as disconnected/muted states */
+        #network.linked {
+            color: #${c.base04};
+        }
+
+        /* laptop group pill */
+        #laptop {
+            padding: 0 2px;
+            margin-left: 4px;
+        }
+
+        #battery {
+            padding: 0 6px;
+            color: #${c.base0F};
+        }
+
+        #battery.warning {
+            color: #${c.base0A};
+        }
+
+        #battery.critical {
+            color: #${c.base08};
+        }
+
+        /* hover bg, all clickable pills + workspace dots, last for specificity over .focused */
+        #custom-power:hover,
+        #custom-files:hover,
+        #custom-search:hover,
+        #custom-terminal:hover,
+        #pulseaudio:hover,
+        #bluetooth:hover,
+        #network:hover,
+        #battery:hover,
+        #tray:hover,
+        #workspaces button:hover {
+            background: ${rgba "base0A" "0.2"};
         }
       '';
   };
