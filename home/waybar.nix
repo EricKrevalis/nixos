@@ -69,7 +69,7 @@
       };
 
       tray = {
-        "icon-size"         = 10;
+        "icon-size"         = 9;
         spacing             = 8;
         "reverse-direction" = true;
         # tray's own tooltip popup steals hover focus and drops the pill's :hover background
