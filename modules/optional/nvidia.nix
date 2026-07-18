@@ -20,6 +20,11 @@ lib.mkIf settings.nvidia {
   # without nvidia_drm there's no KMS, sway drops to the EFI framebuffer.
   boot.kernelModules = [ "nvidia_modeset" "nvidia_drm" ];
 
+  # late-loading nvidia_drm sometimes loses the race with simpledrm for the framebuffer
+  # (ENOMEM on insert, sway falls back to a fake 1024x768 output). load in initrd instead.
+  boot.initrd.kernelModules = [ "nvidia" ];
+  boot.kernelParams = [ "nvidia_drm.fbdev=1" ];
+
   hardware.nvidia = {
     modesetting.enable = true; # required for wayland, enables explicit sync path
     open = true; # see header for the closed-module fallback
