@@ -7,10 +7,11 @@ lib.mkIf settings.gaming {
     extraCompatPackages = [ pkgs.proton-ge-bin ]; # newest GE-Proton, pick per game in steam
   };
 
-  # steam launch-option wrapper can't inherit caps (nixpkgs#351516), run gamescope directly
+  # capSysNice off, the cap_sys_nice wrapper fails under steam launch options
+  # steam sets no_new_privs, the game can't inherit the cap so it exits (nixpkgs#351516)
   programs.gamescope = {
     enable = true;
-    capSysNice = true; # lets gamescope raise its scheduling priority
+    capSysNice = false;
   };
 
   # per-title cpu governor + scheduling boost, add gamemoderun to a game's launch options

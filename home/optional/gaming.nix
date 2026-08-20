@@ -12,7 +12,7 @@ lib.mkIf settings.gaming {
 
   # the overlay below is tuned for low visibility, stylix's target would also force its own
   # alpha/background_alpha/font_size. colors pulled by hand instead, same role mapping the
-  # target itself uses, alpha/font_size stay ours.
+  # target itself uses, alpha/font_size kept local.
   stylix.targets.mangohud.enable = false;
 
   # enable installs mangohud and manages the conf, so the package isn't in systemPackages
