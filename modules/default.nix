@@ -6,7 +6,7 @@
 {
   imports = [
     ./boot.nix # systemd-boot
-    ./network.nix # networkmanager, openssh, syncthing
+    ./network.nix # networkmanager, openssh
     ./locale.nix # timezone, locale split
     ./desktop.nix # swayfx, soteria, swaylock pam, xdg portals, screenshare patches, launch hooks
     ./audio.nix # pipewire, bluetooth

@@ -13,12 +13,4 @@
       PermitRootLogin = "no";
     };
   };
-
-  # file sync with the surface: no systemd service, just the package.
-  # run manually with `syncthing`, same habit as on Mint.
-  # GUI defaults to localhost:8384 once running.
-  services.syncthing = {
-    enable = true;
-    systemService = false;
-  };
 }

@@ -7,6 +7,7 @@
     ./theme.nix # cursor, gtk dark, papirus icons
     ./shell.nix # zsh, starship, zoxide, fzf, direnv
     ./ssh.nix # one identity block per git host
+    ./syncthing.nix # file sync user service
     ./git.nix # git config, delta, lazygit
     ./foot.nix # terminal
     ./fuzzel.nix # launcher, power menu
