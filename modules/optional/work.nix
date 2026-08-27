@@ -5,7 +5,19 @@ lib.mkIf settings.work {
   environment.systemPackages = [
     pkgs.eduvpn-client # browser login then a rotating-key wireguard tunnel, runs as eduvpn-gui
     pkgs.teams-for-linux # electron wrapper, no native linux client anymore
+    pkgs.bun # js/ts runtime + package manager
+    pkgs.zotero # reference manager
   ];
+
+  # tailscale for direct access to jupyter clusters, instead of going through jupyterlab in the browser
+  services.tailscale.enable = true;
+  networking.firewall.trustedInterfaces = [ "tailscale0" ];
+
+  # local llm inference on the 3060 ti
+  services.ollama = {
+    enable = true;
+    package = pkgs.ollama-cuda;
+  };
 
   # strict reverse path filtering drops eduvpn's wireguard return traffic, loosen it
   networking.firewall.checkReversePath = "loose";
