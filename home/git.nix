@@ -26,10 +26,10 @@
     enable = true;
     settings = {
       os.editPreset = "nvim";
-      git.pagers = [
+      git.diffRenderers = [
         {
           colorArg = "always";
-          pager = "delta --paging=never";
+          command = "delta --paging=never";
         }
       ];
     };
