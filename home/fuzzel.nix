@@ -7,6 +7,9 @@ let
   border = "${colors.base0F}ff";
 in
 {
+  # rofi isn't installed, but stylix themes it anyway. fuzzel is the launcher here.
+  stylix.targets.rofi.enable = false;
+
   programs.fuzzel = {
     enable = true;
     package = null; # fuzzel is installed system-wide, home-manager only writes the config

@@ -22,6 +22,16 @@ refs: https://github.com/swaywm/sway/wiki/Useful-add-ons-for-sway
 ## base:
 
 - [ ] calculator (own app or fuzzel calc mode)
+- [ ] powermenu eats shifted keys. cursor-home in home/fuzzel.nix lists lowercase letters and bare digits only, so a stray capital or !@#$ filters the hidden list instead of doing nothing. catch the shifted row too.
+- [ ] archives dead in thunar, fine in yazi. thunar-archive-plugin looks for the helper under its own store path, xarchiver ships xarchiver.tap under xarchiver's. two packages, two paths, so the plugin finds nothing and the context menu stays empty. needs the tap reachable from one place.
+
+## direction:
+
+bigger questions about the shape of the setup, minimal may have gone too far. research first, this is a rebuild not a package add.
+- [ ] launcher: fuzzel is thin. see what a fuller one gives (calc, emoji, file search, window switch) and whether it earns the weight
+- [ ] pdf and images: zathura and swayimg only read, decide if bare viewers are still the right call
+- [ ] tiling itself, sway may not be what i want anymore. look at floating or hybrid and what switching would cost
+- [ ] judge the above as one build, not app by app, that's the whole point of asking
 
 ## polish:
 
@@ -102,6 +112,7 @@ cleanup nix doesn't handle on its own.
 
 ## repo:
 
+- [ ] recheck what the flake update before 2026-09-23 changed, stylix especially. the 2026-09-23 bump cleared the regreet and stdenv.isLinux warnings on its own, so some of it may already be gone. confirm before chasing it.
 - [x] surface host: generate hardware config and re-enable in flake.nix
 - [x] surface: ipts.enable, surface-control.enable and extraGroups don't exist as options anymore, the surface-pro-intel profile turns on touch, pen and performance profile switching by default now. tested working without sudo, removed the stale commented lines.
 
@@ -133,7 +144,7 @@ not committed. pull one up into a section above when it's worth doing.
 ### shell + tools
 - [ ] eza (ls), tealdeer (tldr), dust + duf, sd, yq, glow
 - [ ] jq, still not installed
-- [ ] yazi tui file manager
+- [x] yazi tui file manager
 - [ ] atuin shell history, decide deliberately
 - [ ] nh + nix-output-monitor for nicer rebuilds
 - [ ] nix-tree and nix-index for closure and package spelunking
