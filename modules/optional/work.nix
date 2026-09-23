@@ -7,6 +7,7 @@ lib.mkIf settings.work {
     pkgs.teams-for-linux # electron wrapper, no native linux client anymore
     pkgs.bun # js/ts runtime + package manager
     pkgs.zotero # reference manager
+    pkgs.obs-studio # screen recording/streaming
   ];
 
   # tailscale for direct access to jupyter clusters, instead of going through jupyterlab in the browser

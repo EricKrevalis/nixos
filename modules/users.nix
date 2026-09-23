@@ -4,7 +4,7 @@
   users.users.${settings.username} = {
     isNormalUser = true;
     description = settings.username;
-    extraGroups = [ "networkmanager" "wheel" ];
+    extraGroups = [ "networkmanager" "wheel" "video" ];
     # gaming toggle adds "gamemode" here too, see modules/optional/gaming.nix
     shell = pkgs.zsh; # home-manager configures zsh, this makes it the login shell
   };
