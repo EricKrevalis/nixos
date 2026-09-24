@@ -69,7 +69,7 @@
         desktop = mkHost (common // {
           hostname = "desktop";
           nvidia = true; # RTX 3060 Ti
-          gaming = false;
+          gaming = true;
           work = true;
           arkenfox = true;
           sshIdentities = common.sshIdentities // {
