@@ -74,6 +74,8 @@
       wlr.settings.screencast = {
         chooser_type = "simple";
         chooser_cmd = "${pkgs.slurp}/bin/slurp -f 'Monitor: %o' -or";
+        # caps capture on the 240 Hz output, discord streams 60 at most
+        max_fps = 60;
       };
     };
   };
