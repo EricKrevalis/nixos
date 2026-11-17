@@ -3,7 +3,7 @@
 {
   imports = [ ./hardware-configuration.nix ];
 
-  # both branches are the same 6.19.8 kernel right now, staying on longterm
+  # longterm is the lts line, stable follows the newest kernel
   hardware.microsoft-surface.kernelVersion = "longterm";
 
   # touch, pen and performance profile switching are already on by default, nothing to set here

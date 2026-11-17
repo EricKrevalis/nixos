@@ -4,7 +4,7 @@
 # firefox is always installed, this only adds the hardened profile: user.js, ublock, theme
 # the manual non-nix setup guide is the README in configs/firefox, alongside these files
 let
-  # dropped into the profile, not policy, so no "managed by your organization" and the settings stay mine
+  # dropped into the profile, not policy, so no "managed by your organization", settings stay editable in the ui
   # a profile install checks signatures, so the signed amo xpis go in untouched, repacking would void them
   ublock = pkgs.fetchurl {
     url = "https://addons.mozilla.org/firefox/downloads/file/4814095/ublock_origin-1.71.0.xpi";
@@ -32,7 +32,7 @@ lib.mkIf settings.arkenfox {
     profiles.arkenfox-tinkered = {
       isDefault = true;
       settings = {
-        "browser.profiles.enabled" = false;   # off, ff's new profile db desyncs and flags the profile inaccessible
+        "browser.profiles.enabled" = false;   # off, the profile manager's database desyncs and flags the profile inaccessible
         "intl.locale.requested" = "en-US";    # built-in ui locale, no langpack install prompt
         "extensions.activeThemeID" = themeId; # select the forest green theme once it's installed
         "extensions.autoDisableScopes" = 0;   # auto-enable the profile-installed extensions, no approval prompt
@@ -42,18 +42,18 @@ lib.mkIf settings.arkenfox {
         "font.name.serif.x-western"      = "Atkinson Hyperlegible Next";
         "font.name.monospace.x-western"  = "Atkinson Hyperlegible Mono";
       };
-      # arkenfox base then my overrides, the same order arkenfox's own updater uses
+      # arkenfox base then the overrides, the same order arkenfox's own updater uses
       extraConfig = builtins.readFile ../../configs/firefox/user.js
                   + builtins.readFile ../../configs/firefox/user-overrides.js;
       # ublock's filters aren't seeded here, no nix-side way to do it without enforcing them each launch
-      # i import ublock-adminsettings.json once by hand, then they're mine
+      # ublock-adminsettings.json imported once by hand, ublock keeps them after that
       extensions.packages = [
         (sideload "ublock-origin" ublockId ublock)
         (sideload "natural-forest-green-theme" themeId theme)
       ];
       # force=true lets home-manager overwrite the search db firefox rewrites each launch.
       # hiding a builtin actually drops it, the settings ui only grays out its remove button.
-      # no aliases on my engines, i don't want urlbar search shortcuts.
+      # no aliases on the engines, no urlbar search shortcuts
       search = {
         force = true;
         default = "ddg";

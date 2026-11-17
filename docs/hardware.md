@@ -24,7 +24,7 @@ most of this is shared (every host), a few bits are desktop only.
 
 ## gpu
 
-nvidia tuning lives in `modules/optional/nvidia.nix`, currently the latest branch (610), swapped in to test the firefox flicker (610 adds dmabuf mmap on discrete gpus, the path the flicker sits on).
+nvidia tuning lives in `modules/optional/nvidia.nix`, currently the latest branch (615), swapped in to test the firefox flicker (has dmabuf mmap on discrete gpus since 610, the path the flicker sits on).
 stable sits in the module as a commented fallback, roll back at the boot menu if latest regresses.
 
 ## evaluated and skipped

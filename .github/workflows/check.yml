@@ -14,8 +14,7 @@ jobs:
       # flakes enabled by default with this installer
       - uses: DeterminateSystems/nix-installer-action@main
 
-      # evaluates every host, catches type errors and bad options without building. this
-      # covers the whole core/ engine too, since the real hosts import it. the starter flake
-      # in core/ cannot be checked here, it fails on purpose until a hardware config exists.
+      # evaluates every host, type errors and bad options without building.
+      # the nixos starter host stays commented out in flake.nix, no hardware config to check
       - name: evaluate flake
         run: nix flake check --no-build

@@ -8,8 +8,8 @@ return {
   ft = { "markdown" },
   init = function()
     vim.g.mkdp_auto_start = 0 -- never open on its own
-    vim.g.mkdp_auto_close = 1 -- close the window when you leave the file
-    -- its own firefox, closing the preview never touches your real one
+    vim.g.mkdp_auto_close = 1 -- closes the window on leaving the file
+    -- its own firefox, closing the preview never touches the main one
     -- fixed window name, the cleanup below closes just this window
     vim.g.mkdp_browserfunc = "OpenMarkdownInFirefox"
     vim.cmd([[

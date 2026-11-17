@@ -9,7 +9,7 @@ local function split_first(item)
   if not (d:find("^smart %(") or d:find("^vertical %(") or d:find("^horizontal %(")) then
     return "1"
   end
-  -- raw_key is the untransformed key (e.g. <C-V>), item.key is replaced with a display glyph
+  -- raw_key is the untransformed key (like <C-V>), item.key is replaced with a display glyph
   local raw = (item.raw_key or ""):lower()
   local mod = raw:match("^<c%-(.-)>$") -- ctrl form, captures the base letter
   local rank = split_order[mod or raw]

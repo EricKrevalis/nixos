@@ -46,7 +46,7 @@
     security.pam.services.swaylock = { };
 
     # two local patches to xdg-desktop-portal-wlr, both fix discord screenshare freezing.
-    # destroy-stale-frame: portal reused a frame without freeing the old one, sway killed the session. upstream PR #380.
+    # destroy-stale-frame: portal reused a frame without freeing the old one, sway ended the session. upstream PR #380.
     # more-buffers: a pipewire pool of 2 starved the portal and froze the stream, bumped to 6, clear at 1080p60.
     # if a portal release fixes either the patch stops applying and the build fails, drop that file.
     nixpkgs.overlays = [

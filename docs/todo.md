@@ -8,6 +8,7 @@ refs: https://github.com/swaywm/sway/wiki/Useful-add-ons-for-sway
       https://github.com/Alexays/Waybar/wiki/Examples
 
 ## TODO:
+- [!] rebuilds close to an hour on the surface, cut local compiles, details in the builds section.
 - [ ] discord (vesktop) screenshare still a bit buggy, wayland screencast portal/pipewire, details in the gaming section.
 
 ## testing / work-in-progress:
@@ -115,6 +116,17 @@ cleanup nix doesn't handle on its own.
 ## secrets:
 
 - [ ] add the surface host key as a recipient in .sops.yaml once that machine exists, then run sops updatekeys on secrets/*
+
+## builds:
+
+close to an hour on the surface, most of it compiled locally instead of fetched.
+- [!] ollama-cuda unconditional in modules/optional/work.nix, the surface has no nvidia and still compiles cuda. gate it on settings.nvidia
+- [ ] cuda is unfree, never on cache.nixos.org, the desktop compiles ollama-cuda every bump. find a cuda cache
+- [ ] linux-surface kernel patched by nixos-hardware, never cached, full kernel compile every bump
+- [ ] zotero builds locally, its bundled firefox esr is skipped by hydra
+- [ ] find a cache before accepting a local build. a friend found caches for things that supposedly had none, ask which and how
+- [ ] own cache: desktop or a github actions job builds every host, pushes to cachix or attic, the surface pulls from it. the friend runs one, ask for the workflow. public repo, so no self-hosted runner, and unfree builds stay out of a public cache
+- [ ] `nix build --dry-run` per host before an update, lists what compiles
 
 ## repo:
 

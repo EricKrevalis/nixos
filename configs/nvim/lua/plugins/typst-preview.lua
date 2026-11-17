@@ -1,12 +1,12 @@
 -- live typst preview in the browser, follows the cursor.
 -- one preview at a time, it hands off to whichever typst file is focused.
--- two previews would collide on the single reused firefox profile lock and sync would die.
+-- two previews would collide on the single reused firefox profile lock and sync would stop.
 return {
   "chomosuke/typst-preview.nvim",
   ft = "typst",
   version = "1.*",
   opts = {
-    -- its own firefox, closing the preview never touches your real one
+    -- its own firefox, closing the preview never touches the main one
     -- fixed window name, the cleanup below closes just this window
     -- reused profile, skips the first-run private-browsing tab
     open_cmd = 'D="${XDG_DATA_HOME:-$HOME/.local/share}/firefox-previews/typst"; mkdir -p "$D" && '
@@ -69,7 +69,7 @@ return {
         if active == ev.buf then stop_active() end
       end,
     })
-    -- safety net on :qa, kill any preview window left behind
+    -- safety net on :qa, close any preview window left behind
     vim.api.nvim_create_autocmd("VimLeavePre", {
       group = group,
       callback = close_window,

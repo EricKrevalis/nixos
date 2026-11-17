@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ settings, lib, pkgs, ... }:
 
 {
   environment.systemPackages = with pkgs; [
@@ -40,9 +40,14 @@
   ];
 
   nixpkgs.config.allowUnfree = true;
+  # only list, a second one in another module replaces it
   # pnpm builds the electron apps and never lands in the system, the CVEs target interactive use.
   # drop once nixpkgs moves pnpm_10 past 10.29.2
-  nixpkgs.config.permittedInsecurePackages = [ "pnpm-10.29.2" ];
+  nixpkgs.config.permittedInsecurePackages = [
+    "pnpm-10.29.2"
+  ]
+  # zotero's bundled firefox esr 140, end of life 2026-10-13. exact version, the next zotero bump fails here
+  ++ lib.optionals settings.work [ "firefox-esr-140-bin-unwrapped-140.17.0esr" ];
 
   # keep man pages, skip the nixos manual rebuild and the html/info trees
   documentation = {

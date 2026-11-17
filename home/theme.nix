@@ -2,7 +2,7 @@
 
 {
   home.pointerCursor = {
-    enable  = true; # the settings below no longer turn this on by themselves
+    enable  = true; # the settings below don't turn this on by themselves
     package = pkgs.bibata-cursors;
     name    = "Bibata-Modern-Classic";
     size    = 20;
@@ -10,7 +10,7 @@
   };
 
   # enabling gtk hands home-manager the settings.ini, so every pref has to be set here.
-  # prefer-dark keeps thunar etc dark, primary-paste off kills middle-click paste.
+  # prefer-dark keeps thunar and other gtk apps dark, primary-paste off turns off middle-click paste
   gtk = {
     enable = true;
     # papirus-dark icon theme, light-on-dark for the dark desktop

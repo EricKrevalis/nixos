@@ -9,7 +9,7 @@ return {
     -- enter stays a newline, nothing auto-accepts.
     keymap = { preset = "default" },
     completion = {
-      menu = { auto_show = true },                                       -- show as you type
+      menu = { auto_show = true },                                       -- shows while typing
       list = { selection = { preselect = false, auto_insert = false } }, -- but never pick or insert on its own
       documentation = { auto_show = true, auto_show_delay_ms = 200 },    -- docs for the highlighted item
     },

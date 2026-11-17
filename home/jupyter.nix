@@ -118,6 +118,6 @@ in
 
   home.packages = [
     jupyterEnv # jupyter and python on PATH, for kernels and pip workflows
-    jlab       # headless lab in a throwaway firefox window, dies with the window
+    jlab       # headless lab in a throwaway firefox window, exits with the window
   ];
 }

@@ -30,7 +30,7 @@ in
       terminal = "foot";
       menu = "fuzzel"; # Super+D launcher (native wayland, no xwayland)
       startup = [
-        # import session vars so user services (polkit agents, etc.) see the wayland socket and session id
+        # import session vars so user services like the polkit agent see the wayland socket and session id
         { command = "systemctl --user import-environment XDG_SESSION_ID XDG_SESSION_TYPE WAYLAND_DISPLAY DISPLAY"; }
         { command = "waybar"; }
         { command = "sway-autotile"; }

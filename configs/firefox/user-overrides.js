@@ -1,5 +1,5 @@
 // personal overrides on top of the arkenfox base above. arkenfox's own model:
-// user.js is upstream, this file is mine, both get concatenated into the profile.
+// user.js is upstream, this file is the local layer, both get concatenated into the profile
 
 // dns: quad9 over https, mode 3 so there's no fallback to the system resolver
 user_pref("network.trr.mode", 3);
@@ -106,7 +106,7 @@ user_pref("nimbus.rollouts.enabled", false);
 // uniform opt-out header, not a fingerprint, carries ccpa/gdpr weight
 user_pref("privacy.globalprivacycontrol.enabled", true);
 
-// disables Restore Previous Session, so I turn it off, don't want to lose tabs I forgot about
+// clearing history on shutdown breaks Restore Previous Session, off so open tabs survive a restart
 user_pref("privacy.clearOnShutdown_v2.browsingHistoryAndDownloads", false);
 // keep on, exceptions would lose their settings otherwise
 user_pref("privacy.clearOnShutdown_v2.siteSettings", true);
@@ -128,5 +128,5 @@ user_pref("browser.theme.toolbar-theme", 0);
 user_pref("layout.css.prefers-color-scheme.content-override", 0);
 user_pref("browser.tabs.inTitlebar", 1);
 
-// my toolbar layout: home + ublock + private-window-reset buttons, bookmarks bar shown
+// toolbar layout: home, ublock and private-window-reset buttons, bookmarks bar shown
 user_pref("browser.uiCustomization.state", "{\"placements\":{\"widget-overflow-fixed-list\":[],\"unified-extensions-area\":[],\"nav-bar\":[\"back-button\",\"forward-button\",\"stop-reload-button\",\"home-button\",\"customizableui-special-spring1\",\"vertical-spacer\",\"urlbar-container\",\"customizableui-special-spring2\",\"downloads-button\",\"fxa-toolbar-menu-button\",\"unified-extensions-button\",\"ublock0_raymondhill_net-browser-action\",\"reset-pbm-toolbar-button\"],\"toolbar-menubar\":[\"menubar-items\"],\"TabsToolbar\":[\"firefox-view-button\",\"tabbrowser-tabs\",\"new-tab-button\",\"alltabs-button\"],\"vertical-tabs\":[],\"PersonalToolbar\":[\"personal-bookmarks\"]},\"seen\":[\"developer-button\",\"screenshot-button\",\"ublock0_raymondhill_net-browser-action\",\"reset-pbm-toolbar-button\"],\"dirtyAreaCache\":[\"nav-bar\",\"vertical-tabs\",\"toolbar-menubar\",\"TabsToolbar\",\"PersonalToolbar\"],\"currentVersion\":24,\"newElementCount\":2}");

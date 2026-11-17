@@ -64,7 +64,7 @@ in
           radius=6
 
           [key-bindings]
-          # testing j/k navigation here, scoped to this config, the launcher keeps them as plain input
+          # j/k navigation scoped to this config, the launcher keeps them as plain input
           prev=Up k
           next=Down j
           # q cancels the menu alongside the default Escape and Ctrl+c
