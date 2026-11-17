@@ -10,6 +10,11 @@ lib.mkIf settings.work {
     pkgs.obs-studio # screen recording/streaming
   ];
 
+  # teams-for-linux turns the gpu off on native wayland unless set explicitly, webgl goes with it and incoming screen shares stay blank
+  environment.etc."teams-for-linux/config.json".text = builtins.toJSON {
+    performance.disableGpu = false;
+  };
+
   # tailscale for direct access to jupyter clusters, instead of going through jupyterlab in the browser
   services.tailscale.enable = true;
   networking.firewall.trustedInterfaces = [ "tailscale0" ];

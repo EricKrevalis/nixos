@@ -58,4 +58,14 @@
     run ${pkgs.goxlr-utility}/bin/goxlr-client profiles microphone load DEFAULT || true
   '';
 
+  # slippi launcher appimage on the games drive, runs through the appimage binfmt in gaming.nix
+  # no version in the filename so the launcher's self update overwrites it in place
+  xdg.desktopEntries.slippi-launcher = {
+    name = "Slippi Launcher";
+    icon = "/run/media/eric/games/SSBM/slippi-launcher.png"; # copied out of the appimage, Papirus has none
+    exec = "/run/media/eric/games/SSBM/Slippi-Launcher.AppImage";
+    terminal = false;
+    categories = [ "Game" ];
+  };
+
 }

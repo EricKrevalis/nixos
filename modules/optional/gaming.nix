@@ -23,6 +23,16 @@ lib.mkIf settings.gaming {
   # some proton titles crash on the default mmap limit, steamos/fedora ship this value
   boot.kernel.sysctl."vm.max_map_count" = 2147483642;
 
+  # appimages run directly through appimage-run, binfmt also covers the dolphin appimage slippi launcher starts
+  programs.appimage = {
+    enable = true;
+    binfmt = true;
+    # slippi dolphin links the openssl libcurl (CURL_OPENSSL_4), hiPrio so it replaces the gnutls build in the default env
+    package = pkgs.appimage-run.override {
+      extraPkgs = p: [ (lib.hiPrio p.curl) ];
+    };
+  };
+
   # discord fork with working wayland screen share and audio
   environment.systemPackages = [ pkgs.vesktop ];
 }

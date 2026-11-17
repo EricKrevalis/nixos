@@ -14,6 +14,7 @@
     ./fonts.nix # noto, atkynson mono
     ./stylix.nix # base16 forest palette
     ./packages.nix # neovim, git, cli tools, screenshot stack, archive stack, toolchains
+    ./containers.nix # rootless podman
     ./users.nix # user account, zsh
     ./nix.nix # flakes, gc, sops key path
     ./optional/gaming.nix # steam, gamescope, gamemode, vesktop

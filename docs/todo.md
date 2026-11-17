@@ -18,6 +18,7 @@ refs: https://github.com/swaywm/sway/wiki/Useful-add-ons-for-sway
 - [?] language toolchains (rust, c/c++, js/ts, python via the jupyter env) + direnv
 - [?] dev buildout, editor and toolchains, the full task list in the dev section
 - [?] preview fix landed, typst/md open a dedicated firefox instance, :q closes it, verifying in use
+- [?] teams screenshares from others blank, gpu forced back on, check in a call, details in the work section
 
 ## base:
 
@@ -36,14 +37,15 @@ bigger questions about the shape of the setup, minimal may have gone too far. re
 ## polish:
 
 - [ ] office suite (libreoffice), docx/xlsx/odt/pptx, also csv/rtf, no handler now
-- [ ] email client, wires mailto + .eml/mbox/.vcard, all unhandled now
+- [ ] email client, wires mailto + .eml/mbox/.vcard, all unhandled now. thunderbird through proton bridge, bridge needs a keyring (none now)
 - [ ] calendar, wires .ics + webcal://, unhandled now
 - [ ] pdf annotation and forms (zathura is read-only, okular or similar)
 - [ ] image editor (gimp or krita), RAW + .xcf, swayimg only views, no edit
-- [ ] password manager: bitwarden, no browser extension, rbw + fuzzel (rofi-rbw/fuzzel-rbw), type via wtype not clipboard, argon2id kdf, vaultwarden self-host long-term
+- [ ] password manager: bitwarden (eu region), no browser extension, argon2id kdf. test rbw + fuzzel (rofi-rbw/fuzzel-rbw, type via wtype not clipboard) against the bitwarden desktop app, web vault for managing meanwhile. vaultwarden self-host long-term
+- [ ] cliphist skips password copies, the wl-paste watcher in home/sway.nix stores everything to ~/.cache/cliphist/db now
 - [ ] torrent client, wires magnet:// + .torrent, unhandled now
-- [ ] note taking
-- [ ] file sync (syncthing or similar)
+- [ ] note taking: notesnook (essential plan for checklists) or standard notes free (plain text), undecided
+- [ ] file sync: syncthing
 
 ## specialized:
 
@@ -57,7 +59,7 @@ bigger questions about the shape of the setup, minimal may have gone too far. re
 - [?] per-project dev environments: direnv + nix-direnv wired, learn flake devShells next, lsp servers from the project shell
 - [ ] compare devenv vs plain devShells: devenv adds services/presets but its own cli steps outside flakes, reach for it when a project needs services, not by default
 - [ ] revisit python lsp: on basedpyright + ruff now, re-evaluate pyrefly (1.0) and ty (still beta) once they harden
-- [ ] docker or podman
+- [?] podman: rootless, docker alias via dockerCompat, no docker socket (its group is root-equivalent). compose and gpu passthrough not set up
 - [?] language toolchains: rust, c/c++, js/ts global for scratch use, python rides the jupyter env, projects pin their own via devShells
 - [ ] research the top employable languages more before adding toolchains, current landscape read: python, js/ts, java, c#, c/c++, go, sql, rust
 - [ ] learning track, cover languages worth learning for hire, not just ones already written. settled set: typescript, go, sql on postgres. skip java (known, disliked) and c# for now
@@ -75,6 +77,7 @@ bigger questions about the shape of the setup, minimal may have gone too far. re
 - [ ] trouble: project-wide diagnostics panel
 - [ ] luasnip + friendly-snippets: snippet library, blink's builtin covers the basics for now
 - [ ] render-markdown: in-buffer markdown rendering
+- [ ] direnv plugin: nvim opened from thunar, fuzzel or yazi misses the project devShell, gets the system lsp and toolchain instead. load the file's .envrc per buffer, compare plugins first
 - [ ] docs/nvim.md: write up the dev-layer decisions (treesitter from nix, blink lua matcher, basedpyright + ruff, format on demand)
 
 ### gaming:
@@ -85,6 +88,9 @@ bigger questions about the shape of the setup, minimal may have gone too far. re
 
 ### nvidia:
 - [ ] fan/clock control on wayland, nvidia-settings is useless there (needs Xorg), LACT is the lead candidate, research in depth
+
+### work:
+- [?] teams: other people's screenshares show nothing. teams-for-linux turns the gpu off on native wayland unless set explicitly, webgl goes with it. modules/optional/work.nix writes /etc/teams-for-linux/config.json with performance.disableGpu false. after nrs and a teams restart, watch someone share in a call. gpu is on if `pgrep -af "type=gpu-process" | grep -c use-gl=disabled` prints 0. still blank: not the gpu, revert and keep digging. whole teams window blank: revert, try the xwayland route (ozone-platform x11 + wayland.xwaylandOptimizations)
 
 ## hardware / system:
 
